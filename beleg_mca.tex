@@ -1,0 +1,308 @@
+%Wir verwenden eine DIN-A4-Seite und die Schriftgröße 12.
+\documentclass[a4paper,12pt]{scrartcl} 
+
+
+%Diese drei Pakete benötigen wir für die Umlaute, Deutsche Silbentrennung etc.
+%Apple-Nutzer sollten anstelle von \usepackage[latin1]{inputenc} das Paket \usepackage[applemac]{inputenc} verwenden
+%% \usepackage[latin1]{inputenc}
+%%apt-get install texlive-lang-german damit ngerman keine Probleme mehr macht !!
+%\usepackage[utf8]{inputenc} 
+%\usepackage[T1]{fontenc}
+%\usepackage[ngerman]{babel}
+
+%Das Paket erzeugt ein anklickbares Verzeichnis in der PDF-Datei.
+%\usepackage{hyperref}
+
+%Das Paket wird für die anderthalb-zeiligen Zeilenabstand benötigt
+\usepackage{setspace}
+
+%%HTWM-Vorlage - benoetigt apt-get install texlive-fonts-extra
+\setcounter{tocdepth}{3}				%Schatelungstiefe Inhaltsverz.
+\usepackage[utf8]{inputenc}			%deutsche Umlaute
+\usepackage{german, ngerman}
+\usepackage[ngerman]{babel}			%Rechtschreibprüfung
+\usepackage{color,listings} 			%Quellcode Highlighting, bindet das
+%Paket Listings ein
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage[T1]{fontenc}				%srccode
+\usepackage[scaled]{beramono}		%srccode
+\usepackage{longtable}				%mehrseitige tabellen
+\usepackage[tableposition=b]{caption}
+\usepackage[pdftex, pdftoolbar=false, hyperfootnotes=false, bookmarks,
+bookmarksopen, bookmarksnumbered, bookmarksopenlevel=2, pdfpagelabels=true,
+pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
+\usepackage{array}					%farbige Tabellen
+\usepackage[table]{xcolor} 			%farbige Tabellen
+\usepackage{graphicx}				% \includegraphics bnoetigt dies
+
+\usepackage{fancyhdr, graphicx}		%% Logo auf Titelseite
+\renewcommand{\headrulewidth}{0pt}
+\fancyhead[L]{}
+\fancyhead[R]{
+  \includegraphics[width=52mm]{./images/htwk.png}
+}
+\usepackage{draftwatermark}			% wasserzeichen
+	%Quelle: http://choorucode.com/2010/05/05/latex-adding-draft-watermark/?like=1&source=post_flair&_wpnonce=1c9f85538d
+\SetWatermarkText{VORABVERSION}		% wasserzeichen-text
+\SetWatermarkLightness{0.9}			% wasserzeichen-kontrast
+\SetWatermarkScale{2.5}				% wasserzeichen-zeichengroe\ss{}e
+
+
+
+\definecolor{Navy}{rgb}{0,0,0.5}
+\definecolor{Gray}{gray}{0.5}
+\definecolor{dunkelgrau}{rgb}{0.8,0.8,0.8}
+\definecolor{hellgrau}{rgb}{0.95,0.95,0.95}
+\definecolor{hellgrau2}{rgb}{0.93,0.93,0.93}
+
+\hypersetup{
+	colorlinks=true, 			% false: boxed links; true: colored links
+	linkcolor=Navy,          		% color of internal links
+	citecolor=Gray,        			% color of links to bibliography
+	filecolor=magenta,      		% color of file links
+	urlcolor=blue,           			% color of external links
+	linkbordercolor={1 1 1}, 		% set to white
+	citebordercolor={1 1 1} 		% set to white
+}
+
+
+%Einrückung eines neuen Absatzes
+\setlength{\parindent}{0em}
+
+%Definition der Ränder
+\usepackage[paper=a4paper,left=30mm,right=30mm,top=30mm,bottom=30mm]{geometry}
+
+%Abstand der Fussnoten
+\deffootnote{1em}{1em}{\textsuperscript{\thefootnotemark\ }}
+
+%Regeln, bis zu welcher Tiefe (section,subsection,subsubsection) Überschriften angezeigt werden sollen (Anzeige der Überschriften im Verzeichnis / Anzeige der Nummerierung)
+%\setcounter{tocdepth}{3}
+%\setcounter{secnumdepth}{3}
+
+\fancypagestyle{htwkheader}
+{
+   \fancyhf{}	% clear all header and footer fields
+  \fancyhead[RO]{
+	\makebox[\textwidth]{	%% schiebe Logo nach aussen auf den Rand
+		\rule{1				%% nach aussen schieben hoeherer Wert -> Logo weiter nach aussen
+		  \textwidth}{0cm} %% nicht nach unten schieben = 0cm
+			\includegraphics*[width=52mm]{./images/htwk.png}	%%Logo HTWK
+	  }
+  }
+}
+
+
+\begin{document}
+%Beginn der Titelseite
+
+\begin{titlepage}
+\thispagestyle{htwkheader}		
+%\addtolength{\voffset}{-2cm}		
+%\addtolength{\topmargin}{-2cm}
+%\addtolength{\bottommargin}{2cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%  Oberer Teil: Links Textblock HTWK, Rechts Logo HTWK %%
+%%\begin{figure}[htbp]
+%%\begin{minipage}[t]{6cm}	%% linker Teil
+%%\vspace{0cm}
+HTWK Leipzig\\
+Fachbereich IMN \\
+Wintersemester 2012/2013
+%%\end{minipage}
+%%\hfill						%% Zwischenraum auffuellen
+%%\begin{minipage}[t]{6cm}	%% rechter Teil
+%%\vspace{0pt}
+%%\makebox[\textwidth]{	%% schiebe Logo nach aussen auf den Rand
+%%  \rule{1				%% nach aussen schieben hoeherer Wert -> Logo weiter nach aussen
+%%    \textwidth}{0cm} %% nicht nach unten schieben = 0cm
+%%      \includegraphics*[width=52mm]{./images/htwk.png}	%%Logo HTWK
+%%}
+
+%%  \end{flushright}
+%%\caption{Bild1}			%% keine Bildbeschriftung fuer Logo
+%%\label{fig:Bild1}			%% nicht ins Abbildungsverzeichnis aufnehmen
+%%\end{minipage}
+%%\end{figure}
+
+%\vspace{6cm}
+
+%\addtolength{\voffset}{0cm}
+
+\begin{center}
+\begin{Large}
+\vfill {\textsf{\textbf{
+Die Möglichkeiten des System-Managements der Firewall-Distribution
+pfSense\\--VORABVERSION--\\
+}}}
+\end{Large}
+Beleg im Fach Netzwerk- und System-Management
+\end{center}
+
+\begin{small}
+\vfill
+Marcel Kirbst \\
+Sieglitz 39 \\
+06618 Molau \\
+marcel.kirbst@stud.htwk-leipzig.de\\
+\\
+Sebastian \\
+Stra\ss{}e \\
+Ort \\
+sebastian.kirbst@stud.htwk-leipzig.de\\
+\\
+\today
+\end{small}
+
+\end{titlepage}
+\addtolength{\voffset}{0cm}
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%Ende der Titelseite%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Inhaltsverzeichnis (aktualisiert sich erst nach dem zweiten Setzen)
+\tableofcontents
+\thispagestyle{empty}
+
+%Beginn einer neuen Seite
+\clearpage
+
+%Anderthalbzeiliger Zeilenabstand ab hier
+\onehalfspacing
+
+%%\pagestyle{plain}
+\pagestyle{headings}	%% lebende Kopfzeile
+
+%%Abbildungsverzeichnis hier erstellen
+\clearpage
+\listoffigures
+
+\clearpage
+\section{Einleitung}
+Dieser Beleg befasst sich mit
+
+%% BILD:
+%\begin{figure}[htb]
+%\begin{center}
+% \includegraphics[width=0.65\hsize]{./images/default.pdf}
+%\end{center}
+%\caption[Beispielhafte Standardkonfiguration eines Internetanschlu\ss{}, Quelle: Autor, verwendete Symbole unterliegen der
+%GPL]{\label{stdinet}Beispielhafte Standardkonfiguration eines Internetanschlu\ss{}.}
+%\end{figure}
+
+\clearpage
+\section{BLUB}
+
+\subsection{blub}
+
+%% Tabelle
+
+%\vspace*{1cm}
+\begin{longtable}{p{34mm}>{\columncolor[gray]{0.97}}p{33mm}p{33mm}>{\columncolor[gray]{0.97}}p{33mm}}
+\rowcolor[gray]{.9}Funktion & \textbf{IPCop} & \textbf{IPFire} & \textbf{pfSense}\\
+Lizenz & GPL\cite{GPLLicense} & GPL\cite{GPLLicense} & BSD\cite{FreeBSDLicense}\\
+\rowcolor[gray]{.95}Betriebssystem & Linux & Linux & FreeBSD   \\
+Hardware"-architektur & i386, Cobald, Sparc, PowerPC & i386, AMD64 & i386, AMD64\\
+\caption{Merkmale ausgew\"ahlter Routerdistributionen im Vergleich}
+\label{Merkmale der Routerdistributionen im Vergleich}
+\end{longtable}
+\clearpage
+\section{Schluss}
+Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
+
+\clearpage
+\section{Glossar}
+\begin{description}
+ \item[DHCP-Server] DHCP steht als Abk\"urzung f\"ur "Dynamic Host
+Configuration Protokoll" und beschreibt Techniken um Hosts in Netzwerken
+dynamisch Netzwerkparameter wie IP-Adressen zuzuwei\ss{}en\footnote{\cite{dhcp}}
+ \item[Router] Ein Rechnersystem mit mindestens zwei Netzwerkschnittstellen,
+das Netzwerkschverkehr zwischen diesen Netzwerkschnittstellen nach einem
+Regelwerk vermittelt und weiterleitet.
+ \item[Routerdistribution] Eine spezielle Art von Betriebssystem, deren
+Hauptaugenmerk bei der Konzeption und Entwicklung darauf liegt
+Router-Funktionen sicher und stabil auszuf\"uhren
+ \item[VLAN] Die Abk\"urzung VLAN steht f\"ur Virtual Local Area Network und
+fasst Techniken zusammen um physikale Netzwerkstrukturen logisch zu
+Segmentieren, beispielsweise zur Erh\"ohung der Sicherheit oder um
+Broadcast-Dom\"anen zu verkleinern.
+\end{description}
+CARP pf pfsync XMLRPC BSD FreeBSD OpenBSD linux Betriebssystem BSD-Lizenz GPL-Lizenz Cluster(HA,HP, ) Intel, BSD-Jails
+
+\clearpage
+
+\section{Literatur- und Quellenverzeichnis}
+
+\renewcommand\refname{Literaturverzeichnis}
+\begin{thebibliography}{999}
+
+\bibitem{buch_bsdultguide}Michael W. Lucas:  {\sl Absolute BSD (2nd Edition). The Ultimate Guide to FreeBSD.} No Starch Press, 2008,
+\\ISBN: 978-1-59327-151-0
+
+\bibitem{buch_bookofpf}Peter N.M. Hansteen:  {\sl The Book of PF}. No Starch Press, 2008,
+\\ISBN: 978-1-59327-165-7
+
+\bibitem{buch_pfsultguide}Christopher M. Buechler, Jim Pingle: {\sl pfSense: The Definitive Guide.} Reed Media Services, 2009,
+\\ISBN: 978-0-97903-428-2
+
+\end{thebibliography}
+
+\renewcommand\refname{Quellenverzeichnis}
+\begin{thebibliography}{999}
+
+\bibitem{IPCopManual}
+\url{http://www.ipcop.org/1.4.0/en/install/html/}
+\\Abrufbar am 16.12.2012.
+
+\bibitem{IPCopSamba}
+\url{http://www.ipcopwiki.de/index.php/Samba\_Server}
+\\Abrufbar am 20.12.2012.
+\\\textit{Anmerkung: Der Artikel zu diesem Addon ist zwar noch verf\"ugbar, jedoch
+nicht die eigentlichen Dateien, die f\"ur das Addon erforderlich sind.}
+
+\bibitem{IPCop20Hardware}
+\url{http://www.ipcop.org/2.0.0/en/admin/html/whatsnew.html}
+\\Abrufbar am 11.01.2013.
+
+\bibitem{IPFireAddons}
+\url{http://wiki.ipfire.org/de/addons/start}
+\\Abrufbar am 10.01.2013.
+
+\bibitem{GPLLicense}
+\url{http://www.gnu.org/licenses/gpl.html}
+\\Abrufbar am 20.02.2013
+
+\bibitem{FreeBSDDoc}
+\url{http://www.freebsd.org/docs.html}
+\\Abrufbar am 21.02.2013
+
+\bibitem{FreeBSDLicense}
+\url{http://www.freebsd.org/copyright/freebsd-license.html}
+\\Abrufbar am 20.02.2013
+
+\bibitem{FreeBSDHardware}
+\url{http://www.freebsd.org/doc/de/books/faq/hardware.html\#which-hardware-to-get}
+\\Abrufbar am 12.01.2013.
+
+\bibitem{IPFireSWRAID}
+\url{http://wiki.ipfire.org/de/addons/mdadm/starten}
+\\Abrufbar am 16.02.2013.
+
+\bibitem{dhcp}
+\url{http://www.isc.org/software/dhcp}
+\\Abrufbar am 11.01.2013.
+
+\bibitem{ixpos}
+\url{https://www.euro-ix.net/documents/1024-Euro-IX-IXP-Report-pdf}
+\\Abrufbar am 18.02.2013
+
+\bibitem{vortrag_bsdfirewalling}
+\url{http://www.bsdcan.org/2006/papers/BSD_Firewalling.pdf}
+\\Abrufbar am 19.02.2013
+
+\end{thebibliography}
+
+\end{document}
+%% EOF
