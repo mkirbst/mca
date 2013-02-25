@@ -86,7 +86,7 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
    \fancyhf{}	% clear all header and footer fields
   \fancyhead[RO]{
 	\makebox[\textwidth]{	%% schiebe Logo nach aussen auf den Rand
-		\rule{1				%% nach aussen schieben hoeherer Wert -> Logo weiter nach aussen
+		\rule{0.9				%% nach aussen schieben hoeherer Wert -> Logo weiter nach aussen
 		  \textwidth}{0cm} %% nicht nach unten schieben = 0cm
 			\includegraphics*[width=52mm]{./images/htwk.png}	%%Logo HTWK
 	  }
@@ -133,11 +133,11 @@ Wintersemester 2012/2013
 \begin{center}
 \begin{Large}
 \vfill {\textsf{\textbf{
-Die Möglichkeiten des System-Managements der Firewall-Distribution
-pfSense\\--VORABVERSION--\\
+Beleuchtungssteuerung mit dem Mikrocontroller LPC1768
+\\--VORABVERSION--\\
 }}}
 \end{Large}
-Beleg im Fach Netzwerk- und System-Management
+Beleg im Mikrocontrolleranwendungen
 \end{center}
 
 \begin{small}
@@ -147,10 +147,10 @@ Sieglitz 39 \\
 06618 Molau \\
 marcel.kirbst@stud.htwk-leipzig.de\\
 \\
-Sebastian \\
-Stra\ss{}e \\
-Ort \\
-sebastian.kirbst@stud.htwk-leipzig.de\\
+Sebastian Krause\\
+Dante-Stra\ss{}e 16 \\
+04159 Leipzig \\
+sebastian.krause@stud.htwk-leipzig.de\\
 \\
 \today
 \end{small}
@@ -181,8 +181,9 @@ sebastian.kirbst@stud.htwk-leipzig.de\\
 
 \clearpage
 \section{Einleitung}
-Dieser Beleg befasst sich mit
-
+Dieser Beleg befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
+Leuchtmodluen handelt es sich um Baugruppen die mit jeweils sechs 1Watt-LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt werden.  
+Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der real messbaren Beleuchtungsst\"arke korreliert. 
 %% BILD:
 %\begin{figure}[htb]
 %\begin{center}
@@ -193,21 +194,35 @@ Dieser Beleg befasst sich mit
 %\end{figure}
 
 \clearpage
-\section{BLUB}
+\section{Grundlagen}
+\subsection{I2C}
 
-\subsection{blub}
+\clearpage
+\section{Eingesetzte Hardware}
+\subsection{LPC1768}
+\subsection{PCA9685}
+
+\clearpage
+\section{Implementierung}
+\subsection{Quellcode}
+
+\clearpage
+\section{Auswertung}
+\subsection{Messergebisse}
+
 
 %% Tabelle
 
 %\vspace*{1cm}
-\begin{longtable}{p{34mm}>{\columncolor[gray]{0.97}}p{33mm}p{33mm}>{\columncolor[gray]{0.97}}p{33mm}}
-\rowcolor[gray]{.9}Funktion & \textbf{IPCop} & \textbf{IPFire} & \textbf{pfSense}\\
-Lizenz & GPL\cite{GPLLicense} & GPL\cite{GPLLicense} & BSD\cite{FreeBSDLicense}\\
-\rowcolor[gray]{.95}Betriebssystem & Linux & Linux & FreeBSD   \\
-Hardware"-architektur & i386, Cobald, Sparc, PowerPC & i386, AMD64 & i386, AMD64\\
-\caption{Merkmale ausgew\"ahlter Routerdistributionen im Vergleich}
-\label{Merkmale der Routerdistributionen im Vergleich}
-\end{longtable}
+%\begin{longtable}{p{34mm}>{\columncolor[gray]{0.97}}p{33mm}p{33mm}>{\columncolor[gray]{0.97}}p{33mm}}
+%\rowcolor[gray]{.9}Funktion & \textbf{IPCop} & \textbf{IPFire} & \textbf{pfSense}\\
+%Lizenz & GPL\cite{GPLLicense} & GPL\cite{GPLLicense} & BSD\cite{FreeBSDLicense}\\
+%\rowcolor[gray]{.95}Betriebssystem & Linux & Linux & FreeBSD   \\
+%Hardware"-architektur & i386, Cobald, Sparc, PowerPC & i386, AMD64 & i386, AMD64\\
+%\caption{Merkmale ausgew\"ahlter Routerdistributionen im Vergleich}
+%\label{Merkmale der Routerdistributionen im Vergleich}
+%\end{longtable}
+
 \clearpage
 \section{Schluss}
 Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
@@ -215,94 +230,40 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 \clearpage
 \section{Glossar}
 \begin{description}
- \item[DHCP-Server] DHCP steht als Abk\"urzung f\"ur "Dynamic Host
-Configuration Protokoll" und beschreibt Techniken um Hosts in Netzwerken
-dynamisch Netzwerkparameter wie IP-Adressen zuzuwei\ss{}en\footnote{\cite{dhcp}}
- \item[Router] Ein Rechnersystem mit mindestens zwei Netzwerkschnittstellen,
-das Netzwerkschverkehr zwischen diesen Netzwerkschnittstellen nach einem
-Regelwerk vermittelt und weiterleitet.
- \item[Routerdistribution] Eine spezielle Art von Betriebssystem, deren
-Hauptaugenmerk bei der Konzeption und Entwicklung darauf liegt
-Router-Funktionen sicher und stabil auszuf\"uhren
- \item[VLAN] Die Abk\"urzung VLAN steht f\"ur Virtual Local Area Network und
-fasst Techniken zusammen um physikale Netzwerkstrukturen logisch zu
-Segmentieren, beispielsweise zur Erh\"ohung der Sicherheit oder um
-Broadcast-Dom\"anen zu verkleinern.
+ \item[I2C] Prtokoll zur Kommunikation in Ger\"aten
 \end{description}
-CARP pf pfsync XMLRPC BSD FreeBSD OpenBSD linux Betriebssystem BSD-Lizenz GPL-Lizenz Cluster(HA,HP, ) Intel, BSD-Jails
 
 \clearpage
-
 \section{Literatur- und Quellenverzeichnis}
 
 \renewcommand\refname{Literaturverzeichnis}
 \begin{thebibliography}{999}
 
-\bibitem{buch_bsdultguide}Michael W. Lucas:  {\sl Absolute BSD (2nd Edition). The Ultimate Guide to FreeBSD.} No Starch Press, 2008,
+\bibitem{buch_foobar}Michael W. Lucas:  {\sl Absolute BSD (2nd Edition). The Ultimate Guide to FreeBSD.} No Starch Press, 2008,
 \\ISBN: 978-1-59327-151-0
-
-\bibitem{buch_bookofpf}Peter N.M. Hansteen:  {\sl The Book of PF}. No Starch Press, 2008,
-\\ISBN: 978-1-59327-165-7
-
-\bibitem{buch_pfsultguide}Christopher M. Buechler, Jim Pingle: {\sl pfSense: The Definitive Guide.} Reed Media Services, 2009,
-\\ISBN: 978-0-97903-428-2
 
 \end{thebibliography}
 
 \renewcommand\refname{Quellenverzeichnis}
 \begin{thebibliography}{999}
 
-\bibitem{IPCopManual}
-\url{http://www.ipcop.org/1.4.0/en/install/html/}
-\\Abrufbar am 16.12.2012.
-
-\bibitem{IPCopSamba}
-\url{http://www.ipcopwiki.de/index.php/Samba\_Server}
-\\Abrufbar am 20.12.2012.
-\\\textit{Anmerkung: Der Artikel zu diesem Addon ist zwar noch verf\"ugbar, jedoch
-nicht die eigentlichen Dateien, die f\"ur das Addon erforderlich sind.}
-
-\bibitem{IPCop20Hardware}
-\url{http://www.ipcop.org/2.0.0/en/admin/html/whatsnew.html}
-\\Abrufbar am 11.01.2013.
-
-\bibitem{IPFireAddons}
-\url{http://wiki.ipfire.org/de/addons/start}
-\\Abrufbar am 10.01.2013.
-
-\bibitem{GPLLicense}
-\url{http://www.gnu.org/licenses/gpl.html}
-\\Abrufbar am 20.02.2013
-
-\bibitem{FreeBSDDoc}
-\url{http://www.freebsd.org/docs.html}
-\\Abrufbar am 21.02.2013
-
-\bibitem{FreeBSDLicense}
-\url{http://www.freebsd.org/copyright/freebsd-license.html}
-\\Abrufbar am 20.02.2013
-
-\bibitem{FreeBSDHardware}
-\url{http://www.freebsd.org/doc/de/books/faq/hardware.html\#which-hardware-to-get}
-\\Abrufbar am 12.01.2013.
-
-\bibitem{IPFireSWRAID}
-\url{http://wiki.ipfire.org/de/addons/mdadm/starten}
-\\Abrufbar am 16.02.2013.
-
-\bibitem{dhcp}
-\url{http://www.isc.org/software/dhcp}
-\\Abrufbar am 11.01.2013.
-
-\bibitem{ixpos}
-\url{https://www.euro-ix.net/documents/1024-Euro-IX-IXP-Report-pdf}
-\\Abrufbar am 18.02.2013
-
-\bibitem{vortrag_bsdfirewalling}
-\url{http://www.bsdcan.org/2006/papers/BSD_Firewalling.pdf}
-\\Abrufbar am 19.02.2013
+%%\cite{citeverweis}
+\bibitem{citeverweis}
+\url{http://www.citeverweis.foo.bar}
+\\Abrufbar am 25.02.2013.
 
 \end{thebibliography}
 
+\clearpage
+\section{Verzichtserkl\"arung}
+\thispagestyle{plain}
+
+Hiermit erkläre ich, dass ich die vorliegende Arbeit selbstständig und nur unter Verwendung der angegebenen Literatur und Hilfsmittel angefertigt habe.
+Stellen, die wörtlich oder sinngemäß aus Quellen entnommen wurden, sind als solche
+kenntlich gemacht.\\
+
+Diese Arbeit wurde in gleicher oder ähnlicher Form noch keiner anderen Prüfungsbehörde vorgelegt.\\\\
+
+Leipzig, \today
 \end{document}
 %% EOF
