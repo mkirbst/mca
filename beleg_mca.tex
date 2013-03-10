@@ -142,12 +142,12 @@ Beleg im Mikrocontrolleranwendungen
 
 \begin{small}
 \vfill
-Marcel Kirbst, B.Sc.\\
+Marcel Kirbst B.Sc.\\
 Sieglitz 39 \\
 06618 Molau \\
 marcel.kirbst@stud.htwk-leipzig.de\\
 \\
-Sebastian Krause, B.Sc.\\
+Sebastian Krause B.Sc.\\
 Dante-Stra\ss{}e 16 \\
 04159 Leipzig \\
 sebastian.krause@stud.htwk-leipzig.de\\
@@ -181,33 +181,46 @@ sebastian.krause@stud.htwk-leipzig.de\\
 
 \clearpage
 \section{Einleitung}
+\pagestyle{empty}
 Dieser Beleg befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
-Leuchtmodluen handelt es sich um Baugruppen die mit jeweils sechs 1Watt-LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt werden.  
+Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt
+werden.
 Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der real messbaren Beleuchtungsst\"arke korreliert. 
 %% BILD:
-%\begin{figure}[htb]
-%\begin{center}
-% \includegraphics[width=0.65\hsize]{./images/default.pdf}
-%\end{center}
-%\caption[Beispielhafte Standardkonfiguration eines Internetanschlu\ss{}, Quelle: Autor, verwendete Symbole unterliegen der
-%GPL]{\label{stdinet}Beispielhafte Standardkonfiguration eines Internetanschlu\ss{}.}
-%\end{figure}
+\begin{figure}[htb]
+\begin{center}
+  \includegraphics[width=1\hsize]{./images/foto_hardware_komplett.png}
+\end{center}
+\caption[\"Ubersicht der eingesetzten Hardware, Quelle: Autor, verwendete Symbole unterliegen der
+GPL]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware.}
+\end{figure}
 
 \clearpage
 \section{Grundlagen}
-Dieser Abschnitt führt die für das Projekt nötigen theoretischen Grundlagen aus. Dabei wird auf Charakteristika der Beleuchtungsmessung sowie verwendete Protokolle eingegangen.
 
-\subsection{Beleuchtungsmessung}
+Dieser Abschnitt führt einen kurzen \"Uberblick \"uber die für das Projekt nötigen theoretischen Grundlagen aus. Dabei wird auf Charakteristika der
+Beleuchtungsmessung sowie verwendete Protokolle eingegangen.
 
 \subsection{I2C Protokoll}
-Marcel
 
-Der I2C-Bus ist ein von der Firma Philips entwickeltes Protokoll, welches zur Kommunikation zwischen Bausteinen und Baugruppen innerhalb von Ger\"aten entwickelt wurde. Wie der Name bereits andeutet handelt es sich um ein Bussystem, bei dem pro Bus ein Master und bis zu 
+Der I2C-Bus ist ein von der Firma Philips entwickeltes Protokoll, welches zur Kommunikation zwischen Bausteinen und Baugruppen innerhalb von Ger\"aten
+entwickelt wurde und auch unter dem Namen TWI firmiert. Wie der Name bereits andeutet handelt es sich um ein Bussystem, bei welchem die Daten seriell und
+synchron \"ubertragen werden. Im Standard-Mode wird eine \"Ubertragungsrate von 100 KBit/S erreicht, es sind bei Vetrwendung anderer \"Ubertragungsmodi jedoch
+auch \"Ubertragungsraten von bis zu 3,4 MBit/S m\"oglich. An einem I2C-Bus finden sich immer mindestens ein Master und bis zu 127 Slaves.
+
+F\"ur weiterf\"uhrende Informationen sei an dieser Stelle auf die Spezifikationen des I2C-Busses verwiesen, welche unter \cite{speci2c} abrufbar
+sind.
 
 \subsection{OneWire Protokoll}
-Marcel
+Als OneWire wird ein Bus-Protokoll bezeichnet welches nur eine Verbindungsleitung zwischen den Kommunikationspartnern erfordert, wenn diese ein gemeinsames
+Masse-Potential haben. \"Uber diese Verbindungsleitung erfolgt sowohl die Spannungsversorgung als auch der Datenaustausch. OneWire arbeitet dabei asynchron,
+dass hei\ss{}t es wird kein Taktsignal f\"ur die Kommunikation ben\"otigt. Die Daten\"ubertragung erfolgt bei einem OneWire-Bus im bidirektionalem
+Halbduplexverfahren, dass hei\ss{}t es wird f\"ur das Senden und das Empfangen der gleiche Datenkanal benutzt, wobei aber immer nur gesendet oder empfangen
+werden kann. Weiterf\"uhrende Informationen zum OneWire-Busprotokoll k\"onnen unter \cite{spec1wire} abgerufen werden.
 
-\clearpage
+\subsection{Beleuchtungsmessung}
+Sebastian
+
 \section{Eingesetzte Hardware}
 Sebastian
 \subsection{CARALUX LED Control Board v1.1}
@@ -222,6 +235,8 @@ Sebastian
 Sebastian
 \subsection{Lichtsensor GeoSys GSLx}
 Sebastian
+TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
+
 \subsection{Temperatursensor DS18S20}
 Marcel
 
@@ -283,9 +298,13 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 \begin{thebibliography}{999}
 
 %%\cite{citeverweis}
-\bibitem{citeverweis}
-\url{http://www.citeverweis.foo.bar}
-\\Abrufbar am 25.02.2013.
+\bibitem{speci2c}
+\url{http://www.nxp.com/documents/user_manual/UM10204.pdf}
+\\Abrufbar am 10.03.2013
+
+\bibitem{spec1wire}
+\url{http://www.1wire.org}
+\\Abrufbar am 10.03.2013
 
 \end{thebibliography}
 
