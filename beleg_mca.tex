@@ -258,7 +258,15 @@ versehen, was eine leichte Fixierung auf dem LED-Modul erm\"oglicht.
 \subsection{Mikrocontroller LPC1768}
 Marcel
 \subsection{PWM-Controller PCA9685}
-Sebastian
+
+Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.  
+
+\subsubsection{Konfiguration}
+Konfiguriert wird der Controller mittels acht Bit großer Register. 
+
+\subsubsection{Ansteuerung}
+Wie eingangs beschrieben erfolgt die Ansteuerung über das I2C-Protokoll.
+
 \subsection{Lichtsensor TSL2561}
 Sebastian
 \subsection{Lichtsensor GeoSys GSLx}
@@ -337,6 +345,10 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 \bibitem{specled}
 \url{http://www.osram-os.net/osram_os/CN/Downloads/Solid_State_Lighting/documents/LUW_W5AM_Pb-free_C_final.pdf}
 \\Abrufbar am 10.03.2013
+
+\bibitem{specpwm}
+\url{http://www.nxp.com/documents/data_sheet/PCA9685.pdf}
+\\Abrufbar am 11.03.2013
 
 \end{thebibliography}
 
