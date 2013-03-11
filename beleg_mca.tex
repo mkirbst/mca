@@ -256,7 +256,10 @@ Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterh
 versehen, was eine leichte Fixierung auf dem LED-Modul erm\"oglicht.
 
 \subsection{Mikrocontroller LPC1768}
-Marcel
+Den Kern des Projekts bildet die Mikrocontrollerbaugruppe LPC1768 der Firma NXP. Diese Baugruppe basiert auf einem ARM Cortex-M3 
+
+\cite{speclpc1768}
+
 \subsection{PWM-Controller PCA9685}
 
 Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.  
@@ -350,7 +353,9 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 \url{http://www.nxp.com/documents/data_sheet/PCA9685.pdf}
 \\Abrufbar am 11.03.2013
 
-\end{thebibliography}
+\bibitem{speclpc1768}
+\url{http://www.nxp.com/documents/data_sheet/LPC1769_68_67_66_65_64_63.pdf}
+\\Abrufbar am 11.03.2013\end{thebibliography}
 
 \clearpage
 \section{Verzichtserkl\"arung}
