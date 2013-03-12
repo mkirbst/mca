@@ -98,7 +98,7 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
 %Beginn der Titelseite
 
 \begin{titlepage}
-\thispagestyle{htwkheader}		
+%%\thispagestyle{htwkheader}		
 %\addtolength{\voffset}{-2cm}		
 %\addtolength{\topmargin}{-2cm}
 %\addtolength{\bottommargin}{2cm}
@@ -156,17 +156,11 @@ sebastian.krause@stud.htwk-leipzig.de\\
 \end{small}
 
 \end{titlepage}
-\addtolength{\voffset}{-2cm}
+\addtolength{\voffset}{0cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%Ende der Titelseite%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{0pt}%
-  \renewcommand{\footrulewidth}{0pt}%
-}
-
 
 %Inhaltsverzeichnis (aktualisiert sich erst nach dem zweiten Setzen)
 \tableofcontents
@@ -178,7 +172,7 @@ sebastian.krause@stud.htwk-leipzig.de\\
 \onehalfspacing
 
 %%\pagestyle{plain}
-\pagestyle{headings}	%% lebende Kopfzeile
+%\pagestyle{headings}	%% lebende Kopfzeile
 
 %%Abbildungsverzeichnis hier erstellen
 \clearpage
@@ -186,7 +180,7 @@ sebastian.krause@stud.htwk-leipzig.de\\
 
 \clearpage
 \section{Einleitung}
-\pagestyle{empty}
+%%\pagestyle{empty}
 Dieser Beleg befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
 Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt
 werden.
