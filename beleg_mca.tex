@@ -223,10 +223,18 @@ Sebastian
 \section{Eingesetzte Hardware}
 Sebastian
 \subsection{CARALUX LED Control Board v1.1}
-Sebastian
+- grundlegende Plattform
+- von elmicro designed
+- Zweck: ansteuerung eines LED-Straßenlampenmoduls mit 16 LED-Modulen
+- Enthält Sockel für Mikrocontroller, pinkompatibel mit LPC1768
+- 16 Kanal PWM-Controller
+- Temperatursensor
+- betrieben mit 24 volt
+
+
 \subsection{LED-Module und Optiken}
 Die eingesetzten LED-Module wurden von der Firma Caralux gefertigt und tragen die Bezeichnung LED-LL-1,0/6L-DIM. Die Versorgungsspannung der LED-Module
-betr\"agt 24 VOlt bei einer maximalen Stromaufnahme von 0,35 Ampere. Weiterhin besitzen die LED-Module einen invertierten Signaleingang um die Helligkeit per
+betr\"agt 24 Volt bei einer maximalen Stromaufnahme von 0,35 Ampere. Weiterhin besitzen die LED-Module einen invertierten Signaleingang um die Helligkeit per
 PWM-Signal zu dimmen, wobei die Signaleingangsspannung zwischen 0 und 5 Volt variieren darf und 0 Volt am Signaleingang zur maximalen Helligkeit des Moduls
 f\"uhren. 
 
@@ -261,7 +269,7 @@ Den Kern des Projekts bildet die Mikrocontrollerbaugruppe LPC1768 der Firma NXP.
 
 \subsection{PWM-Controller PCA9685}
 
-Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.  
+Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.
 
 \subsubsection{Konfiguration}
 Konfiguriert wird der Controller mittels acht Bit großer Register. 
