@@ -98,7 +98,7 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
 %Beginn der Titelseite
 
 \begin{titlepage}
-\thispagestyle{htwkheader}		
+%%\thispagestyle{htwkheader}		
 %\addtolength{\voffset}{-2cm}		
 %\addtolength{\topmargin}{-2cm}
 %\addtolength{\bottommargin}{2cm}
@@ -156,17 +156,11 @@ sebastian.krause@stud.htwk-leipzig.de\\
 \end{small}
 
 \end{titlepage}
-\addtolength{\voffset}{-2cm}
+\addtolength{\voffset}{0cm}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %%%Ende der Titelseite%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%
-\fancypagestyle{plain}{%
-  \fancyhf{}%
-  \renewcommand{\headrulewidth}{0pt}%
-  \renewcommand{\footrulewidth}{0pt}%
-}
-
 
 %Inhaltsverzeichnis (aktualisiert sich erst nach dem zweiten Setzen)
 \tableofcontents
@@ -178,7 +172,7 @@ sebastian.krause@stud.htwk-leipzig.de\\
 \onehalfspacing
 
 %%\pagestyle{plain}
-\pagestyle{headings}	%% lebende Kopfzeile
+%\pagestyle{headings}	%% lebende Kopfzeile
 
 %%Abbildungsverzeichnis hier erstellen
 \clearpage
@@ -186,7 +180,7 @@ sebastian.krause@stud.htwk-leipzig.de\\
 
 \clearpage
 \section{Einleitung}
-\pagestyle{empty}
+%%\pagestyle{empty}
 Dieser Beleg befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
 Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt
 werden.
@@ -269,9 +263,16 @@ Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterh
 versehen, was eine leichte Fixierung auf dem LED-Modul erm\"oglicht.
 
 \subsection{Mikrocontroller LPC1768}
-Den Kern des Projekts bildet die Mikrocontrollerbaugruppe LPC1768 der Firma NXP. Diese Baugruppe basiert auf einem ARM Cortex-M3 
-
-\cite{speclpc1768}
+Den Kern des Projekts bildet die Mikrocontrollerbaugruppe "`mbed LPC1768"' der
+Firma NXP. Diese Baugruppe basiert auf einem ARM Cortex-M3, welcher umfangreiche
+Austattungsmerkmale bietet und auf geringen Energieverbrauch hin optimiert ist.
+Der LPC1768 kann mit einer Taktrate von bis zu 100 MHz betrieben werden und
+bietet je nach Konfiguration bis zu 512 KByte Flash und bis zu 64 KByte
+Datenspeicher. Weiterhin stehen umfangreiche Schnittstellen zur Verfügung um
+Peripherie anbinden zu können, beispielsweise eine Ethernet-Schnittstelle, ein
+USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere. Detailierte
+Spezifikationen können dem Datenblatt entnommen werden, welches unter
+\cite{speclpc1768} abgerufen werden kann.
 
 \subsection{PWM-Controller PCA9685}
 
@@ -290,10 +291,14 @@ Sebastian
 TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
 
 \subsection{Temperatursensor DS18S20}
-Marcel
-
-\clearpage
-\section{Versuchsanordnung}
+Bei dem Bauteil DS18S20 handelt es sich um einen verbreiteten Temperatursensor,
+welcher über das OneWire-Protokoll angesprochen werden kann. Zu den Vorzügen
+dieses Senesors zählen der Messbereich von -55 bis +125 Grad Celsius, die
+geringe Messdauer von nur 200 Millisekunden pro Messung, dass zum Betrieb keine
+zusätzlichen, externen Bauteile nötig sind und die Kaskadierbarkeit mehrerer
+Sensoren über den OneWire-Bus. Ein solcher Temperatursensor ist auf dem
+Caralux-Steuermodul enthalten. Das Datenblatt zu diesem Temperatursensor kann
+unter \cite{specds1820} abgerufen werden.
 
 \clearpage
 \section{Implementierung}
@@ -302,6 +307,15 @@ Sebastian
 - Pwm Ansteuerung
 - Lichtmessung TSL
 - Lichtmessung GSLx
+
+
+\clearpage
+\section{Versuchsanordnung}
+FÜr die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
+einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt. Dieses Rohr
+kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden.
+
+
 
 
 \clearpage
@@ -368,7 +382,13 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 
 \bibitem{speclpc1768}
 \url{http://www.nxp.com/documents/data_sheet/LPC1769_68_67_66_65_64_63.pdf}
-\\Abrufbar am 11.03.2013\end{thebibliography}
+\\Abrufbar am 11.03.2013
+
+\bibitem{specds1820}
+\url{http://www.systronix.com/Resource/ds1820.pdf}
+\\Abrufbar am 11.03.2013
+
+\end{thebibliography}
 
 \clearpage
 \section{Verzichtserkl\"arung}
