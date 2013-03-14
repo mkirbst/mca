@@ -307,12 +307,6 @@ Sebastian
 Sebastian
 TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
 
-\subsection{Luxmeter Mini-Lux}
-Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
-im Versuchsaufbau präzise Messwerte liefern und als Bezugspunkt für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in den
-Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an. Die
-Anleitung des Mini-Lux lässt sich unter \cite{specminilux} abrufen. 
-
 \subsection{Temperatursensor DS18S20}
 Bei dem Bauteil DS18S20 handelt es sich um einen verbreiteten Temperatursensor,
 welcher über das OneWire-Protokoll angesprochen werden kann. Zu den Vorzügen
@@ -325,10 +319,12 @@ unter \cite{specds1820} abgerufen werden.
 
 \clearpage
 \section{Implementierung}
-Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen.
+Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen. 
 \subsection{Steuerung des PWM-Controllers}
 
 \subsubsection{Initialisierung}
+Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus auf 400 kHz gesetzt, was dem Fast Mode entspricht Im Anschluss werden die Mode-Register gesetzt. MODE1 erhält den Wert 20h. Dies entspricht dem Betrieb mit internen Oszillator
+
 \subsubsection{PWM-Ausgabe}
 \subsubsection{Auslesen der PWM-Werte}
 \subsection{Lichtmessung mittels GSLx}
@@ -336,7 +332,7 @@ Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen
 
 \clearpage
 \section{Versuchsanordnung}
-FÜr die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
+Für die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
 einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt. Dieses Rohr
 kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden. Eine Seite
 des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne
@@ -362,8 +358,8 @@ Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
 %\end{figure}
 
 
-Die drei eingesetzten Messsensoren bestehen aus einem Helligkeitssensoren GeoSys GSLx, einem Taos TSL2561 sowie als Referenzmessgerät ein kalibriertes Luxmeter
-Minilux der Firma MX-Electronic \cite{specminilux}.  
+Bei den eingesetzten Mess-Sensoren handelt es 
+
 
 
 \clearpage
@@ -433,10 +429,6 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 
 \bibitem{specds1820}
 \url{http://www.systronix.com/Resource/ds1820.pdf}
-\\Abrufbar am 11.03.2013
-
-\bibitem{specminilux}
-\url{http://www.mx-electronic.com/pdf/Bedienungsanleitungdeu.PDF}
 \\Abrufbar am 11.03.2013
 
 \end{thebibliography}
