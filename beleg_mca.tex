@@ -296,7 +296,7 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 \label{tab:registers}
 \end{longtable}
 
-
+Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Anschaltwert 0 und der Ausschaltwert 2047. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle abgebildet wird.
 
 \subsubsection{Ansteuerung}
 Wie eingangs beschrieben erfolgt die Ansteuerung über das I2C-Protokoll. 
