@@ -275,15 +275,31 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 \cite{speclpc1768} abgerufen werden kann.
 
 \subsection{PWM-Controller PCA9685}
-
-Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.
+Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels 3 verschiedener Sub-Call-Adressen auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und abzuschalten.
 
 \subsubsection{Konfiguration}
-Konfiguriert wird der Controller mittels acht Bit großer Register.
+Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf. 
+
+\begin{longtable}{p{45mm}>{\columncolor[gray]{0.97}}p{25mm}p{65mm}}
+\rowcolor[gray]{.9}
+\textbf{Register} & \textbf{Adresse} & \textbf{Verwendung} \\ 
+MODE1, MODE2 & 00h, 01h & Enhält allgemeine Parameter für den Betriebsmodus \\ 
+\rowcolor[gray]{.95}
+SUBADR1 - SUBADR3 & 02h - 04h & Definition der Sub-Call-Adressen \\ 
+ALLCALLADR & 05h & Definition der All-Call-Adresse \\ 
+\rowcolor[gray]{.95}
+LED-Register & 06h - 45h & Separate Konfiguration der PWM-Kanäle \\ 
+ALLLED-Register & FAh - FDh & Gemeinsame Konfiguration der PWM-Kanäle \\ 
+\rowcolor[gray]{.95}
+PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\ 
+\caption{Konfigurationsregister des PCA9685}
+\label{tab:registers}
+\end{longtable}
+
 
 
 \subsubsection{Ansteuerung}
-Wie eingangs beschrieben erfolgt die Ansteuerung über das I2C-Protokoll.
+Wie eingangs beschrieben erfolgt die Ansteuerung über das I2C-Protokoll. 
 
 \subsection{Lichtsensor TSL2561}
 Sebastian
@@ -329,7 +345,6 @@ kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden.
 
 
 %% Tabelle
-
 %\vspace*{1cm}
 %\begin{longtable}{p{34mm}>{\columncolor[gray]{0.97}}p{33mm}p{33mm}>{\columncolor[gray]{0.97}}p{33mm}}
 %\rowcolor[gray]{.9}Funktion & \textbf{IPCop} & \textbf{IPFire} & \textbf{pfSense}\\
