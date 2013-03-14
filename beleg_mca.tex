@@ -278,15 +278,7 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 \cite{speclpc1768} abgerufen werden kann.
 
 \subsection{PWM-Controller PCA9685}
-<<<<<<< HEAD
-
-Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das 
-Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus
-befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe
-komplett an- und abgeschaltet werden.
-=======
 Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels 3 verschiedener Sub-Call-Adressen auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und abzuschalten.
->>>>>>> fdd553a7d42d002654cb4f2b350080698bddadfd
 
 \subsubsection{Konfiguration}
 Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf. 
