@@ -37,17 +37,19 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
 \usepackage[table]{xcolor} 			%farbige Tabellen
 \usepackage{graphicx}				% \includegraphics bnoetigt dies
 
+\usepackage{subfigure} 				%% Bilder nebeneinander einfuegen
+
 \usepackage{fancyhdr, graphicx}		%% Logo auf Titelseite
 \renewcommand{\headrulewidth}{0pt}
 \fancyhead[L]{}
 \fancyhead[R]{
   \includegraphics[width=52mm]{./images/htwk.png}
 }
-%%\usepackage{draftwatermark}			% wasserzeichen
+\usepackage{draftwatermark}			% wasserzeichen
 	%Quelle: http://choorucode.com/2010/05/05/latex-adding-draft-watermark/?like=1&source=post_flair&_wpnonce=1c9f85538d
-%%\SetWatermarkText{VORABVERSION}		% wasserzeichen-text
-%%\SetWatermarkLightness{0.9}			% wasserzeichen-kontrast
-%%\SetWatermarkScale{2.5}				% wasserzeichen-zeichengroe\ss{}e
+\SetWatermarkText{VORABVERSION}		% wasserzeichen-text
+\SetWatermarkLightness{0.9}			% wasserzeichen-kontrast
+\SetWatermarkScale{2.5}				% wasserzeichen-zeichengroe\ss{}e
 
 
 
@@ -276,7 +278,10 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 
 \subsection{PWM-Controller PCA9685}
 
-Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe komplett an- und abgeschaltet werden.
+Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das 
+Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus
+befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Über einen separaten OE-Eingang kann die PWM-Ausgabe
+komplett an- und abgeschaltet werden.
 
 \subsubsection{Konfiguration}
 Konfiguriert wird der Controller mittels acht Bit großer Register. 
@@ -313,8 +318,31 @@ Sebastian
 \section{Versuchsanordnung}
 FÜr die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
 einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt. Dieses Rohr
-kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden.
+kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden. Eine Seite
+des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne
+Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
+3 Öffnungen versehen um die 3 Lichtsensoren einsetzen zu können.
 
+%% Bilder: Rohr, beide Enden
+
+\begin{figure}[h] 
+  \subfigure[Deckel zur Aufnahme des LED-Moduls]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_beleuchtungsdeckel.png}} 
+  \subfigure[Deckel mit Messsensoren bestückt.]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_sensordeckel.png}} 
+  \subfigure[Messrohr]{\includegraphics[width=1\hsize]{./images/foto_hardware_messrohr.png}}
+  \caption[Messaufbau]{\label{fotohwmessaufbau}Messaufbau, Quelle: Autor}
+\end{figure} 
+
+%\begin{figure}[h]
+%\begin{center}
+%  \includegraphics[width=1\hsize]{./images/foto_hardware_messrohr.png}
+%\end{center}
+%\caption[Messaufbau: Papprohr mit LED-Modul und Sensoren bestückt, Quelle:
+%Autor]{\label{fotohwmessrohr}Messaufbau: Papprohr mit LED-Modul und Sensoren bestückt, Quelle:
+%Autor}
+%\end{figure}
+
+
+Bei den eingesetzten Mess-Sensoren handelt es 
 
 
 
