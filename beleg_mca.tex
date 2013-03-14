@@ -301,9 +301,6 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 
 Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Anschaltwert 0 und der Ausschaltwert 2047. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle abgebildet wird.
 
-\subsubsection{Ansteuerung}
-Wie eingangs beschrieben erfolgt die Ansteuerung über das I2C-Protokoll. 
-
 \subsection{Lichtsensor TSL2561}
 Sebastian
 \subsection{Lichtsensor GeoSys GSLx}
@@ -322,12 +319,14 @@ unter \cite{specds1820} abgerufen werden.
 
 \clearpage
 \section{Implementierung}
-Sebastian
+Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen.
+\subsection{Steuerung des PWM-Controllers}
 
-- Pwm Ansteuerung
-- Lichtmessung TSL
-- Lichtmessung GSLx
-
+\subsubsection{Initialisierung}
+\subsubsection{PWM-Ausgabe}
+\subsubsection{Auslesen der PWM-Werte}
+\subsection{Lichtmessung mittels GSLx}
+\subsection{Lichtmessung mittels TSL2561}
 
 \clearpage
 \section{Versuchsanordnung}
