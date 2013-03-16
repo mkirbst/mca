@@ -144,12 +144,12 @@ Beleg im Mikrocontrolleranwendungen
 
 \begin{small}
 \vfill
-Marcel Kirbst B.Sc.\\
+Marcel Kirbst, B.Sc.\\
 Sieglitz 39 \\
 06618 Molau \\
 marcel.kirbst@stud.htwk-leipzig.de\\
 \\
-Sebastian Krause B.Sc.\\
+Sebastian Krause, B.Sc.\\
 Dante-Stra\ss{}e 16 \\
 04159 Leipzig \\
 sebastian.krause@stud.htwk-leipzig.de\\
@@ -185,16 +185,14 @@ sebastian.krause@stud.htwk-leipzig.de\\
 %%\pagestyle{empty}
 Dieser Beleg befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
 Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt
-werden.
-Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der real messbaren Beleuchtungsst\"arke korreliert. 
+werden. Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der real messbaren Beleuchtungsst\"arke korreliert. 
 %% BILD:
 \begin{figure}[htb]
   \begin{center}
 %%    \includegraphics[width=1\hsize]{./images/foto_hardware_komplett.png}
     \includegraphics[width=1\hsize]{./images/foto_hardware_komplett_dunkel.png}
   \end{center}
-\caption[\"Ubersicht der eingesetzten Hardware, Quelle: Autor, verwendete Symbole unterliegen der
-GPL]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware.}
+\caption[\"Ubersicht der eingesetzten Hardware, Quelle: Autoren]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware.}
 \end{figure}
 
 \clearpage
@@ -224,16 +222,27 @@ werden kann. Weiterf\"uhrende Informationen zum OneWire-Busprotokoll k\"onnen un
 Sebastian
 
 \section{Eingesetzte Hardware}
-Sebastian
+In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenen Falls
+auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen.
+
 \subsection{CARALUX LED Control Board v1.1}
-- grundlegende Plattform
-- von elmicro designed
-- Zweck: ansteuerung eines LED-Straßenlampenmoduls mit 16 LED-Modulen
-- Enthält Sockel für Mikrocontroller, pinkompatibel mit LPC1768
-- 16 Kanal PWM-Controller
-- Temperatursensor
-- betrieben mit 24 volt
-- Kommunikationsschnittstellen: USB, Ethernet
+%Sebastian
+%- grundlegende Plattform
+%- von elmicro designed
+%- Zweck: ansteuerung eines LED-Straßenlampenmoduls mit 16 LED-Modulen
+%- Enthält Sockel für Mikrocontroller, pinkompatibel mit LPC1768
+%- 16 Kanal PWM-Controller
+%- Temperatursensor
+%- betrieben mit 24 volt
+%- Kommunikationsschnittstellen: USB, Ethernet
+
+Das LED-Board als zentrale Komponente des Messaufbaus sowie auch der Lampe ist eine Entwicklung der Firma Elmicro für die Firma Caralux. Dieses LED-Board, das
+für den Messaufbau in der Version 1.1 zur Verfügung stand, besitzt Schnittstellen für USB und Netzwerk, sowie über Schraubklemmen Anschlüsse für die
+Energieversorgung mit 24 Volt, RS485 sowie für den Anschluss von 16 LED-Modulen. Die LED-Module werden jeweils über drei Leitungen vom LED-Board mit Masse, 24
+Volt Versorgungsspannung sowie dem PWM-Signal, welches die Werte 0 Volt oder 5 Volt annehmen kann, versorgt.
+
+Das LED-Board ist weiterhin mit einem PWM-Controller PCA9685 sowie einem Temperatursensor DS1820 bestückt und besitzt einen Sockel für den Mikrocontroller
+LPC1768.  
 
 
 \subsection{LED-Module und Optiken}
@@ -246,7 +255,7 @@ f\"uhren.
 \begin{center}
   \includegraphics[width=1\hsize]{./images/foto_hardware_ledmodul.png}
 \end{center}
-\caption[LED-Modul der Firma Caralux mit provisorisch fixierter Optik im Messaufbau, Quelle: Autor]{\label{fotohwledmodul}LED-Modul mit provisorisch fixierter
+\caption[LED-Modul der Firma Caralux mit provisorisch fixierter Optik im Messaufbau, Quelle: Autoren]{\label{fotohwledmodul}LED-Modul mit provisorisch fixierter
 Optik f\"ur Einsatz im Messaufbau.}
 \end{figure}
 Die LED-Module sind jeweils mit sechs wei\ss{}en LEDs LUW W5AM-LX-6Q der Firma Osram best\"uck, die eine Farbtemperatur von 6500K aufweisen. Weitere Informationen zu diesem LED-Typ k\"onnen aus dem zugeh\"origen Datenblatt entnommen werden, welches unter \cite{specled} abgerufen werden kann. Durch die hohe
@@ -259,8 +268,8 @@ k\"onnen. Im Messaufbau wurden Messreihen f\"ur die Optiken Titanium-M und Titan
   \includegraphics[width=1\hsize]{./images/foto_hardware_optiken.png}
 \end{center}
 \caption[LED-Optiken, links: Titanium-M, rechts Titanium-SS, Quelle:
-Autor]{\label{fotohwoptiken}LED-Optiken, links: Titanium-M, rechts Titanium-SS, Quelle:
-Autor}
+Autoren]{\label{fotohwoptiken}LED-Optiken, links: Titanium-M, rechts Titanium-SS, Quelle:
+Autoren}
 \end{figure}
 Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterhin sind die LED-Optiken an der Unterseite mit doppelseitigem Kelebematerial
 versehen, was eine leichte Fixierung auf dem LED-Modul erm\"oglicht.
@@ -278,7 +287,12 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 \cite{speclpc1768} abgerufen werden kann.
 
 \subsection{PWM-Controller PCA9685}
-Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels 3 verschiedener Sub-Call-Adressen auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und abzuschalten.
+%%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
+Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das 
+Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus
+befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels 3 verschiedener Sub-Call-Adressen
+auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und
+abzuschalten.
 
 \subsubsection{Konfiguration}
 Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf. 
@@ -299,7 +313,10 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 \label{tab:registers}
 \end{longtable}
 
-Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Anschaltwert 0 und der Ausschaltwert 2047. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle abgebildet wird.
+Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und 
+Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Einschaltwert
+\texttt{0} und der Ausschaltwert \texttt{2047}. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle
+abgebildet wird.
 
 \subsection{Lichtsensor TSL2561}
 Sebastian
@@ -323,7 +340,10 @@ Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen
 \subsection{Steuerung des PWM-Controllers}
 
 \subsubsection{Initialisierung}
-Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus auf 400 kHz gesetzt, was dem Fast Mode entspricht Im Anschluss werden die Mode-Register gesetzt. MODE1 erhält den Wert 20h. Dies entspricht dem Betrieb mit internen Oszillator
+%%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
+Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus auf 400 kHz gesetzt, was dem Fast Mode entspricht. Im
+Anschluss werden die Mode-Register gesetzt. MODE1 erhält den Wert \texttt{20h}.
+Dies entspricht dem Betrieb mit internen Oszillator.
 
 \subsubsection{PWM-Ausgabe}
 \subsubsection{Auslesen der PWM-Werte}
@@ -333,7 +353,7 @@ Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Ta
 \clearpage
 \section{Versuchsanordnung}
 Für die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
-einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt. Dieses Rohr
+einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt, wie es beispielsweise von der Post zum Versand genutzt wird. Dieses Rohr
 kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden. Eine Seite
 des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne
 Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
@@ -343,28 +363,19 @@ Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
 
 \begin{figure}[h] 
   \subfigure[Deckel zur Aufnahme des LED-Moduls]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_beleuchtungsdeckel.png}} 
-  \subfigure[Deckel mit Messsensoren bestückt.]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_sensordeckel.png}} 
+  \subfigure[Sensoren: MiniLux, GSLx,
+TSL2561]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_sensordeckel.png}} 
   \subfigure[Messrohr]{\includegraphics[width=1\hsize]{./images/foto_hardware_messrohr.png}}
-  \caption[Messaufbau]{\label{fotohwmessaufbau}Messaufbau, Quelle: Autor}
+  \caption[Messaufbau]{\label{fotohwmessaufbau}Messaufbau, Quelle: Autoren}
 \end{figure} 
 
-%\begin{figure}[h]
-%\begin{center}
-%  \includegraphics[width=1\hsize]{./images/foto_hardware_messrohr.png}
-%\end{center}
-%\caption[Messaufbau: Papprohr mit LED-Modul und Sensoren bestückt, Quelle:
-%Autor]{\label{fotohwmessrohr}Messaufbau: Papprohr mit LED-Modul und Sensoren bestückt, Quelle:
-%Autor}
-%\end{figure}
-
-
-Bei den eingesetzten Mess-Sensoren handelt es 
-
-
+Um bei der Bestimmung der Messreihen tragfähige Ergebnisse zu generieren, wurde jede einzelne Messung mit der Messgeräten parallel durchgeführt. Die beiden
+Sensoren GeoSys GSLx und Taos TSL2561 wurden über einen Adapter mit dem Mikrocontroller LPC1768 verbunden und während der Messreihen von diesem ausgelesen.
+Zusätzlich wurde noch ein kalibriertes Luxmeter MiniLux händisch ausgewertet um die Messwerte vergleichen und beurteilen zu können. 
 
 \clearpage
 \section{Auswertung}
-\subsection{Messergebisse}
+\subsection{Messergebnisse}
 
 \clearpage
 \section{Schlussbetrachtung}
