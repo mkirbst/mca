@@ -292,7 +292,6 @@ befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen so
 auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und
 abzuschalten.
 
-\subsubsection{Konfiguration}
 Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf. 
 
 \begin{longtable}{p{45mm}>{\columncolor[gray]{0.97}}p{25mm}p{65mm}}
@@ -314,13 +313,19 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und 
 Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Einschaltwert
 \texttt{0} und der Ausschaltwert \texttt{2047}. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle
-abgebildet wird.
+abgebildet wird. 
 
-\subsection{Lichtsensor TSL2561}
-Sebastian
 \subsection{Lichtsensor GeoSys GSLx}
 Sebastian
+
+Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys 
+
+12V-15V
+0 - 50 Lux
+
 TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
+
+\subsection{Lichtsensor TSL2561}
 
 \subsection{Luxmeter Mini-Lux}
 Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
