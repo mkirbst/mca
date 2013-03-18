@@ -384,14 +384,302 @@ Variation dieser Parameter andere Messergebnisse resultieren.
 Die Messungen erfolgten in vier Messereihen, wobei die LED-Module mit 350mA und 500mA jeweils mit den Optiken Titanium-O-M und Titanium-O-SS kombiniert wurden.
 Die Auflösung des PWM-Controllers beträgt 12 Bit, womit die PWM-Stufen 0 bis 4095 abgebildet werden können. Zusätzlich existiert noch eine Einstellung in
 welcher der jeweilige PWM-Ausgang dauerhaft auf logisch 1 gesetzt wird. Für die Messreihen wurde im Bezug auf die PWM-Stufen eine Granularität von 100 gewählt.
-Für jede Messreihe wurden Messwerte des Sensors GeoSys GSLx, des Sensors Taos TSL2561, des Luxmeters Mini-Lux sowie die Stromaufnahme des Messaufbaus.
+Für jede Messreihe wurden Messwerte  des Sensors Taos TSL2561, des Luxmeters Mini-Lux sowie die Stromaufnahme des Messaufbaus aufgenommen.
 Abschließend wurde noch eine Messreihe zur Stromaufnahme des komplett bestückten Straßenlampenprototypen aufgebnommen.
 
-\subsection{LED-Modul 350mA mit Optik Titanium-O-M}
-\subsection{LED-Modul 350mA mit Optik Titanium-O-SS}
-\subsection{LED-Modul 500mA mit Optik Titanium-O-M}
-\subsection{LED-Modul 500mA mit Optik Titanium-O-SS}
-\subsection{Stromaufnahme des Prototypen}
+%%\subsection{LED-Modul 350mA mit Optik Titanium-O-M}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=1\hsize]{./images/350-m-print.png}
+  \end{center}
+\caption[Diagramm zur Messreihe LED-Modul 350mA mit Optik Titanium-O-M]{\label{diagram350matitm}Diagramm zur Messreihe LED-Modul 350mA mit Optik
+Titanium-O-M.}
+\end{figure}
+
+\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+  \rowcolor[gray]{.9}
+    \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
+0 & 0 & 0 \\
+\rowcolor[gray]{.95}
+100	&	18	&	20	\\
+200	&	39	&	43	\\
+\rowcolor[gray]{.95}
+300	&	61	&	66	\\
+400	&	84	&	89	\\
+\rowcolor[gray]{.95}
+500	&	105	&	112	\\
+600	&	128	&	136	\\
+\rowcolor[gray]{.95}
+700	&	149	&	159	\\
+800	&	169	&	182	\\
+\rowcolor[gray]{.95}
+900	&	193	&	205	\\
+1000	&	212	&	228	\\
+\rowcolor[gray]{.95}
+1100	&	234	&	251	\\
+1200	&	255	&	274	\\
+\rowcolor[gray]{.95}
+1300	&	277	&	297	\\
+1400	&	300	&	320	\\
+\rowcolor[gray]{.95}
+1500	&	319	&	343	\\
+1600	&	341	&	366	\\
+\rowcolor[gray]{.95}
+1700	&	362	&	389	\\
+1800	&	386	&	412	\\
+\rowcolor[gray]{.95}
+1900	&	405	&	435	\\
+2000	&	427	&	458	\\
+\rowcolor[gray]{.95}
+2100	&	450	&	481	\\
+2200	&	471	&	504	\\
+\rowcolor[gray]{.95}
+2300	&	493	&	527	\\
+2400	&	515	&	550	\\
+\rowcolor[gray]{.95}
+2500	&	536	&	573	\\
+2600	&	555	&	595	\\
+\rowcolor[gray]{.95}
+2700	&	577	&	618	\\
+2800	&	600	&	641	\\
+\rowcolor[gray]{.95}
+2900	&	622	&	663	\\
+3000	&	643	&	686	\\
+\rowcolor[gray]{.95}
+3100	&	665	&	709	\\
+3200	&	685	&	732	\\
+\rowcolor[gray]{.95}
+3300	&	705	&	755	\\
+3400	&	729	&	777	\\
+\rowcolor[gray]{.95}
+3500	&	750	&	800	\\
+3600	&	771	&	823	\\
+\rowcolor[gray]{.95}
+3700	&	793	&	845	\\
+3800	&	814	&	868	\\
+\rowcolor[gray]{.95}
+3900	&	835	&	891	\\
+4000	&	856	&	914	\\
+\rowcolor[gray]{.95}
+4095	&	879	&	937	\\
+4096\_voll	&	879	&	937	\\
+\caption{Messreihe LED-Modul 350mA mit Optik Titanium-O-M}
+\label{tab:350maTitM}
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\subsection{LED-Modul 350mA mit Optik Titanium-O-SS}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=1\hsize]{./images/350-ss-print.png}
+  \end{center}
+\caption[Diagramm zur Messreihe LED-Modul 350mA mit Optik Titanium-O-SS]{\label{diagram350matitss}Diagramm zur Messreihe LED-Modul 350mA mit Optik
+Titanium-O-SS.}
+\end{figure}
+
+\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+  \rowcolor[gray]{.9}
+    \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
+0 & 0 & 0 \\
+0	&	0	&	0	\\
+100	&	63	&	73	\\
+200	&	140	&	158	\\
+300	&	213	&	243	\\
+400	&	287	&	328	\\
+500	&	361	&	413	\\
+600	&	438	&	497	\\
+700	&	510	&	582	\\
+800	&	586	&	666	\\
+900	&	661	&	751	\\
+1000	&	733	&	836	\\
+1100	&	813	&	920	\\
+1200	&	882	&	1005	\\
+1300	&	958	&	1090	\\
+1400	&	1034	&	1174	\\
+1500	&	1105	&	1259	\\
+1600	&	1179	&	1343	\\
+1700	&	1257	&	1428	\\
+1800	&	1332	&	1512	\\
+1900	&	1402	&	1597	\\
+2000	&	1476	&	1681	\\
+2100	&	1558	&	1766	\\
+2200	&	1634	&	1850	\\
+2300	&	1705	&	1935	\\
+2400	&	1774	&	2020	\\
+2500	&	1850	&	2110	\\
+2600	&	1920	&	2190	\\
+2700	&	2020	&	2280	\\
+2800	&	2093	&	2360	\\
+2900	&	2134	&	2450	\\
+3000	&	2200	&	2530	\\
+3100	&	2304	&	2610	\\
+3200	&	2353	&	2700	\\
+3300	&	2440	&	2780	\\
+3400	&	2530	&	2870	\\
+3500	&	2602	&	2950	\\
+3600	&	2657	&	3040	\\
+3700	&	2733	&	3120	\\
+3800	&	2815	&	3210	\\
+3900	&	2893	&	3290	\\
+4000	&	2965	&	3370	\\
+4095	&	3042	&	3460	\\
+4096\_voll	&	3041	&	3460	\\
+\caption{Messreihe LED-Modul 350mA mit Optik Titanium-O-SS}
+\label{tab:350maTitSS}
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\subsection{LED-Modul 500mA mit Optik Titanium-O-M}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=1\hsize]{./images/500-m-print.png}
+  \end{center}
+\caption[Diagramm zur Messreihe LED-Modul 500mA mit Optik Titanium-O-M]{\label{diagram500matitm}Diagramm zur Messreihe LED-Modul 500mA mit Optik
+Titanium-O-M.}
+\end{figure}
+
+\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+  \rowcolor[gray]{.9}
+    \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
+0 & 0 & 0 \\
+\rowcolor[gray]{.95}
+100 & 24 & 27 \\
+200 & 53 & 59 \\
+\rowcolor[gray]{.95}
+300 & 82 & 90 \\
+400 & 111 & 122 \\
+\rowcolor[gray]{.95}
+500 & 140 & 154 \\
+600 & 169 & 185 \\
+\rowcolor[gray]{.95}
+700 & 198 & 217 \\
+800 & 227 & 249 \\
+\rowcolor[gray]{.95}
+900 & 257 & 280 \\
+1000 & 284 & 312 \\
+\rowcolor[gray]{.95}
+1100 & 313 & 343 \\
+1200 & 342 & 375 \\
+\rowcolor[gray]{.95}
+1300 & 372 & 406 \\
+1400 & 401 & 437 \\
+\rowcolor[gray]{.95}
+1500 & 430 & 469 \\
+1600 & 457 & 500 \\
+\rowcolor[gray]{.95}
+1700 & 486 & 532 \\
+1800 & 514 & 562 \\
+\rowcolor[gray]{.95}
+1900 & 544 & 594 \\
+2000 & 575 & 625 \\
+\rowcolor[gray]{.95}
+2100 & 601 & 656 \\
+2200 & 631 & 687 \\
+\rowcolor[gray]{.95}
+2300 & 661 & 719 \\
+2400 & 690 & 750 \\
+\rowcolor[gray]{.95}
+2500 & 716 & 781 \\
+2600 & 746 & 812 \\
+\rowcolor[gray]{.95}
+2700 & 773 & 842 \\
+2800 & 800 & 873 \\
+\rowcolor[gray]{.95}
+2900 & 832 & 905 \\
+3000 & 860 & 935 \\
+\rowcolor[gray]{.95}
+3100 & 886 & 965 \\
+3200 & 917 & 996 \\
+\rowcolor[gray]{.95}
+3300 & 943 & 1027 \\
+3400 & 974 & 1057 \\
+\rowcolor[gray]{.95}
+3500 & 1000 & 1087 \\
+3600 & 1029 & 1118 \\
+\rowcolor[gray]{.95}
+3700 & 1059 & 1148 \\
+3800 & 1087 & 1178 \\
+\rowcolor[gray]{.95}
+3900 & 1115 & 1207 \\
+4000 & 1144 & 1240 \\
+\rowcolor[gray]{.95}
+4095 & 1173 & 1272 \\
+4096\_voll & 1174 & 1274 \\
+\caption{Messreihe LED-Modul 500mA mit Optik Titanium-O-M}
+\label{tab:500maTitM}
+\end{longtable}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\subsection{LED-Modul 500mA mit Optik Titanium-O-SS}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=1\hsize]{./images/500-ss-print.png}
+  \end{center}
+\caption[Diagramm zur Messreihe LED-Modul 500mA mit Optik Titanium-O-SS]{\label{diagram500matitss}Diagramm zur Messreihe LED-Modul 500mA mit Optik
+Titanium-O-SS.}
+\end{figure}
+
+\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+  \rowcolor[gray]{.9}
+    \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
+0 & 0 & 0 \\
+0	&	0	&	0	\\
+100	&	85	&	99	\\
+200	&	187	&	216	\\
+300	&	292	&	332	\\
+400	&	390	&	449	\\
+500	&	491	&	565	\\
+600	&	600	&	681	\\
+700	&	695	&	797	\\
+800	&	796	&	913	\\
+900	&	908	&	1029	\\
+1000	&	999	&	1145	\\
+1100	&	1111	&	1261	\\
+1200	&	1202	&	1377	\\
+1300	&	1306	&	1493	\\
+1400	&	1416	&	1608	\\
+1500	&	1514	&	1723	\\
+1600	&	1608	&	1839	\\
+1700	&	1709	&	1955	\\
+1800	&	1814	&	2070	\\
+1900	&	1938	&	2180	\\
+2000	&	2050	&	2300	\\
+2100	&	2108	&	2420	\\
+2200	&	2176	&	2530	\\
+2300	&	2323	&	2640	\\
+2400	&	2459	&	2760	\\
+2500	&	2541	&	2870	\\
+2600	&	2600	&	2990	\\
+2700	&	2691	&	3100	\\
+2800	&	2817	&	3220	\\
+2900	&	2956	&	3330	\\
+3000	&	3011	&	3440	\\
+3100	&	3150	&	3550	\\
+3200	&	3218	&	3670	\\
+3300	&	3315	&	3780	\\
+3400	&	3452	&	3900	\\
+3500	&	3551	&	4010	\\
+3600	&	3650	&	4120	\\
+3700	&	3729	&	4230	\\
+3800	&	3832	&	4350	\\
+3900	&	3940	&	4450	\\
+4000	&	4039	&	4560	\\
+4095	&	4147	&	4680	\\
+4096\_voll	&	4147	&	4680	\\
+\caption{Messreihe LED-Modul 500mA mit Optik Titanium-O-SS}
+\label{tab:500maTitSS}
+\end{longtable}
+
+%%\subsection{Stromaufnahme des Prototypen}
+
+TODO: Stromaufnahme Tabelle und Diagramm 350ma 500ma Prototyp
 
 \clearpage
 \section{Schlussbetrachtung}
