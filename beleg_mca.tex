@@ -139,7 +139,7 @@ Beleuchtungssteuerung mit dem Mikrocontroller LPC1768
 \\--VORABVERSION--\\
 }}}
 \end{Large}
-Beleg im Mikrocontrolleranwendungen
+Beleg im Fach Mikrocontrolleranwendungen
 \end{center}
 
 \begin{small}
@@ -260,13 +260,13 @@ Die LED-Module sind jeweils mit sechs wei\ss{}en LEDs LUW W5AM-LX-6Q der Firma O
 Leistungsaufnahme der LED-Module sollten diese ohne zus\"atzliche K\"uhlelemente nur f\"ur sehr kurze Zeitr\"aume in Betrieb genommen werden.
 
 Die LED-Module sind so konstruiert das diese mit verschiedenen Optiken versehen werden k\"onnen um die Abstrahlcharakteristik jeder einzelnen LED variieren zu
-k\"onnen. Im Messaufbau wurden Messreihen f\"ur die Optiken Titanium-M und Titanium-SS aufgenommen.
+k\"onnen. Im Messaufbau wurden Messreihen f\"ur die Optiken Titanium-O-M und Titanium-O-SS aufgenommen.
 \begin{figure}[htb]
 \begin{center}
   \includegraphics[width=1\hsize]{./images/foto_hardware_optiken.png}
 \end{center}
-\caption[LED-Optiken, links: Titanium-M, rechts Titanium-SS, Quelle:
-Autoren]{\label{fotohwoptiken}LED-Optiken, links: Titanium-M, rechts Titanium-SS, Quelle:
+\caption[LED-Optiken, links: Titanium-O-M, rechts Titanium-O-SS, Quelle:
+Autoren]{\label{fotohwoptiken}LED-Optiken, links: Titanium-O-M, rechts Titanium-O-SS, Quelle:
 Autoren}
 \end{figure}
 Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterhin sind die LED-Optiken an der Unterseite mit doppelseitigem Kelebematerial
@@ -324,7 +324,7 @@ TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys S
 
 \subsection{Luxmeter Mini-Lux}
 Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
-im Versuchsaufbau präzise Messwerte liefern und als Bezugspunkt für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in den
+im Versuchsaufbau präzise Messwerte liefern und als Referenz für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in die
 Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an. Die
 Anleitung des Mini-Lux lässt sich unter \cite{specminilux} abrufen. 
 
@@ -363,8 +363,6 @@ des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne
 Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
 3 Öffnungen versehen um die 3 Lichtsensoren einsetzen zu können.
 
-%% Bilder: Rohr, beide Enden
-
 \begin{figure}[h] 
   \subfigure[Deckel zur Aufnahme des LED-Moduls]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_beleuchtungsdeckel.png}} 
   \subfigure[Sensoren: MiniLux, GSLx,
@@ -377,14 +375,29 @@ Um bei der Bestimmung der Messreihen tragfähige Ergebnisse zu generieren, wurde
 Sensoren GeoSys GSLx und Taos TSL2561 wurden über einen Adapter mit dem Mikrocontroller LPC1768 verbunden und während der Messreihen von diesem ausgelesen.
 Zusätzlich wurde noch ein kalibriertes Luxmeter MiniLux händisch ausgewertet um die Messwerte vergleichen und beurteilen zu können. 
 
+Besonders hervorzuheben ist noch der Zusammenhang der Messergebnisse in Abhängigkeit der Geometrie sowie der Beschaffenheit der Innenseite des im Versuchsaufbau
+verwendeten Papprohrs. Die Oberfläche dieser Innenseite ist weiß und reflektiert somit sehr viel auftreffendes Licht. Es ist davon auszugehen das bei der
+Variation dieser Parameter andere Messergebnisse resultieren.
+
 \clearpage
-\section{Auswertung}
-\subsection{Messergebnisse}
+\section{Messergebnisse und Auswertung}
+Die Messungen erfolgten in vier Messereihen, wobei die LED-Module mit 350mA und 500mA jeweils mit den Optiken Titanium-O-M und Titanium-O-SS kombiniert wurden.
+Die Auflösung des PWM-Controllers beträgt 12 Bit, womit die PWM-Stufen 0 bis 4095 abgebildet werden können. Zusätzlich existiert noch eine Einstellung in
+welcher der jeweilige PWM-Ausgang dauerhaft auf logisch 1 gesetzt wird. Für die Messreihen wurde im Bezug auf die PWM-Stufen eine Granularität von 100 gewählt.
+Für jede Messreihe wurden Messwerte des Sensors GeoSys GSLx, des Sensors Taos TSL2561, des Luxmeters Mini-Lux sowie die Stromaufnahme des Messaufbaus.
+Abschließend wurde noch eine Messreihe zur Stromaufnahme des komplett bestückten Straßenlampenprototypen aufgebnommen.
+
+\subsection{LED-Modul 350mA mit Optik Titanium-O-M}
+\subsection{LED-Modul 350mA mit Optik Titanium-O-SS}
+\subsection{LED-Modul 500mA mit Optik Titanium-O-M}
+\subsection{LED-Modul 500mA mit Optik Titanium-O-SS}
+\subsection{Stromaufnahme des Prototypen}
 
 \clearpage
 \section{Schlussbetrachtung}
-\subsection{Messergebisse}
-
+Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken
+ersichtlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau
+Gültigkeit besitzen.
 
 %% Tabelle
 %\vspace*{1cm}
@@ -442,12 +455,12 @@ Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 \url{http://www.nxp.com/documents/data_sheet/LPC1769_68_67_66_65_64_63.pdf}
 \\Abrufbar am 11.03.2013
 
-\bibitem{specds1820}
-\url{http://www.systronix.com/Resource/ds1820.pdf}
-\\Abrufbar am 11.03.2013
-
 \bibitem{specminilux}
 \url{http://www.mx-electronic.com/pdf/Bedienungsanleitungdeu.PDF}
+\\Abrufbar am 11.03.2013
+
+\bibitem{specds1820}
+\url{http://www.systronix.com/Resource/ds1820.pdf}
 \\Abrufbar am 11.03.2013
 
 \end{thebibliography}
