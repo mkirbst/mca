@@ -36,7 +36,6 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
 \usepackage{array}					%farbige Tabellen
 \usepackage[table]{xcolor} 			%farbige Tabellen
 \usepackage{graphicx}				% \includegraphics bnoetigt dies
-
 \usepackage{subfigure} 				%% Bilder nebeneinander einfuegen
 
 \usepackage{fancyhdr, graphicx}		%% Logo auf Titelseite
@@ -45,12 +44,15 @@ pdfstartpage=3, pdfstartview=FitH,]{hyperref} %Verlinkungen
 \fancyhead[R]{
   \includegraphics[width=52mm]{./images/htwk.png}
 }
+
 \usepackage{draftwatermark}			% wasserzeichen
 	%Quelle: http://choorucode.com/2010/05/05/latex-adding-draft-watermark/?like=1&source=post_flair&_wpnonce=1c9f85538d
 \SetWatermarkText{VORABVERSION}		% wasserzeichen-text
 \SetWatermarkLightness{0.9}			% wasserzeichen-kontrast
 \SetWatermarkScale{2.5}				% wasserzeichen-zeichengroe\ss{}e
 
+\usepackage{float}					% Bilder mittels H-Paramter genau positionieren
+\restylefloat{figure}				% Bilder mittels H-Paramter genau positionieren
 
 
 \definecolor{Navy}{rgb}{0,0,0.5}
@@ -392,7 +394,7 @@ welcher der jeweilige PWM-Ausgang dauerhaft auf logisch 1 gesetzt wird. Für die
 Für jede Messreihe wurden Messwerte  des Sensors Taos TSL2561, des Luxmeters Mini-Lux sowie die Stromaufnahme des Messaufbaus aufgenommen.
 Abschließend wurde noch eine Messreihe zur Stromaufnahme des komplett bestückten Straßenlampenprototypen aufgebnommen.
 
-%%\subsection{LED-Modul 350mA mit Optik Titanium-O-M}
+\subsection{LED-Modul 350mA mit Optik Titanium-O-M}
 
 \begin{figure}[H]
   \begin{center}
@@ -402,10 +404,12 @@ Abschließend wurde noch eine Messreihe zur Stromaufnahme des komplett bestückt
 Titanium-O-M.}
 \end{figure}
 
-\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+\begin{longtable}[H]
+{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
-0 & 0 & 0 \\
+
+    0 & 0 & 0 \\
 \rowcolor[gray]{.95}
 100	&	18	&	20	\\
 200	&	39	&	43	\\
@@ -475,7 +479,7 @@ Titanium-O-M.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%\subsection{LED-Modul 350mA mit Optik Titanium-O-SS}
+\subsection{LED-Modul 350mA mit Optik Titanium-O-SS}
 
 \begin{figure}[H]
   \begin{center}
@@ -485,7 +489,7 @@ Titanium-O-M.}
 Titanium-O-SS.}
 \end{figure}
 
-\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+\begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
 0 & 0 & 0 \\
@@ -538,7 +542,7 @@ Titanium-O-SS.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%\subsection{LED-Modul 500mA mit Optik Titanium-O-M}
+\subsection{LED-Modul 500mA mit Optik Titanium-O-M}
 
 \begin{figure}[H]
   \begin{center}
@@ -548,7 +552,7 @@ Titanium-O-SS.}
 Titanium-O-M.}
 \end{figure}
 
-\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+\begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
 0 & 0 & 0 \\
@@ -621,7 +625,7 @@ Titanium-O-M.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%\subsection{LED-Modul 500mA mit Optik Titanium-O-SS}
+\subsection{LED-Modul 500mA mit Optik Titanium-O-SS}
 
 \begin{figure}[H]
   \begin{center}
@@ -631,7 +635,7 @@ Titanium-O-M.}
 Titanium-O-SS.}
 \end{figure}
 
-\begin{longtable}{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+\begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
 0 & 0 & 0 \\
@@ -682,7 +686,7 @@ Titanium-O-SS.}
 \label{tab:500maTitSS}
 \end{longtable}
 
-%%\subsection{Stromaufnahme des Prototypen}
+\subsection{Stromaufnahme des Prototypen}
 
 TODO: Stromaufnahme Tabelle und Diagramm 350ma 500ma Prototyp
 
