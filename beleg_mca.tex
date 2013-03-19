@@ -638,55 +638,159 @@ Titanium-O-SS.}
 \begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
-0 & 0 & 0 \\
 0	&	0	&	0	\\
+\rowcolor[gray]{.95}
 100	&	85	&	99	\\
 200	&	187	&	216	\\
+\rowcolor[gray]{.95}
 300	&	292	&	332	\\
 400	&	390	&	449	\\
+\rowcolor[gray]{.95}
 500	&	491	&	565	\\
 600	&	600	&	681	\\
+\rowcolor[gray]{.95}
 700	&	695	&	797	\\
 800	&	796	&	913	\\
+\rowcolor[gray]{.95}
 900	&	908	&	1029	\\
 1000	&	999	&	1145	\\
+\rowcolor[gray]{.95}
 1100	&	1111	&	1261	\\
 1200	&	1202	&	1377	\\
+\rowcolor[gray]{.95}
 1300	&	1306	&	1493	\\
 1400	&	1416	&	1608	\\
+\rowcolor[gray]{.95}
 1500	&	1514	&	1723	\\
 1600	&	1608	&	1839	\\
+\rowcolor[gray]{.95}
 1700	&	1709	&	1955	\\
 1800	&	1814	&	2070	\\
+\rowcolor[gray]{.95}
 1900	&	1938	&	2180	\\
 2000	&	2050	&	2300	\\
+\rowcolor[gray]{.95}
 2100	&	2108	&	2420	\\
 2200	&	2176	&	2530	\\
+\rowcolor[gray]{.95}
 2300	&	2323	&	2640	\\
 2400	&	2459	&	2760	\\
+\rowcolor[gray]{.95}
 2500	&	2541	&	2870	\\
 2600	&	2600	&	2990	\\
+\rowcolor[gray]{.95}
 2700	&	2691	&	3100	\\
 2800	&	2817	&	3220	\\
+\rowcolor[gray]{.95}
 2900	&	2956	&	3330	\\
 3000	&	3011	&	3440	\\
+\rowcolor[gray]{.95}
 3100	&	3150	&	3550	\\
 3200	&	3218	&	3670	\\
+\rowcolor[gray]{.95}
 3300	&	3315	&	3780	\\
 3400	&	3452	&	3900	\\
+\rowcolor[gray]{.95}
 3500	&	3551	&	4010	\\
 3600	&	3650	&	4120	\\
+\rowcolor[gray]{.95}
 3700	&	3729	&	4230	\\
 3800	&	3832	&	4350	\\
+\rowcolor[gray]{.95}
 3900	&	3940	&	4450	\\
 4000	&	4039	&	4560	\\
+\rowcolor[gray]{.95}
 4095	&	4147	&	4680	\\
 4096\_voll	&	4147	&	4680	\\
 \caption{Messreihe LED-Modul 500mA mit Optik Titanium-O-SS}
 \label{tab:500maTitSS}
 \end{longtable}
 
-\subsection{Stromaufnahme des Prototypen}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Leistungsaufnahme der LED-Module während der Messreihen}
+
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[width=1\hsize]{./images/350-500-leistungsaufnahme.png}
+  \end{center}
+\caption[Diagramm zur Leistungsaufnahme der LED-Module während der Messreihen]{\label{diagramPled}Diagramm zur Leistungsaufnahme der LED-Module während der
+Messreihen.}
+\end{figure}
+
+\begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
+  \rowcolor[gray]{.9}
+    \textbf{PWM-Wert} & \textbf{P LED-Modul 350mA [Watt]} & \textbf{P LED-Modul 500mA [Watt]} \\ 
+0	&	0,0816	&	1,128	\\
+\rowcolor[gray]{.95}
+100	&	0,2136	&	1,392	\\
+200	&	0,432	&	1,68	\\
+\rowcolor[gray]{.95}
+300	&	0,5256	&	1,968	\\
+400	&	0,5328	&	2,256	\\
+\rowcolor[gray]{.95}
+500	&	0,5688	&	2,52	\\
+600	&	0,7536	&	2,808	\\
+\rowcolor[gray]{.95}
+700	&	0,8568	&	3,096	\\
+800	&	0,9624	&	3,384	\\
+\rowcolor[gray]{.95}
+900	&	1,0656	&	3,672	\\
+1000	&	1,1664	&	3,96	\\
+\rowcolor[gray]{.95}
+1100	&	1,2744	&	4,224	\\
+1200	&	1,3776	&	4,512	\\
+\rowcolor[gray]{.95}
+1300	&	1,4808	&	4,776	\\
+1400	&	1,584	&	5,064	\\
+\rowcolor[gray]{.95}
+1500	&	1,6872	&	5,352	\\
+1600	&	1,7928	&	5,64	\\
+\rowcolor[gray]{.95}
+1700	&	1,896	&	5,904	\\
+1800	&	1,9992	&	6,192	\\
+\rowcolor[gray]{.95}
+1900	&	2,1024	&	6,48	\\
+2000	&	2,208	&	6,744	\\
+\rowcolor[gray]{.95}
+2100	&	2,3136	&	7,032	\\
+2200	&	2,388	&	7,32	\\
+\rowcolor[gray]{.95}
+2300	&	2,5224	&	7,584	\\
+2400	&	2,628	&	7,872	\\
+\rowcolor[gray]{.95}
+2500	&	2,736	&	8,16	\\
+2600	&	2,8392	&	8,424	\\
+\rowcolor[gray]{.95}
+2700	&	2,9448	&	8,712	\\
+2800	&	3,0552	&	8,976	\\
+\rowcolor[gray]{.95}
+2900	&	3,1464	&	9,264	\\
+3000	&	3,2664	&	9,552	\\
+\rowcolor[gray]{.95}
+3100	&	3,3696	&	9,816	\\
+3200	&	3,4752	&	10,08	\\
+\rowcolor[gray]{.95}
+3300	&	3,5832	&	10,368	\\
+3400	&	3,6888	&	10,656	\\
+\rowcolor[gray]{.95}
+3500	&	3,7992	&	10,92	\\
+3600	&	3,9048	&	11,208	\\
+\rowcolor[gray]{.95}
+3700	&	4,0104	&	11,472	\\
+3800	&	4,1184	&	11,76	\\
+\rowcolor[gray]{.95}
+3900	&	4,2264	&	12,048	\\
+4000	&	4,332	&	12,312	\\
+\rowcolor[gray]{.95}
+4095	&	4,4544	&	12,6	\\
+4096\_voll	&	4,4544	&	12,624	\\
+\caption{Leistungsaufnahme der LED-Module während der Messreihen}
+\label{tab:pledmodule}
+\end{longtable}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Leistungsaufnahme des Straßenlampen-Prototypen}
 
 TODO: Stromaufnahme Tabelle und Diagramm 350ma 500ma Prototyp
 
