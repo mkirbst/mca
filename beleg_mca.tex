@@ -347,7 +347,47 @@ unter \cite{specds1820} abgerufen werden.
 
 \clearpage
 \section{Implementierung}
-Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen. 
+Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen.
+HINWEIS: QUELLCODE KOMPLETT IM ANHANG, eventuell drauf verweisen, sonst hier nur Code-Fragmente
+BSP-Codeausschnitt:
+
+Reset des PWM-Controllers:
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	language=C,
+	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	numbers=left,
+	stepnumber=1,
+	firstnumber=90,	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier die Quellcode-Zeilennummer laut Gesamtquelltext eintragen, siehe Anhang  
+	numbersep=6pt,
+	numberstyle=\tiny,
+	tabsize=2,
+	breaklines=true,	%automatischer Zeilenumbruch
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace=false,
+	aboveskip={1.5\baselineskip},
+  	columns=fixed,
+  	upquote=true,
+  	extendedchars=true,
+  	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+}
+\begin{lstlisting}[captionpos=b, caption=Code-Ausschnitt: Software-Reset des PWM-Controllers, label=codeswreset]
+int swReset()
+{
+    char cmd[1];
+    cmd[0] = 0x06;
+    i2c.write(0x00,cmd,1);
+    return 0;
+}
+\end{lstlisting}
+
+
 \subsection{Steuerung des PWM-Controllers}
 
 \subsubsection{Initialisierung}
@@ -871,6 +911,656 @@ Gültigkeit besitzen.
 \clearpage
 \section{Schluss}
 Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
+
+\section{Anhang}
+\subsection{Quellcodelisting}
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	language=C,
+	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	numbers=left,
+	stepnumber=1,
+	numbersep=6pt,
+	numberstyle=\tiny,
+	tabsize=2,
+	breaklines=true,	%automatischer Zeilenumbruch
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace=false,
+	aboveskip={1.5\baselineskip},
+  	columns=fixed,
+  	upquote=true,
+  	extendedchars=true,
+  	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+}
+\begin{lstlisting}[captionpos=b, caption=MBED-Programmcode für den Messaufbau, label=messprogkomplett]
+#include "mbed.h"
+#include "string"
+
+AnalogIn ain(p15);              //Lichtsensor GeoSys
+Serial serterm(USBTX, USBRX);   //serielles Terminal zum PC
+
+DigitalOut led1(LED1);
+DigitalOut led2(LED2);
+DigitalOut led3(LED3);
+DigitalOut led4(LED4);
+
+DigitalOut oe(p18);
+
+I2C i2c(p9, p10);        // sda, scl
+
+LocalFileSystem local("local");
+
+Timer t;
+
+const int buffersize = 100;
+const int tslWriteAddr = 0x52;
+const int tslReadAddr  = 0x53;
+const int pwmWriteAddr = 0x80;
+const int pwmReadAddr  = 0x81;
+
+int pwmVal[16];
+
+int ledStart(int times, double delay)
+{
+    int i;
+
+    led1 = 0;
+    led2 = 0;
+    led3 = 0;
+    led4 = 0;
+
+    for(i = 0; i < times; i++) {
+        led1 = 1;
+        wait(delay);
+        led1 = 0;
+        led2 = 1;
+        wait(delay);
+        led2 = 0;
+        led3 = 1;
+        wait(delay);
+        led3 = 0;
+        led4 = 1;
+        wait(delay);
+        led4 = 0;
+    }
+    wait(delay);
+    return 0;
+}
+
+int setLed(int led)
+{
+    led1 = led & 1;
+    led2 = led >> 1 & 1;
+    led3 = led >> 2 & 1;
+    led4 = led >> 3 & 1;
+
+    return 0;
+}
+
+void readText(int size, char *buf)
+{
+    char temp;
+    int i = 0;
+
+    buf = (char *)malloc(100*sizeof(char));
+
+    while(i < size && ((temp = serterm.getc()) != '\r')) {
+        buf[i++] = temp;
+        serterm.putc(temp);
+    }
+    buf[i] = '\0';
+}
+
+int swReset()
+{
+    char cmd[1];
+    cmd[0] = 0x06;
+    i2c.write(0x00,cmd,1);
+    return 0;
+}
+
+int setPwm12(int n, int ontime)
+{
+    char baseAddr;
+    char cmd[5];
+    int start, stop;
+
+    // calulate delay time
+    if(n == 0)
+        start = 0;
+    else
+        start = n * 256;
+
+    // calulate stop time
+    stop = start + ontime;
+
+    // address calculation for channel n
+    if(n == 16) {               // all call address
+        baseAddr = 0xfa;
+    } else if(n >= 0 && n <= 15) {
+        baseAddr = n  * 4 + 0x06;
+    } else {
+        return 1;
+    }
+
+    if(ontime < 0 && ontime > 4096) {
+        return 2;
+    }
+
+    if(ontime == 4096) {        // LED Full ON
+        cmd[0] = baseAddr;
+        cmd[1] = 0x00;
+        cmd[2] = 0x10;          // full on bit 4 set
+        cmd[3] = 0x00;
+        cmd[4] = 0x00;
+    } else {                    // variable brightness
+        if(stop > 4095) {
+            stop = stop - 4096;
+        }
+        cmd[0] = baseAddr;          // start address for channel
+        cmd[1] = start & 0xff;      // LED_ON_LOW
+        cmd[2] = start >> 8 & 0x0f; // LED_ON_HIGH
+        cmd[3] = stop & 0xff;       // LED_OFF_LOW
+        cmd[4] = stop >> 8 & 0x0f;  // LED_OFF_HIGH
+    }
+
+    i2c.write(pwmWriteAddr, cmd, 5);
+
+    if(n!=16)
+        pwmVal[n] = ontime;
+
+    return 0;
+}
+
+int readPwm12(int n)
+{
+    char baseAddr;
+    char cmd[5];
+    char read[16];
+    int start, stop, val;
+
+    // address calculation for channel n
+if(n == 16) {               // all call address
+        baseAddr = 0xfa;
+    } else if(n >= 0 && n <= 15) {
+        baseAddr = n  * 4 + 0x06;
+    } else {
+        return 1;
+    }
+
+    cmd[0] = baseAddr;
+    i2c.write(pwmWriteAddr, cmd, 1);
+    i2c.read(pwmReadAddr, read, 4);
+    start = read[0] + (read[1] << 8);
+    stop = read[2] + (read[3] << 8);
+    if(stop < start)
+        stop += 4096;
+    val = stop - start;
+    return val;
+}
+
+int initPwm(int mode)
+{
+    int i;
+    char cmd[2];
+
+    for(i = 0; i <= 15; i++) {
+        pwmVal[i] = 0;
+    }
+
+    // set i2c clock to fast mode
+    i2c.frequency(400000);
+
+    // set MODE1 register
+    cmd[0] = 0x00;
+    cmd[1] = 0x00;
+
+    i2c.write(pwmWriteAddr, cmd, 2);
+
+    // set MODE2 register
+    cmd[0] = 0x01;
+    cmd[1] = 0x04;
+
+    i2c.write(pwmWriteAddr, cmd, 2);
+
+    // set MODE1 register
+    // set AI flag
+    cmd[0] = 0x00;
+    cmd[1] = 0x20;
+
+    i2c.write(pwmWriteAddr, cmd, 2);
+
+    // set all pwm channels to 0
+    setPwm12(16, 0);
+
+    //output enable of pwm controller
+    oe = 0;
+
+
+
+    return 0;
+}
+
+int initTsl()
+{
+    char cmd[5];
+
+    // set control register - powering up
+    cmd[0] = 0x80;
+    cmd[1] = 0x03;
+    i2c.write(tslWriteAddr, cmd, 2);
+
+    // set timing register - high gain and 402 ms integration time
+    cmd[0] = 0x81;
+    cmd[1] = 0x12;
+    i2c.write(tslWriteAddr, cmd, 2);
+
+    return 0;
+}
+
+int initDS18S20()
+{
+
+    return 0;
+}
+
+double readLux()
+{
+    double lux, dif;
+    // full range
+    int ch0;
+    // ir only
+    int ch1;
+    char cmd[5];
+
+    //channel 0 - full range
+    cmd[0] = 0x8C;
+    i2c.write(tslWriteAddr, cmd, 1);
+    i2c.read(tslReadAddr, cmd, 2);
+
+    ch0 = cmd[1] << 8;
+    ch0 = ch0 + cmd[0];
+
+    // channel 1 - ir only
+    cmd[0] = 0x8e;
+    i2c.write(tslWriteAddr, cmd, 1);
+    i2c.read(tslReadAddr, cmd, 2);
+
+    ch1 = cmd[1] << 8;
+    ch1 = ch1 + cmd[0];
+
+    dif = ch1/ch0;
+
+    if(dif <= 0.50) {
+        lux = 0.0304 * ch0 - 0.062 * ch0 * pow(ch1/ch0, 1.4);
+    } else if (dif <= 0.61) {
+        lux = 0.0224 * ch0 - 0.031 * ch1;
+    } else if (dif <= 0.80) {
+        lux = 0.0128 * ch0 - 0.0153 * ch1;
+    } else if (dif <= 1.3) {
+        lux = 0.00146 * ch0 - 0.00112 * ch1;
+    } else if (dif > 0) {
+        lux = 0;
+    } else {
+        return -1.0;
+    }
+
+    return lux;
+}
+
+double readLuxScale()
+{
+    char cmd[5];
+    double lux;
+    lux = readLux();
+    if (lux > 1900.0) {
+        //reduce integration time to 101 ms
+        cmd[0] = 0x81;
+        cmd[1] = 0x11;
+        i2c.write(tslWriteAddr, cmd, 2);
+        wait(1);
+
+        //meassure
+        lux = readLux();
+
+        //reset integration time
+        cmd[0] = 0x81;
+        cmd[1] = 0x12;
+        i2c.write(tslWriteAddr, cmd, 2);
+        wait(1);
+
+        //scale value
+        lux = lux / 0.252 * 1.0;
+    }
+    return lux;
+}
+
+double readLuxCalib()
+{
+    double baseVal = readLuxScale();
+    return baseVal + baseVal * 0.1095;
+}
+
+void printHomeScreen()
+{
+    int i, j, bar;
+
+    serterm.printf("\x1B[2J");    //VT100 erase screen
+    serterm.printf("\x1B[H");     //VT100 home
+    serterm.printf("AllInOne 0.2\n\rHomeScreen\n\r");
+    serterm.printf("\n\rPWM Values:\n\r");
+    for(i = 0; i <=15; i++) {
+        pwmVal[i] = readPwm12(i);
+        serterm.printf("channel %d: %d\r\x1B[46C[",i, pwmVal[i]);
+        bar = pwmVal[i]/128+1;
+        for(j = 0; j < 32; j++) {
+            if(bar > 1 && j < bar)
+                serterm.printf("=");
+            else
+                serterm.printf(" ");
+        }
+        serterm.printf("]\n\r");
+    }
+    serterm.printf("\n\rb - set brightness; o - options; m - measuring lux; s - measured series\n\r>");
+}
+
+int pwmDemo()
+{
+    int i, j;
+//    for(j=0; j<=16; j++) {
+    for(j=0; j<=1; j++) {
+        setLed(j);
+        for(i=0; i < 4096; i++) {
+            setPwm12(j, i);
+            wait(0.0005);
+        }
+        for(i=4096; i >= 0; i--) {
+            setPwm12(j, i);
+            wait(0.0005);
+        }
+    }
+    setPwm12(0, 4096);
+    wait(0.2);
+    setPwm12(0,0);
+    wait(0.2);
+    setPwm12(0, 4096);
+    wait(0.2);
+    setPwm12(0,0);
+    return 0;
+}
+
+
+int main()
+{
+    char charbuf[buffersize];
+    char cmd[5];
+    char temp;
+    char filename[13];
+    char path[50];
+    int cap;
+    double value;
+    char charbuf2;
+
+    wait(1);
+    serterm.printf("\x1B[2J");    //VT100 erase screen
+    serterm.printf("\x1B[H");     //VT100 home
+    serterm.printf("Starting mbed...\n\r");
+
+    // indicate controler strat
+    ledStart(1, 0.1);
+
+    setLed(15);
+
+    wait(1);
+    setLed(0);
+
+    //i2c fast mode 400 kHz
+    i2c.frequency(400000);
+    setLed(1);
+
+    // initialize pwm module
+    initPwm(0);
+    setLed(2);
+
+    // initialize i2c TAOS Sensor
+    initTsl();
+    setLed(3);
+
+    //pwmDemo();
+
+
+    while(1) {
+        printHomeScreen();
+        temp = serterm.getc();
+        switch(temp) {
+            case 'b':
+                int i = 0;
+                int channel, brightness;
+                serterm.printf("\x1B[2J");    //VT100 erase screen
+                serterm.printf("\x1B[H");     //VT100 home
+
+                for(i = 0; i<buffersize; i++)
+                    charbuf[i] = '\0';
+                i = 0;
+                serterm.printf("\n\rSelect channel (0 - 15; 16 - all channels): ");
+                while(i < 99 && ((temp = serterm.getc()) != '\r')) {
+                    if((int)temp == 127) {
+                        if(i > 0)
+                            i--;
+                    } else {
+                        charbuf[i++] = temp;
+                        serterm.putc(temp);
+                    }
+                }
+                charbuf[i] = '\0';
+                channel = atoi(charbuf);
+
+                if(channel < 0 || channel > 16) {
+                    serterm.printf("\n\rValue invalid\n\rHit any key to continue...\n\r");
+                    serterm.getc();
+                    break;
+                }
+
+                for(i = 0; i<buffersize; i++)
+                    charbuf[i] = '\0';
+                i = 0;
+                serterm.printf("\n\rSet brightness (PWM: 0 - 4095; Full ON: 4096): ");
+                while(i < 99 && ((temp = serterm.getc()) != '\r')) {
+                    if((int)temp == 127) {
+                        if(i > 0)
+                            i--;
+                    } else {
+                        charbuf[i++] = temp;
+                        serterm.putc(temp);
+                    }
+                }
+                charbuf[i] = '\0';
+                brightness = atoi(charbuf);
+
+                if(brightness < 0 || brightness > 4096) {
+                    serterm.printf("\n\rValue invalid\n\rHit any key to continue...\n\r");
+                    serterm.getc();
+                    break;
+                }
+
+                if(channel == 16) {
+                    for(i = 0; i < 16; i++) {
+                        setPwm12(i,brightness);
+                    }
+                } else {
+                    setPwm12(channel,brightness);
+                }
+                break;
+
+            case 'o':
+                while(temp != 'q') {
+                    serterm.printf("\x1B[2J");    //VT100 erase screen
+                    serterm.printf("\x1B[H");     //VT100 home
+                    serterm.printf("Options\n\r\n\r");
+                    serterm.printf("TSL:\r\n");
+                    serterm.printf("i - Integration time\r\n");
+                    serterm.printf("\r\n");
+                    serterm.printf("\r\n");
+                    serterm.printf("\r\n");
+
+                    serterm.printf("\r\n>");
+
+                    temp = serterm.getc();
+
+                    switch(temp) {
+                        case 'i':
+                            serterm.printf("\x1B[2J");    //VT100 erase screen
+                            serterm.printf("\x1B[H");     //VT100 home
+                            serterm.printf("Integration time\n\r\n\r");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                break;
+            case 'm':
+                while(temp != 'q') {
+                    //int val;
+                    double voltage, lux;
+                    serterm.printf("\x1B[2J");    //VT100 erase screen
+                    serterm.printf("\x1B[H");     //VT100 home
+                    serterm.printf("Meassurement - hit 'q' for home screen - any key for refresh\n\n\r");
+
+                    serterm.printf("TSL2561: %f Lux            \n\r",readLuxScale());
+                    serterm.printf("TSL2561 (cal): %f Lux            \n\r",readLuxCalib());
+
+                    //val = (int) ain.read_u16();
+                    voltage = ain.read();
+                    lux = 100/(0.8037-0.0806)*(voltage-0.1953);
+                    serterm.printf("Geosys: %.10f V --> %f Lux             \n\r", voltage, lux);
+                    temp = serterm.getc();
+                }
+                break;
+            case 's':
+                int stepSize, pause;
+                serterm.printf("\x1B[2J");    //VT100 erase screen
+                serterm.printf("\x1B[H");     //VT100 home
+
+                // read filename
+                serterm.printf("Enter filename: ");
+
+                i = 0;
+                while(i < 8 && ((temp = serterm.getc()) != '\r')) {
+                    if((int)temp == 127) {
+                        if(i > 0)
+                            i--;
+                    } else {
+                        charbuf[i++] = temp;
+                        serterm.putc(temp);
+                    }
+                }
+                charbuf[i] = '\0';
+                strcpy(filename, charbuf);
+                strcat(filename, ".csv");
+                strcpy(path, "/local/");
+                strcat(path, filename);
+
+                //read step size
+                serterm.printf("\n\rEnter step size 0 - 500: ");
+                i = 0;
+                while(i < 8 && ((temp = serterm.getc()) != '\r')) {
+                    if((int)temp == 127) {
+                        if(i > 0)
+                            i--;
+                    } else {
+                        charbuf[i++] = temp;
+                        serterm.putc(temp);
+                    }
+                }
+                charbuf[i] = '\0';
+                stepSize = atoi(charbuf);
+                if(stepSize < 0 || stepSize > 500) {
+                    serterm.printf("\n\rInvalid value\n\r");
+                    serterm.getc();
+                    break;
+                }
+
+                //read step size
+                serterm.printf("\n\rEnter pause time 0 - 10 (in full seconds): ");
+                i = 0;
+                while(i < 8 && ((temp = serterm.getc()) != '\r')) {
+                    if((int)temp == 127) {
+                        if(i > 0)
+                            i--;
+                    } else {
+                        charbuf[i++] = temp;
+                        serterm.putc(temp);
+                    }
+                }
+                charbuf[i] = '\0';
+                pause = atoi(charbuf);
+                if(pause < 0 || pause > 10) {
+                    serterm.printf("\n\rInvalid value\n\r");
+                    serterm.getc();
+                    break;
+                }
+
+                FILE *fp = fopen(path, "w");
+                fprintf(fp, "pwmval;lux\n");
+                serterm.printf("\n\rpwm --> lux\n\r");
+                wait(1);
+                for(i = 0; i < 4095; i+=stepSize) {
+                    setPwm12(0, i);
+                    wait(1);
+                    value = readLuxScale();
+                    fprintf(fp, "%d;%f\n",i ,value);
+                    serterm.printf("%d --> %f\n\r",i ,value);
+                    //serterm.getc();
+                    setPwm12(0, 0);
+                    wait(pause);
+                    //serterm.getc();
+                }
+                if(stepSize >= 10) {
+                    setPwm12(0, 4095);
+                    wait(1);
+                    value = readLuxScale();
+                    fprintf(fp, "%d;%f\n",4095 ,value);
+                    serterm.printf("%d --> %f\n\r",4095 ,value);
+                    //serterm.getc();
+                    setPwm12(0, 0);
+                    wait(pause);
+                    //serterm.getc();
+
+                    setPwm12(0, 4095);
+                    wait(1);
+                    value = readLuxScale();
+                    fprintf(fp, "%d;%f\n",4096 ,value);
+                    serterm.printf("%d --> %f\n\r",4096 ,value);
+                    //serterm.getc();
+                    setPwm12(0, 0);
+                    wait(pause);
+                    //serterm.getc();
+                }
+                fclose(fp);
+                serterm.printf("done...\n\r");
+                setPwm12(0, 0);
+                serterm.getc();
+                break;
+            case 't':
+                while(((temp = serterm.getc()) != 'q')) {
+                    for(i=0; i<=16; i++) {
+                        serterm.printf("\n\rread %d: %d", i, readPwm12(i));
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+}
+\end{lstlisting}
+
 
 \clearpage
 \section{Glossar}
