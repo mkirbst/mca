@@ -315,19 +315,45 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und 
 Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Einschaltwert
 \texttt{0} und der Ausschaltwert \texttt{2047}. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle
-abgebildet wird. 
+abgebildet wird.
 
 \subsection{Lichtsensor GeoSys GSLx}
-Sebastian
+Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser besteht aus zwei Hauptkomponenten. Zum einen der eigentliche Sensor, welcher die Photodiode TSL250R des Herstellers Taos ist, sowie einen IC zur Verstärkung des Ausgangsstroms. Abhängig vom gemessenen Ausgangsstrom, welcher im Bereich von 5 - 20 mA liegt, kann somit die Beleuchtungsstärke ermittelt werden. Die laut Hersteller angegebene maximal messbare Beleuchtungsstärke liegt bei 50 Lux. Im Versuch stellte sich jedoch eine Beleuchtungsstärke von ca. 200 Lux als maximal erfassbar heraus.
 
-Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys 
+TODO: Schaltung einfügen.
 
-12V-15V
-0 - 50 Lux
+\begin{figure}[htb]
+\begin{center}
+%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+\end{center}
+\caption[Teilschaltung zur Ansteuerung des GSLx, Quelle: Autoren]{\label{fig:schaltungGSLx}Teilschaltung zur Ansteuerung des GSLx}
+\end{figure}
+
+Die eingesetzte Konfiguration aus Mikrocontroller und Control Board bieten weder eine geeignete Spannungsquelle im zugelassen Bereich von 12 - 15 V noch eine Schnittstelle zur Erfassung des Ausgangsstrom. Um dieses Problem zu lösen, kommt, wie in Abbildung \ref{fig:schaltungGSLx} dargestellt, der Spannungsregler LM317 zum Einsatz. Dieser wandelt die am Control Board verfügbaren 24 V in die benötigten 12 V um. Weiterhin erfolgt die Erfassung des Beleuchtungsstärke mittels dem im Mikrocontroller verfügbaren AD-Wandler. Hierfür verwendet wird ein geeigneter Shunt, über den eine Messung des Spannungsabfalls erfolgt. Eine Referenzspannung für den AD-Wandler wird nicht benötigt, da diese intern bei 3,3 V liegt. 
 
 TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
 
+\begin{figure}[htb]
+\begin{center}
+%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+\end{center}
+\caption[Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal, Quelle: Autoren]{\label{fig:gslOszi}Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal}
+\end{figure}
+
 \subsection{Lichtsensor TSL2561}
+
+Der unzureichende Messbereich des GSLx führte zur Suche eines weiteren Sensors. Als geeignet erschien der TAOS TSL2561 mit einen angegebenen Messbereich von 0,1 Lux bis 40.000 Lux. Zur Ermittlung der Beleuchtungsstärke sind zwei Photodioden verbaut. Eine erfasst dabei einen breiten Wellenlängenbereich, welche das für Menschen sichtbare sowie infrarotes Licht abdeckt. Die zweite Photodiode erfasst nur infrarotes Licht. Somit ist es möglich im Gesamten ausschließlich das für das menschliche Auge sichtbare Spektrum zu erfassen.
+
+TODO: Schaltungsgrafik einfügen
+
+\begin{figure}[htb]
+\begin{center}
+%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+\end{center}
+\caption[Teilschaltung zur Ansteuerung des TS2561, Quelle: Autoren]{\label{fig:schaltungTSL}Teilschaltung zur Ansteuerung des TS2561}
+\end{figure}
+
+Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C Protokoll. Da das Caralux Control Board die hierfür benötigten des LPC1768 nicht herausführt, war es nötig diese mittels einer Adapterbuchse zwischen Mikrocontroller und Control Board, wie in Abbildung \ref{fig:schaltungTSL} dargestellt, abzugreifen. Neben den I2C Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen.
 
 \subsection{Luxmeter Mini-Lux}
 Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
