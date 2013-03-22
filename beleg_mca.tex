@@ -224,8 +224,7 @@ werden kann. Weiterf\"uhrende Informationen zum OneWire-Busprotokoll k\"onnen un
 Sebastian
 
 \section{Eingesetzte Hardware}
-In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenen Falls
-auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen.
+In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenenfalls auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen.
 
 \subsection{CARALUX LED Control Board v1.1}
 %Sebastian
@@ -418,14 +417,15 @@ int swReset()
 
 \subsubsection{Initialisierung}
 %%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
-Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus auf 400 kHz gesetzt, was dem Fast Mode entspricht. Im
-Anschluss werden die Mode-Register gesetzt. MODE1 erhält den Wert \texttt{20h}.
-Dies entspricht dem Betrieb mit internen Oszillator.
+Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus  \texttt{frequency()} auf 400 kHz gesetzt, was dem I2C Fast Mode entspricht. Im Anschluss werden die Mode-Register geschrieben. MODE1 erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit internen Oszillator.
 
 \subsubsection{PWM-Ausgabe}
 \subsubsection{Auslesen der PWM-Werte}
 \subsection{Lichtmessung mittels GSLx}
+
 \subsection{Lichtmessung mittels TSL2561}
+\subsubsection{Initialisierung}
+\subsubsection{Beleuchtungsmessung}
 
 \clearpage
 \section{Versuchsanordnung}
