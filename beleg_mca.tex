@@ -419,8 +419,32 @@ int swReset()
 %%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
 Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus  \texttt{frequency()} auf 400 kHz gesetzt, was dem I2C Fast Mode entspricht. Im Anschluss werden die Mode-Register geschrieben. MODE1 erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit internen Oszillator.
 
+- mode1: reset, extclock, ai 1, sleep, subcall adr, allcall adr --> 20h
+- mode2: invrt, och, outdrv, outen --> 04h
+- oe = 0
+
 \subsubsection{PWM-Ausgabe}
+- stopzeitpunkt = start + ontime
+- berechnung register adresse n*4+0x06
+- vorbereiten der zu schreibenden daten: 5 byte, adresse, start time, stoptime
+	.4096 --> full on <=4095: stop > 4095 stop - 4096
+	. schrieben in array
+- ausgabe auf i2c bus
+
+Für die Konfiguration der PWM-Ausgabe wird die Funktion \textit{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \textit{n} und \textit{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \textit{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [GRAFIK 4095/4096] dargestellt.
+
+Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \textit{ontime}.
+
+
+
 \subsubsection{Auslesen der PWM-Werte}
+- readPwm12(int n)
+- adressberechung analog
+- schreibvorgang mit adresse
+- lesevorgang 4 byte start stop time
+- stop < start --> stop - 4096
+- ontime = stop - start
+- rückgabe
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
 \subsubsection{Beschaltung}
@@ -433,6 +457,8 @@ Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Ta
 
 \subsection{Lichtmessung mittels Taos TSL2561}
 \subsubsection{Initialisierung}
+- set control reg: 03h --> power up, 7:2 ungenutzt
+- set timing reg: 12h -- > gain 1 --> 16x, manual timing conroll 0, int time 10 --> 402 ms
 \subsubsection{Beleuchtungsmessung}
 
 \clearpage
