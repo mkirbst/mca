@@ -432,6 +432,7 @@ Im \texttt{MODE2}-Register wird der Wert \texttt{04h} geschrieben. Diese Einstel
 Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gesetzt.
 
 \subsubsection{PWM-Ausgabe}
+\label{sec:pwmOut}
 Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [GRAFIK 4095/4096] dargestellt.
 
 Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}.
@@ -442,15 +443,9 @@ Abschließend sind die ermittelten Werte in ein fünf Byte großes \texttt{char}
 
 
 \subsubsection{Auslesen der PWM-Werte}
-- readPwm12(int n)
-- adressberechung analog
-- schreibvorgang mit adresse
-- lesevorgang 4 byte start stop time
-- stop < start --> stop - 4096
-- ontime = stop - start
-- rückgabe
+Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} implementiert. Als Parameter erhält sie die Kanalnummer \texttt{n} und gibt anschließend den High-Pegel-Anteil der 12-Bit-Periode zurück.
 
-
+Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
 \subsubsection{Beschaltung}
