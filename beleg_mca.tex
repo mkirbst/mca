@@ -413,35 +413,36 @@ int swReset()
 \subsection{Steuerung des PWM-Controllers}
 
 \subsubsection{Initialisierung}
-%%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
-Die Initialisierung des PCA9685 erfolgt in drei Schritten. Zunächst wird die Taktfrequenz des I2C-Bus  \texttt{frequency()} auf 400 kHz gesetzt, was dem I2C Fast Mode entspricht. Im Anschluss werden die Mode-Register geschrieben. MODE1 erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit internen Oszillator.
-
-- mode1: reset, extclock, ai 1, sleep, subcall adr, allcall adr --> 20h
-- mode2: invrt, och, outdrv, outen --> 04h
-- oe = 0
+Zur Initialisierung des PWM-Controllers sind zwei Schritte nötig. Zunächst erfolgt das Setzen der allgemeinen Betriebsparameter über die Register \texttt{MODE1} und \texttt{MODE2}. Das Register \texttt{MODE1} erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit 
+\begin{itemize}
+\item internem Oszillator,
+\item Auto-Inkrementierung des Adressregisters und
+\item abgeschalteter Subcall- sowie Allcall-Adressen des PWM-Controllers.
+\end{itemize}
+Im \texttt{MODE2}-Register wird der Wert \texttt{04h} geschrieben. Diese Einstellung bewirkt
+\begin{itemize}
+\item nicht invertierte Ausgabelogik,
+\item Wertübernahme mit Erhalt des I2C-Stop-Kommandos,
+\item Betrieb mit externen Treiber und
+\item Output Enable mit anliegen Low-Pegel.
+\end{itemize}
+Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gesetzt.
 
 \subsubsection{PWM-Ausgabe}
-- stopzeitpunkt = start + ontime
-- berechnung register adresse n*4+0x06
-- vorbereiten der zu schreibenden daten: 5 byte, adresse, start time, stoptime
-	.4096 --> full on <=4095: stop > 4095 stop - 4096
-	. schrieben in array
-- ausgabe auf i2c bus
+\label{sec:pwmOut}
+Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [GRAFIK 4095/4096] dargestellt.
 
-Für die Konfiguration der PWM-Ausgabe wird die Funktion \textit{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \textit{n} und \textit{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \textit{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [GRAFIK 4095/4096] dargestellt.
+Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}.
 
-Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \textit{ontime}.
+Im Anschluss erfolgt die Ermittlung der dem übergebenen Kanal entsprechenden Registeradresse. Relevant hierfür sind die übergebene Kanalnummer \textit{n} und die erste LED-Registeradresse 06h. Da für jeden Kanal vier Register benötigt werden, ergibt sich die Basisadresse aus \texttt{06h + 4 * n}.
 
+Abschließend sind die ermittelten Werte in ein fünf Byte großes \texttt{char}-Array zu übertragen, welches im ersten Byte die Registeradresse, im zweiten und dritten Byte den Anschaltzeitpunkt und im vierten und fünften Byte den Ausschaltzeitpunkt enthält. Dabei kann es zu zwei Sonderfällen kommen. Zum einen kann der Ausschaltzeitpunkt größer 4095 sein. Dies bedeutet, dass das Abschalten nicht mehr in der selben Periode wie das Anschalten erfolgt. Somit ist es nötig vom Ausschaltzeitpunkt 4096 abzuziehen um den gewünschten High-Pegel zu erhalten. Im anderen Spezialfall wurde der Funktion der Wert 4096 übergeben. Hier muss nur im Registerpaar für den Anschaltzeitpunk Bit 12 gesetzt werden um einen konstanten High-Pegel zu generieren. Im letzten Schritt erfolgt die Übertragung auf den I2C-Bus.
 
 
 \subsubsection{Auslesen der PWM-Werte}
-- readPwm12(int n)
-- adressberechung analog
-- schreibvorgang mit adresse
-- lesevorgang 4 byte start stop time
-- stop < start --> stop - 4096
-- ontime = stop - start
-- rückgabe
+Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} implementiert. Als Parameter erhält sie die Kanalnummer \texttt{n} und gibt anschließend den High-Pegel-Anteil der 12-Bit-Periode zurück.
+
+Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
 \subsubsection{Beschaltung}
