@@ -318,12 +318,9 @@ abgebildet wird.
 
 \subsection{Lichtsensor GeoSys GSLx}
 Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser besteht aus zwei Hauptkomponenten. Zum einen der eigentliche Sensor, welcher die Photodiode TSL250R des Herstellers Taos ist, sowie einen IC zur Verstärkung des Ausgangsstroms. Abhängig vom gemessenen Ausgangsstrom, welcher im Bereich von 5 - 20 mA liegt, kann somit die Beleuchtungsstärke ermittelt werden. Die laut Hersteller angegebene maximal messbare Beleuchtungsstärke liegt bei 50 Lux. Im Versuch stellte sich jedoch eine Beleuchtungsstärke von ca. 200 Lux als maximal erfassbar heraus.
-
-TODO: Schaltung einfügen.
-
 \begin{figure}[htb]
 \begin{center}
-%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+  \includegraphics{./images/schaltung-geosys-gslx.png}
 \end{center}
 \caption[Teilschaltung zur Ansteuerung des GSLx, Quelle: Autoren]{\label{fig:schaltungGSLx}Teilschaltung zur Ansteuerung des GSLx}
 \end{figure}
@@ -592,48 +589,68 @@ Titanium-O-SS.}
 \begin{longtable}[H]{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}p{35mm}}
   \rowcolor[gray]{.9}
     \textbf{PWM-Wert} & \textbf{TSL2561 [Lux]} & \textbf{Mini-Lux [Lux]} \\ 
-0 & 0 & 0 \\
 0	&	0	&	0	\\
+\rowcolor[gray]{.95}
 100	&	63	&	73	\\
 200	&	140	&	158	\\
+\rowcolor[gray]{.95}
 300	&	213	&	243	\\
 400	&	287	&	328	\\
+\rowcolor[gray]{.95}
 500	&	361	&	413	\\
 600	&	438	&	497	\\
+\rowcolor[gray]{.95}
 700	&	510	&	582	\\
 800	&	586	&	666	\\
+\rowcolor[gray]{.95}
 900	&	661	&	751	\\
 1000	&	733	&	836	\\
+\rowcolor[gray]{.95}
 1100	&	813	&	920	\\
 1200	&	882	&	1005	\\
+\rowcolor[gray]{.95}
 1300	&	958	&	1090	\\
 1400	&	1034	&	1174	\\
+\rowcolor[gray]{.95}
 1500	&	1105	&	1259	\\
 1600	&	1179	&	1343	\\
+\rowcolor[gray]{.95}
 1700	&	1257	&	1428	\\
 1800	&	1332	&	1512	\\
+\rowcolor[gray]{.95}
 1900	&	1402	&	1597	\\
 2000	&	1476	&	1681	\\
+\rowcolor[gray]{.95}
 2100	&	1558	&	1766	\\
 2200	&	1634	&	1850	\\
+\rowcolor[gray]{.95}
 2300	&	1705	&	1935	\\
 2400	&	1774	&	2020	\\
+\rowcolor[gray]{.95}
 2500	&	1850	&	2110	\\
 2600	&	1920	&	2190	\\
+\rowcolor[gray]{.95}
 2700	&	2020	&	2280	\\
 2800	&	2093	&	2360	\\
+\rowcolor[gray]{.95}
 2900	&	2134	&	2450	\\
 3000	&	2200	&	2530	\\
+\rowcolor[gray]{.95}
 3100	&	2304	&	2610	\\
 3200	&	2353	&	2700	\\
+\rowcolor[gray]{.95}
 3300	&	2440	&	2780	\\
 3400	&	2530	&	2870	\\
+\rowcolor[gray]{.95}
 3500	&	2602	&	2950	\\
 3600	&	2657	&	3040	\\
+\rowcolor[gray]{.95}
 3700	&	2733	&	3120	\\
 3800	&	2815	&	3210	\\
+\rowcolor[gray]{.95}
 3900	&	2893	&	3290	\\
 4000	&	2965	&	3370	\\
+\rowcolor[gray]{.95}
 4095	&	3042	&	3460	\\
 4096\_voll	&	3041	&	3460	\\
 \caption{Messreihe LED-Modul 350mA mit Optik Titanium-O-SS}
