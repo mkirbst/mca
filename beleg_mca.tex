@@ -286,6 +286,7 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 \cite{speclpc1768} abgerufen werden kann.
 
 \subsection{PWM-Controller PCA9685}
+\label{sec:hardwarePWM}
 %%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
 Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das 
 Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus
@@ -317,18 +318,17 @@ Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die er
 abgebildet wird.
 
 \subsection{Lichtsensor GeoSys GSLx}
-Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser besteht aus zwei Hauptkomponenten. Zum einen der eigentliche Sensor, welcher die Photodiode TSL250R des Herstellers Taos ist, sowie einen IC zur Verstärkung des Ausgangsstroms. Abhängig vom gemessenen Ausgangsstrom, welcher im Bereich von 5 - 20 mA liegt, kann somit die Beleuchtungsstärke ermittelt werden. Die laut Hersteller angegebene maximal messbare Beleuchtungsstärke liegt bei 50 Lux. Im Versuch stellte sich jedoch eine Beleuchtungsstärke von ca. 200 Lux als maximal erfassbar heraus.
+\label{sec:HardwareGSLx}
+Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser besteht aus zwei Hauptkomponenten. Zum einen der eigentliche Sensor, welcher die Photodiode TSL250R des Herstellers Taos ist, sowie einen IC zur Verstärkung des Ausgangsstroms. Abhängig vom gemessenen Ausgangsstrom, welcher im Bereich von 5 - 20 mA liegt, kann somit die Beleuchtungsstärke ermittelt werden. Die laut Hersteller angegebene maximal messbare Beleuchtungsstärke liegt bei 50 Lux. Im Versuch stellte sich jedoch eine Beleuchtungsstärke von ca. 170 Lux als maximal erfassbar heraus.
 
-TODO: Schaltung einfügen.
-
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
-%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+  \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
 \end{center}
-\caption[Teilschaltung zur Ansteuerung des GSLx, Quelle: Autoren]{\label{fig:schaltungGSLx}Teilschaltung zur Ansteuerung des GSLx}
+\caption[Beschaltung des GeoSys GSLx, Quelle: Autoren]{\label{fig:schaltplangslx}Beschaltung des GeoSys GSLx, Quelle: Autoren}
 \end{figure}
 
-Die eingesetzte Konfiguration aus Mikrocontroller und Control Board bieten weder eine geeignete Spannungsquelle im zugelassen Bereich von 12 - 15 V noch eine Schnittstelle zur Erfassung des Ausgangsstrom. Um dieses Problem zu lösen, kommt, wie in Abbildung \ref{fig:schaltungGSLx} dargestellt, der Spannungsregler LM317 zum Einsatz. Dieser wandelt die am Control Board verfügbaren 24 V in die benötigten 12 V um. Weiterhin erfolgt die Erfassung des Beleuchtungsstärke mittels dem im Mikrocontroller verfügbaren AD-Wandler. Hierfür verwendet wird ein geeigneter Shunt, über den eine Messung des Spannungsabfalls erfolgt. Eine Referenzspannung für den AD-Wandler wird nicht benötigt, da diese intern bei 3,3 V liegt. 
+Die eingesetzte Konfiguration aus Mikrocontroller und Control Board bieten weder eine geeignete Spannungsquelle im zugelassen Bereich von 12 - 15 V noch eine Schnittstelle zur Erfassung des Ausgangsstrom. Um dieses Problem zu lösen, kommt, wie in Abbildung \ref{fig:schaltplangslx} dargestellt, der Spannungsregler LM317 zum Einsatz. Dieser wandelt die am Control Board verfügbaren 24 V in die benötigten 12 V um. Weiterhin erfolgt die Erfassung der Beleuchtungsstärke mittels dem im Mikrocontroller verfügbaren AD-Wandler. Hierfür verwendet wird ein geeigneter Shunt mit 120 Ohm, über den eine Messung des Spannungsabfalls erfolgt. Die hier messbaren Werte liegen zwischen 0,65 V bei Dunkelheit und 3 V bei maximal erfassbarer Helligkeit. Eine Referenzspannung für den AD-Wandler wird nicht benötigt, da diese intern bei 3,3 V liegt.
 
 TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys Sensor-Output (Kurven \"uberlagern um Zusammenhang zu verdeutlichen)
 
@@ -338,6 +338,8 @@ TODO: Bild einf\"ugen: Oszi-Diagramm: Kanal1=PWM-Output PCA9685, Kanal2=GeoSys S
 \end{center}
 \caption[Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal, Quelle: Autoren]{\label{fig:gslOszi}Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal}
 \end{figure}
+
+Bei der Inbetriebnahme des Sensors wurde schnell klar, dass der Messbereich des GSLx nicht ausreichend für die Messung ist. Des Weiteren zeigte sich die Mangelnde Trägheit des Sensors für die Messung einer PWM-Lichtquelle. Das Oszillogramm des gemessenen Spannungsabfalls stellte die PWM-Ausgabe des Controllers dar. Dies hätte zwar mittels RC-Glied kompensiert werden können, jedoch ist der Messbereich des Sensors nicht groß genug um die bei High-Pegel anliegende Beleuchtungsstärke korrekt zu erfassen.
 
 \subsection{Lichtsensor TSL2561}
 
@@ -352,7 +354,7 @@ TODO: Schaltungsgrafik einfügen
 \caption[Teilschaltung zur Ansteuerung des TS2561, Quelle: Autoren]{\label{fig:schaltungTSL}Teilschaltung zur Ansteuerung des TS2561}
 \end{figure}
 
-Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C Protokoll. Da das Caralux Control Board die hierfür benötigten des LPC1768 nicht herausführt, war es nötig diese mittels einer Adapterbuchse zwischen Mikrocontroller und Control Board, wie in Abbildung \ref{fig:schaltungTSL} dargestellt, abzugreifen. Neben den I2C Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen und mit dem Sensor verbunden. Des Weiteren verfügt der TSL2561 über einen Pin zur Adresskonfiguration. Dieser kann wahlweise mit 3,3 V, GND oder nicht beschaltet werden. In der verwendeten Schaltung liegt der Pin auf GND, woraus die I2C-Busadresse \texttt{29h} resultiert.
+Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C Protokoll. Da das Caralux Control Board die hierfür benötigten des LPC1768 nicht herausführt, war es nötig diese mittels einer Adapterbuchse zwischen Mikrocontroller und Control Board, wie in Abbildung \ref{fig:schaltungTSL} dargestellt, abzugreifen. Neben den I2C Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen und mit dem Sensor verbunden. Des Weiteren verfügt der TSL2561 über einen Pin zur Adresskonfiguration. Dieser kann wahlweise mit 3,3 V, GND oder nicht beschaltet werden. In der verwendeten Schaltung liegt der Pin auf GND.
 
 \subsection{Luxmeter Mini-Lux}
 Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
@@ -414,6 +416,7 @@ int swReset()
 
 
 \subsection{Steuerung des PWM-Controllers}
+Wie in Abschnitt \ref{sec:hardwarePWM} beschrieben erfolgt die Adresskonfiguration des PCA9685 mittels sechs Adresspins. Auf dem Control Board sind diese alle mit GND beschaltet. Daraus ergeben sich die Schreibadresse \texttt{80h} sowie die Leseadresse \texttt{81h}.
 
 \subsubsection{Initialisierung}
 Zur Initialisierung des PWM-Controllers sind zwei Schritte nötig. Zunächst erfolgt das Setzen der allgemeinen Betriebsparameter über die Register \texttt{MODE1} und \texttt{MODE2}. Das Register \texttt{MODE1} erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit 
@@ -448,17 +451,44 @@ Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} 
 Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
-\subsubsection{Beschaltung}
-\begin{figure}[H]
-\begin{center}
-  \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
-\end{center}
-\caption[Beschaltung des GeoSys GSLx, Quelle: Autoren]{\label{fig:schaltplangslx}Beschaltung des GeoSys GSLx, Quelle: Autoren}
-\end{figure}
+Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nötig. Zunächst erfolgt die Erfassung der am Messwiderstand abfallenden Spannung. Dies geschieht mittels des im LPC1768 integrierten AD-Wandlers. Die Funktion \texttt{AnalogIn.read()} gibt einen \texttt{Double}-Wert im Intervall von 0 bis 1,0 zurück. Dies entspricht der Messbaren Spannung von 0 V bis 3,3 V. Ausgehend vom im Abschnitt \ref{sec:HardwareGSLx} beschriebenen relevanten Messbereich von 0,65 V bis 3,0 V wird dieser Wert Korrigiert und mit dem Skalierungsfaktor 1,7 multipliziert, wie in Listing \ref{code:GSLx}.
+
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
+\lstset{
+	language=C,
+	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
+	identifierstyle=\ttfamily,
+	commentstyle=\color[rgb]{0.133,0.545,0.133},
+	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
+	showstringspaces=false,
+	basicstyle=\scriptsize,
+	numbers=left,
+	stepnumber=1,
+	firstnumber=498,	% Hier die Quellcode-Zeilennummer laut Gesamtquelltext eintragen, siehe Anhang  
+	numbersep=6pt,
+	numberstyle=\tiny,
+	tabsize=2,
+	breaklines=true,	%automatischer Zeilenumbruch
+	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+	breakatwhitespace=false,
+	aboveskip={1.5\baselineskip},
+  	columns=fixed,
+  	upquote=true,
+  	extendedchars=true,
+  	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
+}
+
+\begin{lstlisting}[captionpos=b, caption=Berechnung der Beleuchtungsstärke mit dem GSLx, label=code:GSLx]
+voltage = ain.read();
+// (100/MaxU*(MessuredU-MinU))*Scaling value
+lux = (100/(0.8047-0.0806)*(voltage-0.1953))*1.7;
+\end{lstlisting}
 
 \subsection{Lichtmessung mittels Taos TSL2561}
+Wie vorangehend beschrieben wird der TSL2561 mittels I2C-Bus angesteuert. Die hierfür zu verwendende Adresse wird über die Beschaltung des ADR-Pin festgelegt. In unserer Versuchsanordnung ist er mit GND beschaltet. Daraus resultieren die Schreibadresse \texttt{52h} und die Leseadresse \texttt{53h}.
 \subsubsection{Initialisierung}
-Die Initialisierung und Konfiguration des TSL2561 erfolgt über zwei Konfigurationsregister. Zu Beginn erfolgt ein Schreibzugriff auf das Kontrollregister mit Adresse \texttt{00h}. Dieses steuert lediglich den Betriebszustand des Sensors. Durch Schreiben des Wertes \texttt{03h} wird dieser auf "AN" gesetzt. Darauf folgt die Konfiguration des Timing-Registers. Dieses wird mit \texttt{12h} beschreiben, dem Betrieb mit
+Die Initialisierung und Konfiguration des TSL2561 erfolgt über zwei Konfigurationsregister. Zu Beginn erfolgt ein Schreibzugriff auf das Kontrollregister mit Adresse \texttt{00h}. Dieses steuert lediglich den Betriebszustand des Sensors. Durch Schreiben des Wertes \texttt{03h} wird dieser auf "AN" gesetzt. Darauf folgt die Konfiguration des Timing-Registers. Dieses wird mit \texttt{12h} beschreiben, was dem Betrieb mit
 \begin{itemize}
 \item hohem Verstärkungsfaktor,
 \item automatischer Integrationszeitsteuerung und 
