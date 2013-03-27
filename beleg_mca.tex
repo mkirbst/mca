@@ -357,20 +357,10 @@ TODO: Schaltungsgrafik einfügen
 Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C Protokoll. Da das Caralux Control Board die hierfür benötigten des LPC1768 nicht herausführt, war es nötig diese mittels einer Adapterbuchse zwischen Mikrocontroller und Control Board, wie in Abbildung \ref{fig:schaltungTSL} dargestellt, abzugreifen. Neben den I2C Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen und mit dem Sensor verbunden. Des Weiteren verfügt der TSL2561 über einen Pin zur Adresskonfiguration. Dieser kann wahlweise mit 3,3 V, GND oder nicht beschaltet werden. In der verwendeten Schaltung liegt der Pin auf GND.
 
 \subsection{Luxmeter Mini-Lux}
-Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
-im Versuchsaufbau präzise Messwerte liefern und als Referenz für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in die
-Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an. Die
-Anleitung des Mini-Lux lässt sich unter \cite{specminilux} abrufen. 
+Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll im Versuchsaufbau präzise Messwerte liefern und als Referenz für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in die Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an. Die Anleitung des Mini-Lux lässt sich unter \cite{specminilux} abrufen. 
 
 \subsection{Temperatursensor DS18S20}
-Bei dem Bauteil DS18S20 handelt es sich um einen verbreiteten Temperatursensor,
-welcher über das OneWire-Protokoll angesprochen werden kann. Zu den Vorzügen
-dieses Senesors zählen der Messbereich von -55 bis +125 Grad Celsius, die
-geringe Messdauer von nur 200 Millisekunden pro Messung, dass zum Betrieb keine
-zusätzlichen, externen Bauteile nötig sind und die Kaskadierbarkeit mehrerer
-Sensoren über den OneWire-Bus. Ein solcher Temperatursensor ist auf dem
-Caralux-Steuermodul enthalten. Das Datenblatt zu diesem Temperatursensor kann
-unter \cite{specds1820} abgerufen werden.
+Bei dem Bauteil DS18S20 handelt es sich um einen verbreiteten Temperatursensor, welcher über das OneWire-Protokoll angesprochen werden kann. Zu den Vorzügen dieses Senesors zählen der Messbereich von -55 bis +125 Grad Celsius, die geringe Messdauer von nur 200 Millisekunden pro Messung, dass zum Betrieb keine zusätzlichen, externen Bauteile nötig sind und die Kaskadierbarkeit mehrerer Sensoren über den OneWire-Bus. Ein solcher Temperatursensor ist auf dem Caralux-Steuermodul enthalten. Das Datenblatt zu diesem Temperatursensor kann unter \cite{specds1820} abgerufen werden.
 
 \clearpage
 \section{Implementierung}
@@ -1075,13 +1065,36 @@ Messreihen.}
 \label{tab:pprototyp}
 \end{longtable}
 
-    
+\subsection{Auswertung}
+\label{sec:auswertung}
+
+Die in den vorangegangen Abschnitten dargestellten Messreihen zeigen alle einen linearen Anstieg der Beleuchtungsstärke in Abhängigkeit von der gewählten PWM-Stufe. Außerdem ist für alle vier Messreihen eine linear steigende Differenz zwischen den mit dem Luxmeter MiniLux gemessenen und den vom TSL2561 erfassten Werten zu erkennen.
+
+Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion 
+\begin{equation}
+•f(t)=t+t*m
+\end{equation}
+ermittelt. Dabei ist $t$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion. Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare aus den vorangegangen dargestellten Messreihen Teilanstiege bestimmt. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe. Die daraus resulti
+
+\begin{longtable}[H]
+{p{35mm}>{\columncolor[gray]{0.97}}p{35mm}}
+\rowcolor[gray]{.9}
+\textbf{Modul mit Optik} & \textbf{Anstieg} \\ 
+
+350 mA - Ti-O-M & 0,070 \\
+\rowcolor[gray]{.95}
+350 mA - Ti-O-SS & 0,138 \\
+500 mA - Ti-O-M & 0,091 \\
+\rowcolor[gray]{.95}
+500 mA - Ti-O-SS & 0,139 \\
+Mittelwert & 0,1095 \\
+\caption{Gemittelte Anstiege der Differenzfunktion}
+\label{tab:350maTitM}
+\end{longtable}
     
 \clearpage
 \section{Schlussbetrachtung}
-Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken
-ersichtlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau
-Gültigkeit besitzen.
+Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken ersichtlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau Gültigkeit besitzen. 
 
 %% Tabelle
 %\vspace*{1cm}
@@ -1093,10 +1106,6 @@ Gültigkeit besitzen.
 %\caption{Merkmale ausgew\"ahlter Routerdistributionen im Vergleich}
 %\label{Merkmale der Routerdistributionen im Vergleich}
 %\end{longtable}
-
-\clearpage
-\section{Schluss}
-Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
 
 \section{Anhang}
 \subsection{Quellcodelisting}
