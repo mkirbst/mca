@@ -451,6 +451,7 @@ Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} 
 Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
+\label{sec:impGSLx}
 Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nötig. Zunächst erfolgt die Erfassung der am Messwiderstand abfallenden Spannung. Dies geschieht mittels des im LPC1768 integrierten AD-Wandlers. Die Funktion \texttt{AnalogIn.read()} gibt einen \texttt{Double}-Wert im Intervall von 0 bis 1,0 zurück. Dies entspricht der Messbaren Spannung von 0 V bis 3,3 V. Ausgehend vom im Abschnitt \ref{sec:HardwareGSLx} beschriebenen relevanten Messbereich von 0,65 V bis 3,0 V wird dieser Wert Korrigiert und mit dem Skalierungsfaktor 1,7 multipliziert, wie in Listing \ref{code:GSLx}.
 
 \definecolor{listinggray}{gray}{0.9}
@@ -486,6 +487,7 @@ lux = (100/(0.8047-0.0806)*(voltage-0.1953))*1.7;
 \end{lstlisting}
 
 \subsection{Lichtmessung mittels Taos TSL2561}
+\label{sec:impTaos}
 Wie vorangehend beschrieben wird der TSL2561 mittels I2C-Bus angesteuert. Die hierfür zu verwendende Adresse wird über die Beschaltung des ADR-Pin festgelegt. In unserer Versuchsanordnung ist er mit GND beschaltet. Daraus resultieren die Schreibadresse \texttt{52h} und die Leseadresse \texttt{53h}.
 \subsubsection{Initialisierung}
 Die Initialisierung und Konfiguration des TSL2561 erfolgt über zwei Konfigurationsregister. Zu Beginn erfolgt ein Schreibzugriff auf das Kontrollregister mit Adresse \texttt{00h}. Dieses steuert lediglich den Betriebszustand des Sensors. Durch Schreiben des Wertes \texttt{03h} wird dieser auf "AN" gesetzt. Darauf folgt die Konfiguration des Timing-Registers. Dieses wird mit \texttt{12h} beschreiben, was dem Betrieb mit
@@ -546,6 +548,22 @@ if(dif <= 0.50) {
 Die vorangegangen beschriebene Funktion erfasst lediglich Beleuchtungsstärken von bis zu ca. 1900 Lux. Dies resultiert aus der beim Initialisierungsvorgang festgelegten Integrationszeit von 402 ms. Um größere Beleuchtungsstärken zu erfassen, ist es notwendig diese zu reduzieren. Aus diesem Grund wird \texttt{readLux()} von der Funktion \texttt{readLuxScale()} gekapselt. Zunächst führt die Funktion eine einfache Messung durch. Ist der ermittelte Wert größer als 1900 Lux, so wird die Integrationszeit auf 101 ms, dem nächstkleineren einstellbaren Wert, gesetzt. Nach einer kurzen Wartezeit von einer Sekunde erfolgt eine erneute Messung mit anschließenden Rücksetzen der Integrationszeit auf 402 ms. Der somit gemessene Wert entspricht der aktuellen Beleuchtungsstärke multipliziert mit dem Faktor 0,252. Nach Korrektur dessen erfolgt die Rückgabe des Messwertes.
 
 Anschließend wird eine Korrektur der erfassten Messwerte mittels der Funtkion \texttt{readLuxCalib()} durchgeführt. Diese addiert zum gemessenen Wert den selbigen multipliziert mit dem Faktor 0,1095. Abschnitt \ref{sec:auswertung} beschriebt das Zustandekommen dieser Korrekturfunktion.
+
+\subsection{Benutzerinterface}
+Für die Benutzerinteraktion wird die vom LPC1768 bereitgestellte Terminalemulation über USB verwendet. So kann mit einen Terminalclient wie PuTTy auf den Controller zugegriffen werden. In Abbildung \ref{fig:gui} ist der Startbildschirm der Anwendung dargestellt. Zu sehen sind dabei die momentan anliegenden PWM-Werte aller 16 Kanäle in numerischer und grafischer Darstellung. Des Weiteren können Unterprogramme zur Messung der aktuellen Beleuchtungsstärke, zum Setzen der einzelnen PWM-Kanäle und zum Erstellen von Messreihen aufgerufen werden.
+
+\begin{figure}[htb]
+\begin{center}
+%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+\end{center}
+\caption[Bedienoberfläche dargestellt mit PuTTY, Quelle: Autoren]{\label{fig:gui}Bedienoberfläche dargestellt mit PuTTY}
+\end{figure}
+
+Das Messunterprogramm gibt dabei die Werte der beiden Sensoren über die in den Abschnitten \ref{sec:impGSLx} und \ref{sec:impTaos} aufgeführten Funktionen aus. Diese Messungen können durch Drücken einer beliebigen Taste wiederholt werden. Mittels der Taste ’Q’ erfolgt die Rückkehr zum Hauptmenü.
+
+Mit Aufruf des Unterprogramms zum Einstellen der PWM-Werte ist der zu setzende Kanal mit der gewünschten Helligkeit anzugeben. Die Kanalnummern sind hier 0 bis 15. Bei Eingabe einer 16 werden alle Kanäle beschrieben. Für die Helligkeit sind Werte von 0 bis 4095 erlaubte PWM-Werte. Bei der Eingabe von 4096 wird ein durchgehender High-Pegel ausgegeben.
+
+Die letzte bereitgestellte Funktion ist die Aufnahme von Messreihen von Messreihen. Hier wird automatisiert eine Reihe von PMW-Werten mit vorgegebener Schrittweite eingestellt und die daraus resultierende Beleuchtungsstärke gemessen. Die in der Messreihe ermittelten Werte werden anschließend in eine CSV-Datei auf dem internen Flash-Speicher des LPC1768 ausgegeben. Vor Beginn der Messreihe müssen der Dateiname ohne Erweiterung, die Schrittweite sowie die Wartezeit zwischen den Messungen angegeben werden.
 
 \clearpage
 \section{Versuchsanordnung}
