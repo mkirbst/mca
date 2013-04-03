@@ -220,8 +220,8 @@ dass hei\ss{}t es wird kein Taktsignal f\"ur die Kommunikation ben\"otigt. Die D
 Halbduplexverfahren, dass hei\ss{}t es wird f\"ur das Senden und das Empfangen der gleiche Datenkanal benutzt, wobei aber immer nur gesendet oder empfangen
 werden kann. Weiterf\"uhrende Informationen zum OneWire-Busprotokoll k\"onnen unter \cite{spec1wire} abgerufen werden.
 
-\subsection{Beleuchtungsmessung}
-Sebastian
+%\subsection{Beleuchtungsmessung}
+%Sebastian
 
 \section{Eingesetzte Hardware}
 In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenenfalls auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen.
@@ -323,7 +323,7 @@ Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser beste
 
 \begin{figure}[H]
 \begin{center}
-  \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
+ % \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
 \end{center}
 \caption[Beschaltung des GeoSys GSLx, Quelle: Autoren]{\label{fig:schaltplangslx}Beschaltung des GeoSys GSLx, Quelle: Autoren}
 \end{figure}
@@ -420,13 +420,13 @@ Im \texttt{MODE2}-Register wird der Wert \texttt{04h} geschrieben. Diese Einstel
 \item nicht invertierte Ausgabelogik,
 \item Wertübernahme mit Erhalt des I2C-Stop-Kommandos,
 \item Betrieb mit externen Treiber und
-\item Output Enable mit anliegen Low-Pegel.
+\item Output Enable bei anliegendem Low-Pegel.
 \end{itemize}
-Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gesetzt.
+Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gesetzt. Somit ist der PWM-Controller bereit zur Ausgabe.
 
 \subsubsection{PWM-Ausgabe}
 \label{sec:pwmOut}
-Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [GRAFIK 4095/4096] dargestellt.
+Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [Todo: GRAFIK 4095/4096 einfügen] dargestellt.
 
 Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}.
 
@@ -489,7 +489,7 @@ Die Initialisierung und Konfiguration des TSL2561 erfolgt über zwei Konfigurati
 entspricht. Nach setzen dieser Einstellungen ist der TSL2561 betriebsbereit.
 
 \subsubsection{Beleuchtungsmessung}
-Die Beleuchtungsmessung wurde auf die drei Funktionen \texttt{readLux()}, \texttt{readLuxScale()} und \texttt{readLuxCalib()} verteilt. Dabei stellt \texttt{readLux()} das eigentliche Auslesen der Messwerte dar. Diese liegen in je einem Registerpaar und werden zunächst von der Funktion ausgelesen. Kanal 0 entspricht der Photodiode welche über das gesamte für Menschen sichtbare Farbspektrum zuzüglich infraroten Lichts und Kanal 1 entspricht ausschließlich dem infrarotem Wellenlängenbereich. Wie Listing \ref{code:calclux} zeigt wird nun der Quotient aus Kanal 1 und Kanal 0 gebildet und abhängig davon die entsprechende Berechnungsformel verwendet. Abschließend erfolgt die Rückgabe des errechneten Wertes.
+Die Beleuchtungsmessung wurde auf die drei Funktionen \texttt{readLux()}, \texttt{readLuxScale()} und \texttt{readLuxCalib()} verteilt. Dabei stellt \texttt{readLux()} das eigentliche Auslesen der Messwerte dar. Diese liegen in je einem Registerpaar und werden zunächst von der Funktion ausgelesen. Kanal 0 entspricht der Photodiode welche über das gesamte für Menschen sichtbare Farbspektrum zuzüglich infraroten Lichts erfasst und Kanal 1 entspricht ausschließlich dem infrarotem Wellenlängenbereich. Wie Listing \ref{code:calclux} zeigt wird nun der Quotient aus Kanal 1 und Kanal 0 gebildet und abhängig davon die entsprechende Berechnungsformel verwendet. Abschließend erfolgt die Rückgabe des errechneten Wertes.
 
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
@@ -544,7 +544,7 @@ Für die Benutzerinteraktion wird die vom LPC1768 bereitgestellte Terminalemulat
 
 \begin{figure}[htb]
 \begin{center}
-%  \includegraphics[width=0.5\hsize]{./images/htwk.png}
+%  \includegraphics[width=0.5\hsize]{./images/.png}
 \end{center}
 \caption[Bedienoberfläche dargestellt mit PuTTY, Quelle: Autoren]{\label{fig:gui}Bedienoberfläche dargestellt mit PuTTY}
 \end{figure}
@@ -1070,11 +1070,11 @@ Messreihen.}
 
 Die in den vorangegangen Abschnitten dargestellten Messreihen zeigen alle einen linearen Anstieg der Beleuchtungsstärke in Abhängigkeit von der gewählten PWM-Stufe. Außerdem ist für alle vier Messreihen eine linear steigende Differenz zwischen den mit dem Luxmeter MiniLux gemessenen und den vom TSL2561 erfassten Werten zu erkennen.
 
-Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion 
+Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion $E_{k}$
 \begin{equation}
-•f(t)=t+t*m
+•E_{k}(E_{m})=E_{m}+E_{m}*m
 \end{equation}
-ermittelt. Dabei ist $t$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion. Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare aus den vorangegangen dargestellten Messreihen Teilanstiege bestimmt. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe. Die daraus resulti
+ermittelt. Dabei ist $E_{m}$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion. Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare aus den vorangegangenen Abschnitten dargestellten Messreihen Teilanstiege bestimmt. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe. Die daraus resultierenden Anstiege sind in Tabelle \ref{tab:anstiege} aufgeführt. Aus diesen vier Werten wurde wiederum ein Mittelwert gebildet, welcher in die Korrekturfunktion einfließt.
 
 \begin{longtable}[H]
 {p{35mm}>{\columncolor[gray]{0.97}}p{35mm}}
@@ -1089,12 +1089,13 @@ ermittelt. Dabei ist $t$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelt
 500 mA - Ti-O-SS & 0,139 \\
 Mittelwert & 0,1095 \\
 \caption{Gemittelte Anstiege der Differenzfunktion}
-\label{tab:350maTitM}
+\label{tab:anstiege}
 \end{longtable}
     
 \clearpage
 \section{Schlussbetrachtung}
-Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken ersichtlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau Gültigkeit besitzen. 
+TODO: rework
+%Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken ersichtlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau Gültigkeit besitzen. 
 
 %% Tabelle
 %\vspace*{1cm}
