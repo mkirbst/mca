@@ -290,11 +290,9 @@ Spezifikationen können dem Datenblatt entnommen werden, welches unter
 %%Anm.: Werte im Text in \texttt{WERT} schreiben, damit diese im Text als "Schreibmaschinenschrift" hervorgehoben sind, liesst sich besser ;)
 Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das 
 Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus
-befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels 3 verschiedener Sub-Call-Adressen
-auch verschiedene Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und
-abzuschalten.
+befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels drei verschiedener Sub-Call-Adressen auch unterschiedliche Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und abzuschalten.
 
-Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf. 
+Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf.
 
 \begin{longtable}{p{45mm}>{\columncolor[gray]{0.97}}p{25mm}p{65mm}}
 \rowcolor[gray]{.9}
@@ -312,10 +310,14 @@ PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\
 \label{tab:registers}
 \end{longtable}
 
-Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und 
-Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Einschaltwert
-\texttt{0} und der Ausschaltwert \texttt{2047}. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle
-abgebildet wird.
+Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wird. Je zwei Register beinhalten einen zwölf Bit großen Wert für An- und Abschaltzeitpunkt innerhalb eines 4096 Schritte großen Zyklus. Soll also die erste Hälfte der PWM-Periode einen High-Pegel liefern, so beträgt der Einschaltwert \texttt{0} und der Ausschaltwert \texttt{2047}. Das somit entstandene PWM-Signal ist in Abbildung \ref{fig:pwmExample1} dargestellt. Analog dazu verhält sich das ALLLED-Register mit dem Unterschied, dass dieses Schaltverhalten auf alle Kanäle abgebildet wird.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.9\hsize]{./schematics/pwmDiagram1.png}
+\end{center}
+\caption{\label{fig:pwmExample1}Impulsdiagramm einer PWM-Periode mit High-Pegel von Zeitpunkt 0 bis 2047, Quelle: Autoren}
+\end{figure}
 
 \subsection{Lichtsensor GeoSys GSLx}
 \label{sec:HardwareGSLx}
@@ -323,7 +325,7 @@ Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser beste
 
 \begin{figure}[H]
 \begin{center}
- % \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
+\includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
 \end{center}
 \caption[Beschaltung des GeoSys GSLx, Quelle: Autoren]{\label{fig:schaltplangslx}Beschaltung des GeoSys GSLx, Quelle: Autoren}
 \end{figure}
