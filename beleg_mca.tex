@@ -430,7 +430,14 @@ Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gese
 \label{sec:pwmOut}
 Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [Todo: GRAFIK 4095/4096 einfügen] dargestellt.
 
-Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}.
+Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}. Abblidung \ref{fig:pwmExample2} verdeutlicht dies am Beispiel zweier verschiedener Kanäle mit entsprechenden Offset.
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=0.9\hsize]{./schematics/pwmDiagram2.png}
+\end{center}
+\caption{\label{fig:pwmExample2}Impulsdiagramm der Kanäle 0 und 8 mit jeweils einer \texttt{ontime} von 1024, Quelle: Autoren}
+\end{figure}
 
 Im Anschluss erfolgt die Ermittlung der dem übergebenen Kanal entsprechenden Registeradresse. Relevant hierfür sind die übergebene Kanalnummer \textit{n} und die erste LED-Registeradresse 06h. Da für jeden Kanal vier Register benötigt werden, ergibt sich die Basisadresse aus \texttt{06h + 4 * n}.
 
