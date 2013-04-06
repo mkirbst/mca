@@ -186,17 +186,17 @@ sebastian.krause@stud.htwk-leipzig.de\\
 \section{Einleitung}
 %%\pagestyle{empty}
 Diese Projektarbeit befasst sich mit der Helligkeitssteuerung von Leuchtmodulen durch den Mikrocontroller LPC1768 in Verbindung mit dem PWM-Treiber PCA9685. Bei den
-Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber eine integrierte Transistor-Endstufe versorgt
-werden. Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der real messbaren Beleuchtungsst\"arke korreliert. 
+Leuchtmodulen handelt es sich um Baugruppen die mit jeweils sechs 1-Watt LEDs best\"uckt sind und \"uber einen integrierten Konstantstromtreiber versorgt
+werden. Weiterhin soll ermittelt werden wie die Aussteuerung der einzelnen PWM-Stufen mit der messbaren Beleuchtungsst\"arke im Versuchsaufbau korreliert. 
 
 Die Projektarbeit wurde betreut durch Herrn Prof. Dr. Klaus Bastian, Herrn Dipl.-Ing. Oliver Fasterding und Herrn Dipl.-Inf. (FH) Alexander Zahn.
 %% BILD:
 \begin{figure}[htb]
   \begin{center}
 %%    \includegraphics[width=1\hsize]{./images/foto_hardware_komplett.png}
-    \includegraphics[width=1\hsize]{./images/foto_hardware_komplett_dunkel.png}
+    \includegraphics[width=0.95\hsize]{./images/foto_hardware_komplett_dunkel.png}
   \end{center}
-\caption[\"Ubersicht der eingesetzten Hardware, Quelle: Autoren]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware.}
+\caption[C\"Ubersicht der eingesetzten Hardware, Quelle: Autoren]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware (v.l.n.r): Prototyp Straßenleuchte, LED-Board, Sockel-Adapter, Mikrocontroller LPC1768, LED-Modul 350mA, LED-Modul 500mA, Optik Titanium-O-SS, Optik Titanium-O-M.}
 \end{figure}
 
 \clearpage
@@ -242,13 +242,14 @@ auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen.
 %- Kommunikationsschnittstellen: USB, Ethernet
 
 Das LED-Board als zentrale Komponente des Messaufbaus sowie auch der Lampe ist eine Entwicklung der Firma Elmicro für die Firma Caralux. Dieses LED-Board,
-welches für den Messaufbau in der Version 1.1 zur Verfügung stand, besitzt Schnittstellen für USB und Netzwerk, sowie über Schraubklemmen Anschlüsse für die
+welches für den Messaufbau in der Version 1.1 zur Verfügung stand, besitzt beispielsweise Schnittstellen für USB und Netzwerk, sowie über Schraubklemmen Anschlüsse für die
 Energieversorgung mit 24 Volt, RS485 sowie für den Anschluss von 16 LED-Modulen. Die LED-Module werden jeweils über drei Leitungen vom LED-Board mit Masse, 24
 Volt Versorgungsspannung sowie dem PWM-Signal, welches die Werte 0 Volt oder 5 Volt annehmen kann, versorgt.
 
-Das LED-Board ist weiterhin mit einem PWM-Controller PCA9685 sowie einem Temperatursensor DS1820 bestückt und besitzt einen Sockel für den Mikrocontroller LPC1768.
-Während der Durchführung der Implementierung der Software im Rahmen dieses Projektarbeits stellte sich heraus, dass der Temperatursensor DS1820 erst funktioniert wenn
-ein Pullup-Widerstand für dessen Datenleitung nachgerüstet wird.
+Das LED-Board ist weiterhin mit einem PWM-Controller PCA9685 sowie einem Temperatursensor DS1820 bestückt und besitzt einen Sockel für den Mikrocontroller LPC1768. 
+Neben den zwei Stiftleisten dieses Sockels existieren Lötaugen um jeden Pin des Sockels abzugreifen. 
+Während der Durchführung der Implementierung der Software im Rahmen dieser Projektarbeit stellte sich heraus, dass der Temperatursensor DS1820 erst funktioniert, wenn
+ein Pullup-Widerstand für dessen Datenleitung nachgerüstet wird. Als Grund hierfür wird angenommen, dass der interne PullUp-Widerstand des Mikrocontrollers allein nicht ausreicht um den High-Pegel zuverlässig einzustellen.
 
 \subsection{LED-Module und Optiken}
 Die eingesetzten LED-Module wurden von der Firma Caralux gefertigt und tragen die Bezeichnung LED-LL-1,0/6L-DIM. Die Versorgungsspannung der LED-Module
