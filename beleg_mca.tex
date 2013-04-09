@@ -284,7 +284,7 @@ Der LPC1768 kann mit einer Taktrate von bis zu 100 MHz betrieben werden und
 bietet je nach Konfiguration bis zu 512 KByte Flash und bis zu 64 KByte
 Datenspeicher. Weiterhin stehen umfangreiche Schnittstellen zur Verfügung um
 Peripherie anbinden zu können, beispielsweise eine Ethernet-Schnittstelle, ein
-USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere.\cite{speclpc1768}
+USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere. \cite{speclpc1768}
 
 \subsection{PWM-Controller PCA9685}
 \label{sec:hardwarePWM}
@@ -307,7 +307,7 @@ LED-Register & 06h - 45h & Separate Konfiguration der PWM-Kanäle \\
 ALLLED-Register & FAh - FDh & Gemeinsame Konfiguration der PWM-Kanäle \\ 
 \rowcolor[gray]{.95}
 PRESCALE & FEh & Konfiguration der PWM-Frequenz mittels Prescaler \\ 
-\caption{Konfigurationsregister des PCA9685}
+\caption{Auflistung der für das Projekt relevanten Konfigurationsregister des PCA9685 gemäß Datenblatt Seiten 9 ff. \cite{specpwm}}
 \label{tab:registers}
 \end{longtable}
 
@@ -375,46 +375,7 @@ Caralux-Steuermodul enthalten.
 
 \clearpage
 \section{Implementierung}
-Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen.
-HINWEIS: QUELLCODE KOMPLETT IM ANHANG, eventuell drauf verweisen, sonst hier nur Code-Fragmente
-BSP-Codeausschnitt:
-
-Reset des PWM-Controllers:
-\definecolor{listinggray}{gray}{0.9}
-\definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
-\lstset{
-	language=C,
-	keywordstyle=\bfseries\ttfamily\color[rgb]{0,0,1},
-	identifierstyle=\ttfamily,
-	commentstyle=\color[rgb]{0.133,0.545,0.133},
-	stringstyle=\ttfamily\color[rgb]{0.627,0.126,0.941},
-	showstringspaces=false,
-	basicstyle=\scriptsize,
-	numbers=left,
-	stepnumber=1,
-	firstnumber=90,	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Hier die Quellcode-Zeilennummer laut Gesamtquelltext eintragen, siehe Anhang  
-	numbersep=6pt,
-	numberstyle=\tiny,
-	tabsize=2,
-	breaklines=true,	%automatischer Zeilenumbruch
-	prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-	breakatwhitespace=false,
-	aboveskip={1.5\baselineskip},
-  	columns=fixed,
-  	upquote=true,
-  	extendedchars=true,
-  	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
-}
-\begin{lstlisting}[captionpos=b, caption=Code-Ausschnitt: Software-Reset des PWM-Controllers, label=codeswreset]
-int swReset()
-{
-    char cmd[1];
-    cmd[0] = 0x06;
-    i2c.write(0x00,cmd,1);
-    return 0;
-}
-\end{lstlisting}
-
+Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen. 
 
 \subsection{Steuerung des PWM-Controllers}
 Wie in Abschnitt \ref{sec:hardwarePWM} beschrieben erfolgt die Adresskonfiguration des PCA9685 mittels sechs Adresspins. Auf dem Control Board sind diese alle mit GND beschaltet. Daraus ergeben sich die Schreibadresse \texttt{80h} sowie die Leseadresse \texttt{81h}.
@@ -454,7 +415,7 @@ Abschließend sind die ermittelten Werte in ein fünf Byte großes \texttt{char}
 
 
 \subsubsection{Auslesen der PWM-Werte}
-Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} implementiert. Als Parameter erhält sie die Kanalnummer \texttt{n} und gibt anschließend den High-Pegel-Anteil der 12-Bit-Periode zurück.
+Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} implementiert. Zwar speichert das entwickelte Programm die jeweiligen Registereinstellungen nach dem Setzen, aber im Falle eines Datenübertragungsfehlers kann das direkte Auslesen der jeweiligen Register von Vorteil sein. Als Parameter erhält sie die Kanalnummer \texttt{n} und gibt anschließend den High-Pegel-Anteil der 12-Bit-Periode zurück.
 
 Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
 
@@ -1793,21 +1754,13 @@ int main()
 \clearpage
 \section{Glossar}
 \begin{description}
- \item[I2C] Prtokoll zur Kommunikation in Ger\"aten
+ \item[I2C] Prtokoll zur Kommunikation in Geräten
 \end{description}
 
 \clearpage
-\section{Literatur- und Quellenverzeichnis}
+\section{Quellenverzeichnis}
 
-\renewcommand\refname{Literaturverzeichnis}
-\begin{thebibliography}{999}
-
-%%\bibitem{buch_foobar}Michael W. Lucas:  {\sl Absolute BSD (2nd Edition). The Ultimate Guide to FreeBSD.} No Starch Press, 2008,
-%%\\ISBN: 978-1-59327-151-0
-
-\end{thebibliography}
-
-\renewcommand\refname{Quellenverzeichnis}
+\renewcommand\refname{}
 \begin{thebibliography}{999}
 
 %%\cite{citeverweis}
