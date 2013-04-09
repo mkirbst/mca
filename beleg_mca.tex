@@ -421,7 +421,16 @@ Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entspre
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
 \label{sec:impGSLx}
-Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nötig. Zunächst erfolgt die Erfassung der am Messwiderstand abfallenden Spannung. Dies geschieht mittels des im LPC1768 integrierten AD-Wandlers. Die Funktion \texttt{AnalogIn.read()} gibt einen \texttt{Double}-Wert im Intervall von 0 bis 1,0 zurück. Dies entspricht der Messbaren Spannung von 0 V bis 3,3 V. Ausgehend vom im Abschnitt \ref{sec:HardwareGSLx} beschriebenen relevanten Messbereich von 0,65 V bis 3,0 V wird dieser Wert Korrigiert und mit dem Skalierungsfaktor 1,7 multipliziert, wie in Listing \ref{code:GSLx}.
+Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nötig. Zunächst erfolgt die Erfassung der am Messwiderstand abfallenden Spannung. Dies geschieht mittels des im LPC1768 integrierten AD-Wandlers. Die Funktion \texttt{AnalogIn.read()} gibt einen \texttt{Double}-Wert im Intervall von 0 bis 1,0 zurück. Dies entspricht der Messbaren Spannung von 0 V bis 3,3 V. Ausgehend vom im Abschnitt \ref{sec:HardwareGSLx} beschriebenen relevanten Messbereich von 0,65 V bis 3,0 V wird dieser Wert auf eine prozentuale Wiedergabe des Messbereiches umgerechnet. Dabei stellen die Werte 0,1953 die untere Grenze sowie 0,9194 die Obere Grenze des Messbereichs dar, wie Abbildung \ref{fig:geosysScale} verdeutlicht.
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.9\hsize]{./schematics/geosysScale.png}
+\end{center}
+\caption{\label{fig:geosysScale}Abbildung der gemessenen Spannung auf den relevanten Messbereich, Quelle: Autoren}
+\end{figure}
+
+Listing \ref{code:GSLx} zeigt das Einlesen des Wertes sowie die anschließende Umrechnung. Dabei handelt es sich um eine einfache Dreisatzgleichung mit anschließender Multiplikation um einen Skalierungsfaktor. In dieser Gleichung werden von der maximal möglichen Spannung (1,0) der untere (0,1953) sowie obere (0,0806) nicht relevante Bereich abgezogen, was dem korrigierten Wert 0,7241 entspricht. Von der aktuellen Spannung wird nur der untere Bereich abgezogen. Das Ergebnis dieser Rechnung ist die prozentuale Spannung im Bereich von 0 bis 100. Die abschließende Multiplikation mit dem Faktor 1,7 skaliert somit in den erfassbaren Messbereich von 0 bis 170 Lux.
 
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{rgb}{0.9,0.9,0.9}
@@ -451,8 +460,8 @@ Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nöt
 
 \begin{lstlisting}[captionpos=b, caption=Berechnung der Beleuchtungsstärke mit dem GSLx, label=code:GSLx]
 voltage = ain.read();
-// (100/MaxU*(MessuredU-MinU))*Scaling value
-lux = (100/(0.8047-0.0806)*(voltage-0.1953))*1.7;
+// (100/MaxUkor*(MessuredU-MinU))*Scaling value
+lux = (100/(0.7241)*(voltage-0.1953))*1.7;
 \end{lstlisting}
 
 \subsection{Lichtmessung mittels Taos TSL2561}
@@ -1071,7 +1080,7 @@ Die in den vorangegangen Abschnitten dargestellten Messreihen zeigen alle einen 
 
 Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion $E_{k}$
 \begin{equation}
-•E_{k}(E_{m})=E_{m}+E_{m}*m
+E_{k}(E_{m})=E_{m}+E_{m}*m
 \end{equation}
 ermittelt. Dabei ist $E_{m}$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion. Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare aus den vorangegangenen Abschnitten dargestellten Messreihen Teilanstiege bestimmt. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe. Die daraus resultierenden Anstiege sind in Tabelle \ref{tab:anstiege} aufgeführt. Aus diesen vier Werten wurde wiederum ein Mittelwert gebildet, welcher in die Korrekturfunktion einfließt.
 
@@ -1624,9 +1633,9 @@ int main()
                     serterm.printf("TSL2561: %f Lux            \n\r",readLuxScale());
                     serterm.printf("TSL2561 (cal): %f Lux            \n\r",readLuxCalib());
 
-                    //val = (int) ain.read_u16();
-                    voltage = ain.read();
-                    lux = 100/(0.8037-0.0806)*(voltage-0.1953);
+					 voltage = ain.read();
+                    // (100/MaxUkor*(MessuredU-MinU))*Scaling value
+                    lux = (100/(0.7241)*(voltage-0.1953))*1.7;
                     serterm.printf("Geosys: %.10f V --> %f Lux             \n\r", voltage, lux);
                     temp = serterm.getc();
                 }
