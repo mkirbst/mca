@@ -1076,18 +1076,25 @@ Messreihen.}
 \subsection{Auswertung}
 \label{sec:auswertung}
 
-Die in den vorangegangen Abschnitten dargestellten Messreihen zeigen alle einen linearen Anstieg der Beleuchtungsstärke in Abhängigkeit von der gewählten PWM-Stufe. Außerdem ist für alle vier Messreihen eine linear steigende Differenz zwischen den mit dem Luxmeter MiniLux gemessenen und den vom TSL2561 erfassten Werten zu erkennen.
-
-Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion $E_{k}$
+Die in den vorangegangen Abschnitten dargestellten Messreihen zeigen alle einen linearen Anstieg der Beleuchtungsstärke in Abhängigkeit von der gewählten PWM-Stufe. Außerdem ist für alle vier Messreihen eine linear wachsende Differenz zwischen den mit dem Luxmeter MiniLux gemessenen und den vom TSL2561 erfassten Werten zu erkennen.
+Ausgehend von diesen Differenzwerten wurde eine Korrekturfunktion $E_{k}(E_{m})$ (\ref{equ:Korrekturfunktion}) ermittelt.
 \begin{equation}
+\label{equ:Korrekturfunktion}
 E_{k}(E_{m})=E_{m}+E_{m}*m
 \end{equation}
-ermittelt. Dabei ist $E_{m}$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion. Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare aus den vorangegangenen Abschnitten dargestellten Messreihen Teilanstiege bestimmt. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe. Die daraus resultierenden Anstiege sind in Tabelle \ref{tab:anstiege} aufgeführt. Aus diesen vier Werten wurde wiederum ein Mittelwert gebildet, welcher in die Korrekturfunktion einfließt.
+Dabei ist $E_{m}$ der vom TSL2561 erfasste Messwert und $m$ ein gemittelter Anstieg der Differenzfunktion.
+
+Um diesen Korrekturanstieg zu bestimmen, wurden für alle Messpunktpaare $(E_{c_{k}},E_{m_{k}})$ in den vorangegangen dargestellten Messreihen Teilanstiege bestimmt, wobei $E_{c_{k}}$ der mit dem Luxmeter MiniLux gemessene Beleuchtungsstärkewert und $E_{m_{k}}$ der mit dem TSL2561 erfasste Wert bei der k-ten Messeung ist. Anschließend erfolgte eine Mittelwertbildung über alle Teilanstiege einer Messreihe.
+\begin{equation}
+\label{equ:Teilanstieg}
+m_{t}=\frac{\sum_{k=1}^n\frac{(E_{c_{k}}-E_{m_{k}})}{E_{m_{k}}}}{n}
+\end{equation}
+Die daraus resultierenden Anstiege $m_{t}$ sind in Tabelle \ref{tab:anstiege} aufgeführt. Aus diesen vier Werten wurde wiederum ein Mittelwert $(m)$ gebildet, welcher in die Korrekturfunktion einfließt.
 
 \begin{longtable}[H]
 {p{35mm}>{\columncolor[gray]{0.97}}p{35mm}}
 \rowcolor[gray]{.9}
-\textbf{Modul mit Optik} & \textbf{Anstieg} \\ 
+\textbf{Modul mit Optik} & \textbf{Anstieg $(m_{t})$} \\ 
 
 350 mA - Ti-O-M & 0,070 \\
 \rowcolor[gray]{.95}
@@ -1095,7 +1102,7 @@ ermittelt. Dabei ist $E_{m}$ der vom TSL2561 erfasste Messwert und $m$ ein gemit
 500 mA - Ti-O-M & 0,091 \\
 \rowcolor[gray]{.95}
 500 mA - Ti-O-SS & 0,139 \\
-Mittelwert & 0,1095 \\
+Mittelwert $(m)$& 0,1095 \\
 \caption{Gemittelte Anstiege der Differenzfunktion}
 \label{tab:anstiege}
 \end{longtable}
