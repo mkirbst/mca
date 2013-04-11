@@ -194,7 +194,7 @@ Die Projektarbeit wurde betreut durch Herrn Prof. Dr. Klaus Bastian, Herrn Dipl.
 %%    \includegraphics[width=1\hsize]{./images/foto_hardware_komplett.png}
     \includegraphics[width=0.95\hsize]{./images/foto_hardware_komplett_dunkel.png}
   \end{center}
-\caption[C\"Ubersicht der eingesetzten Hardware, Quelle: Autoren]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware (v.l.n.r): Prototyp Straßenleuchte, LED-Board, Sockel-Adapter, Mikrocontroller LPC1768, LED-Modul 350mA, LED-Modul 500mA, Optik Titanium-O-SS, Optik Titanium-O-M.}
+\caption[C\"Ubersicht der eingesetzten Hardware, Quelle: Autoren]{\label{fotohwuebersicht}\"Ubersicht der eingesetzten Hardware (v.l.n.r): Prototyp Straßenleuchte, LED-Control-Board, Sockel-Adapter, Mikrocontroller LPC1768, LED-Modul 350mA, LED-Modul 500mA, Optik Titanium-O-SS, Optik Titanium-O-M.}
 \end{figure}
 
 \clearpage
@@ -212,7 +212,7 @@ Als OneWire wird ein Bus-Protokoll bezeichnet welches nur eine Verbindungsleitun
 
 \clearpage
 \section{Eingesetzte Hardware}
-In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenenfalls auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen. Abbildung \ref{fig:blockDia} zeigt die nachfolgend beschriebenen Komponenten in Verbindung. Hier ist anzumerken, dass nur der PWM-Controller und der Temperatursensor auf dem Control Board fest verbaut sind.
+In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eingegangen werden um dem Leser einen Überblick zu verschaffen und gegebenenfalls auf weiterführende Quellen zu den einzelnen Komponenten zu verweisen. Abbildung \ref{fig:blockDia} zeigt die nachfolgend beschriebenen Komponenten in Verbindung. Hier ist anzumerken, dass nur der PWM-Controller und der Temperatursensor auf dem Control-Board fest verbaut sind.
 
 \begin{figure}[htb]
 \begin{center}
@@ -221,47 +221,36 @@ In diesem Abschnitt soll kurz auf die einzelnen Komponenten des Messaufbaus eing
 \caption{\label{fig:blockDia}Blockdiagramm der verwendeten Hardware}
 \end{figure}
 
-\subsection{CARALUX LED Control Board v1.1}
-Das LED-Board als die zentrale Komponente des Messaufbaus sowie auch der Straßenleuchte ist eine Entwicklung der Firma Elmicro für die Firma Caralux. Dieses LED-Board, welches für den Messaufbau in der Version 1.1 zur Verfügung stand, besitzt beispielsweise Schnittstellen für USB, Netzwerk, Schraubklemmen-Anschlüsse für unter Anderem die Energieversorgung mit 24 Volt, RS485 und den Anschluss von 16 LED-Modulen. Die LED-Module werden jeweils über drei Leitungen vom LED-Board mit Masse, 24 Volt Versorgungsspannung sowie dem PWM-Signal, welches die Werte 0 Volt oder 5 Volt annehmen kann, versorgt.
+\subsection{CARALUX LED-Control-Board v1.1}
+Das LED-Board als die zentrale Komponente des Messaufbaus sowie auch der Straßenleuchte ist eine Entwicklung der Firma Elmicro für die Firma Caralux. Dieses LED-Board, welches für den Messaufbau in der Version 1.1 zur Verfügung stand, besitzt beispielsweise Schnittstellen für USB, Netzwerk, Schraubklemmen-Anschlüsse für unter Anderem die Energieversorgung mit 24 Volt, RS485 und den Anschluss von 16 LED-Modulen. Die LED-Module werden jeweils über drei Leitungen vom LED-Control-Board mit Masse, 24 Volt Versorgungsspannung sowie dem PWM-Signal, welches die Werte 0 Volt oder 5 Volt annehmen kann, versorgt.
 
-Das LED-Board ist weiterhin mit einem PWM-Controller PCA9685 sowie einem Temperatursensor DS18S20 bestückt und besitzt einen Sockel für den Mikrocontroller LPC1768 und Kompatible. Neben den zwei Stiftleisten dieses Sockels existieren Lötaugen um jeden Pin des Sockels abzugreifen. Während der Durchführung der Implementierung der Software im Rahmen dieser Projektarbeit stellte sich heraus, dass der Temperatursensor DS18S20 erst in Betrieb genommen werden kann, wenn ein Pullup-Widerstand für dessen Datenleitung nachgerüstet wird. Als Grund hierfür wird angenommen, dass der interne Pullup-Widerstand des Mikrocontrollers allein nicht ausreicht um den High-Pegel zuverlässig einzustellen.
+Das LED-Board ist weiterhin mit einem PWM-Controller PCA9685 sowie einem Temperatursensor DS18S20 bestückt und besitzt einen Sockel für den Mikrocontroller LPC1768 und pinkompatible Modelle. Neben den zwei Stiftleisten dieses Sockels existieren Lötaugen um jeden Pin des Sockels abzugreifen. Während der Durchführung der Implementierung der Software im Rahmen dieser Projektarbeit stellte sich heraus, dass der Temperatursensor DS18S20 erst in Betrieb genommen werden kann, wenn ein Pullup-Widerstand für dessen Datenleitung nachgerüstet wird. Als Grund hierfür wird angenommen, dass der interne Pullup-Widerstand des Mikrocontrollers allein nicht ausreicht um den High-Pegel zuverlässig einzustellen.
 
 \subsection{LED-Module und Optiken}
-Die eingesetzten LED-Module wurden von der Firma Caralux gefertigt und tragen die Bezeichnung LED-LL-1,0/6L-DIM. Die Versorgungsspannung der LED-Module betr\"agt 24 Volt bei einer maximalen Stromaufnahme von 0,35 Ampere. Weiterhin besitzen die LED-Module einen invertierten Signaleingang um die Helligkeit per
-PWM-Signal zu dimmen, wobei die Signaleingangsspannung zwischen 0 Volt und 20 Volt variieren darf. Wird der Signaleingang nicht beschaltet oder auf ein elektrisches Potential von 0 Volt gelegt, leuchtet das LED-Modul mit maximaler Helligkeit, wird der Signaleingang auf ein elektrisches Potential von mindestens 5 Volt gelegt, geben die LEDs kein messbares Licht mehr ab.  
+Die eingesetzten LED-Module wurden von der Firma Caralux gefertigt und tragen die Bezeichnung LED-LL-1,0/6L-DIM. Die Versorgungsspannung der LED-Module beträgt 24 Volt bei einer maximalen Stromaufnahme von 0,35 Ampere bzw. 0,5 Ampere. Weiterhin besitzen die LED-Module einen invertierten Signaleingang um die Helligkeit per PWM-Signal zu dimmen, wobei die Signaleingangsspannung zwischen 0 Volt und 20 Volt variieren darf. Wird der Signaleingang nicht beschaltet oder auf ein elektrisches Potential von 0 Volt gelegt, leuchtet das LED-Modul mit maximaler Helligkeit. Wird der Signaleingang auf ein elektrisches Potential von mindestens 5 Volt gelegt, geben die LEDs kein messbares Licht mehr ab.
 
 \begin{figure}[htb]
 \begin{center}
   \includegraphics[width=1\hsize]{./images/foto_hardware_ledmodul.png}
 \end{center}
-\caption[LED-Modul der Firma Caralux mit provisorisch fixierter Optik im Messaufbau, Quelle: Autoren]{\label{fotohwledmodul}LED-Modul mit provisorisch fixierter
-Optik f\"ur Einsatz im Messaufbau.}
+\caption{\label{fotohwledmodul}LED-Modul mit provisorisch fixierter Optik für Einsatz im Messaufbau.}
 \end{figure}
-Die LED-Module sind jeweils mit sechs wei\ss{}en LEDs LUW W5AM-LX-6Q der Firma Osram best\"uck, die eine Farbtemperatur von 6500K "kaltweiß" aufweisen \cite{specled}. Durch die hohe
-Leistungsaufnahme der LED-Module sollten diese ohne zus\"atzliche K\"uhlelemente nur f\"ur sehr kurze Zeitr\"aume in Betrieb genommen werden.
 
-Die LED-Module sind so konstruiert das diese mit verschiedenen Optiken versehen werden k\"onnen um die Abstrahlcharakteristik jeder einzelnen LED variieren zu
-k\"onnen. Im Messaufbau wurden Messreihen f\"ur die Optiken Titanium-O-M und Titanium-O-SS aufgenommen.
+Die LED-Module sind jeweils mit sechs wei\ss{}en LEDs LUW W5AM-LX-6Q der Firma Osram best\"uck, die eine Farbtemperatur von 6500K "kaltweiß" aufweisen \cite{specled}. Durch die hohe Leistungsaufnahme der LED-Module sollten diese ohne zus\"atzliche K\"uhlelemente nur f\"ur sehr kurze Zeitr\"aume in Betrieb genommen werden.
+
+Die LED-Module sind so konstruiert das diese mit verschiedenen Optiken versehen werden k\"onnen um die Abstrahlcharakteristik jeder einzelnen LED variieren zu k\"onnen. Im Messaufbau wurden Messreihen f\"ur die Optiken Titanium-O-M und Titanium-O-SS aufgenommen.
 \begin{figure}[htb]
 \begin{center}
   \includegraphics[width=1\hsize]{./images/foto_hardware_optiken.png}
 \end{center}
-\caption[LED-Optiken, links: Titanium-O-M, rechts Titanium-O-SS, Quelle:
-Autoren]{\label{fotohwoptiken}LED-Optiken, links: Titanium-O-M, rechts Titanium-O-SS, Quelle:
-Autoren}
+\caption{\label{fotohwoptiken}LED-Optiken, links: Titanium-O-M, rechts Titanium-O-SS}
 \end{figure}
-Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterhin sind die LED-Optiken an der Unterseite mit doppelseitigem Kelebematerial
-versehen, was eine leichte Fixierung auf dem LED-Modul ermöglicht.
+Die LED-Optiken besitzen einen Fuss, der an das LED-Modul angepasst ist. Weiterhin sind die LED-Optiken an der Unterseite mit doppelseitigem Kelebematerial versehen, was eine leichte Fixierung auf dem LED-Modul ermöglicht.
 
 \subsection{Mikrocontroller LPC1768}
-Den Kern des Projekts bildet die Mikrocontrollerbaugruppe "`mbed LPC1768"' der
-Firma NXP. Diese Baugruppe basiert auf einem ARM Cortex-M3, welcher umfangreiche
-Austattungsmerkmale bietet und auf geringen Energieverbrauch hin optimiert ist.
-Der LPC1768 kann mit einer Taktrate von bis zu 100 MHz betrieben werden und
-bietet je nach Konfiguration bis zu 512 KByte Flash und bis zu 64 KByte
-Datenspeicher. Weiterhin stehen umfangreiche Schnittstellen zur Verfügung um
-Peripherie anbinden zu können, beispielsweise eine Ethernet-Schnittstelle, ein
-USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere. \cite{speclpc1768}
+Den Kern des Projekts bildet die Mikrocontrollerbaugruppe "mbed LPC1768' der Firma NXP. Diese Baugruppe basiert auf einem ARM Cortex-M3, welcher umfangreiche Austattungsmerkmale bietet und auf geringen Energieverbrauch hin optimiert ist.
+Der LPC1768 kann mit einer Taktrate von bis zu 100 MHz betrieben werden und bietet je nach Konfiguration bis zu 512 KByte Flash und bis zu 64 KByte Datenspeicher. Weiterhin stehen umfangreiche Schnittstellen zur Verfügung um
+Peripherie anbinden zu können, beispielsweise eine Ethernet-Schnittstelle, ein USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere. \cite{speclpc1768}
 
 \subsection{PWM-Controller PCA9685}
 \label{sec:hardwarePWM}
@@ -269,7 +258,7 @@ USB-Anschluss, zwei CAN-Kanäle, drei I2C-Kanäle und weitere. \cite{speclpc1768
 Der verwendete PCA9685 ist ein programmierbar PWM-Controller mit 16 Kanälen und einer Auflösung von 12 Bit. Angesteuert wird dieser Controller über das Bus-Protokoll I2C. Durch sechs vorhandene Adresspins können bis zu 62 PCA9685 an einem Bus betrieben werden. Des Weiteren ist es möglich alle am Bus befindlichen Controller gleichzeitig über eine All-Call-Adresse anzusprechen sowie zu konfigurieren. Zusätzlich können mittels drei verschiedener Sub-Call-Adressen auch unterschiedliche Gruppen von PWM-Controllern definiert werden. Über einen separaten OE-Eingang ist es möglich die Ausgabe der PWM-Kanäle komplett an- und abzuschalten.
 
 Die Konfiguration des PCA9685 erfolgt über acht Bit große Register. Tabelle \ref{tab:registers} listet diese in den entsprechenden Gruppen auf.
-
+\newpage
 \begin{longtable}{p{45mm}>{\columncolor[gray]{0.97}}p{25mm}p{65mm}}
 \rowcolor[gray]{.9}
 \textbf{Register} & \textbf{Adresse} & \textbf{Verwendung} \\ 
@@ -299,20 +288,20 @@ Hierbei ist zu beachten, dass jeder PWM-Kanal mit vier Registern konfiguriert wi
 \label{sec:HardwareGSLx}
 Der zunächst verwendete Lichtsensor ist der GSLx der Firma GeoSys. Dieser besteht aus zwei Hauptkomponenten. Zum einen der eigentliche Sensor, welcher die Photodiode TSL250R des Herstellers Taos ist, sowie einen IC zur Verstärkung des Ausgangsstroms. Abhängig vom gemessenen Ausgangsstrom, welcher im Bereich von 5 - 20 mA liegt, kann somit die Beleuchtungsstärke ermittelt werden. Die laut Hersteller angegebene maximal messbare Beleuchtungsstärke liegt bei 50 Lux. Im Versuch stellte sich jedoch eine Beleuchtungsstärke von ca. 170 Lux als maximal erfassbar heraus.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.5\hsize]{./images/schaltung-geosys-gslx.png}
 \end{center}
 \caption{\label{fig:schaltplangslx}Beschaltung des GeoSys GSLx, Quelle: Autoren}
 \end{figure}
 
-Die eingesetzte Konfiguration aus Mikrocontroller und Control Board bieten weder eine geeignete Spannungsquelle im zugelassen Bereich von 12 - 15 V noch eine Schnittstelle zur Erfassung des Ausgangsstrom. Um dieses Problem zu lösen, kommt, wie in Abbildung \ref{fig:schaltplangslx} dargestellt, der Spannungsregler LM317 zum Einsatz. Dieser wandelt die am Control Board verfügbaren 24 V in die benötigten 12 V um. Weiterhin erfolgt die Erfassung der Beleuchtungsstärke mittels dem im Mikrocontroller verfügbaren AD-Wandler. Hierfür verwendet wird ein geeigneter Shunt mit 120 Ohm, über den eine Messung des Spannungsabfalls erfolgt. Die hier messbaren Werte liegen zwischen 0,65 V bei Dunkelheit und 3 V bei maximal erfassbarer Helligkeit. Eine Referenzspannung für den AD-Wandler wird nicht benötigt, da diese intern bei 3,3 V liegt.
+Die eingesetzte Konfiguration aus Mikrocontroller und Control-Board bieten weder eine geeignete Spannungsquelle im zugelassen Bereich von 12 - 15 V noch eine Schnittstelle zur Erfassung des Ausgangsstroms. Um dieses Problem zu lösen, kommt, wie in Abbildung \ref{fig:schaltplangslx} dargestellt, der Spannungsregler LM317 zum Einsatz. Dieser wandelt die am Control-Board verfügbaren 24 V in die benötigten 12 V um. Weiterhin erfolgt die Erfassung der Beleuchtungsstärke mittels dem im Mikrocontroller verfügbaren AD-Wandler. Hierfür verwendet wird ein geeigneter Shunt mit 120 Ohm, über den eine Messung des Spannungsabfalls erfolgt. Die hier messbaren Werte liegen zwischen 0,65 V bei Dunkelheit und 3 V bei maximal erfassbarer Helligkeit. Eine Referenzspannung für den AD-Wandler wird nicht benötigt, da diese intern bei 3,3 V liegt.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.5\hsize]{./images/osziGeosys.png}
 \end{center}
-\caption[Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal, Quelle: Autoren]{\label{fig:gslOszi}Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal}
+\caption{\label{fig:gslOszi}Oszillogramm der vom GSLx ermittelten Beleuchtungsstärke in Abhängigkeit zum PWM-Signal. Kanal A zeigt die PWM-Ausgabe am Control-Board. Kanal B ist die dabei über den Shunt erfasste Spannung.}
 \end{figure}
 
 Bei der Inbetriebnahme des Sensors wurde schnell klar, dass der Messbereich des GSLx nicht ausreichend für die Messung ist. Des Weiteren zeigte sich die Mangelnde Trägheit des Sensors für die Messung einer PWM-Lichtquelle. Das Oszillogramm des gemessenen Spannungsabfalls stellte die PWM-Ausgabe des Controllers dar. Dies hätte zwar mittels RC-Glied kompensiert werden können, jedoch ist der Messbereich des Sensors nicht groß genug um die bei High-Pegel anliegende Beleuchtungsstärke korrekt zu erfassen.
@@ -321,32 +310,30 @@ Bei der Inbetriebnahme des Sensors wurde schnell klar, dass der Messbereich des 
 
 Der unzureichende Messbereich des GSLx führte zur Suche eines weiteren Sensors. Als geeignet erschien der TAOS TSL2561 mit einen angegebenen Messbereich von 0,1 Lux bis 40.000 Lux. Zur Ermittlung der Beleuchtungsstärke sind zwei Photodioden verbaut. Deren Ausgangsströme werden durch je einen integrierenden AD-Wandler in einen 16 Bit Integerwert umgewandelt. Eine Photodiode erfasst dabei einen breiten Wellenlängenbereich, welcher das für Menschen sichtbare sowie infrarotes Licht abdeckt. Die zweite erfasst hingegen nur infrarotes Licht. Somit ist es im Gesamten möglich ausschließlich das für das menschliche Auge sichtbare Spektrum zu erfassen.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.5\hsize]{./images/stiftleiste.png}
 \end{center}
-\caption{\label{fig:stiftleiste}Stiftleiste mit Abgriffen zwischen LPC1768 und Control Board}
+\caption{\label{fig:stiftleiste}Stiftleiste mit Abgriffen zwischen LPC1768 und Control-Board}
 \end{figure}
 
-Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C Protokoll. Da das Caralux Control Board die hierfür benötigten Pins des LPC1768 nicht herausführt, war es nötig diese mittels zwei Stiftleisten zwischen Mikrocontroller und Control Board, wie in Abbildung \ref{fig:stiftleiste} dargestellt, abzugreifen. Neben den I2C Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen und mit dem Sensor verbunden. Des Weiteren verfügt der TSL2561 über einen Pin zur Adresskonfiguration. Dieser kann wahlweise mit 3,3 V, GND oder nicht beschaltet werden. In der verwendeten Schaltung liegt der Pin auf GND.
+Die Ansteuerung des Sensors erfolgt ebenfalls über das I2C-Protokoll. Da das LED-Control-Board die hierfür benötigten Pins des LPC1768 nicht herausführt, war es nötig diese mittels zwei Stiftleisten zwischen Mikrocontroller und Control-Board, wie in Abbildung \ref{fig:stiftleiste} dargestellt, abzugreifen. Neben den I2C-Pins SCL und SDA wurden weiterhin die 3,3 V Versorgungsspannung und Masse abgegriffen und mit dem Sensor verbunden. Des Weiteren verfügt der TSL2561 über einen Pin zur Adresskonfiguration. Dieser kann wahlweise mit 3,3 V, GND oder nicht beschaltet werden. In der verwendeten Schaltung liegt der Pin auf GND.
 
 \subsection{Luxmeter Mini-Lux}
-Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll
-im Versuchsaufbau präzise Messwerte liefern und als Referenz für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in die
-Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an.\cite{specminilux}
+Als Referenzmessgerät für die beiden oben genannten Lichtsensoren dient ein Luxmeter Mini-Lux der Firma MX-Electronic. Dieses kalibrierte Messinstrument soll im Versuchsaufbau präzise Messwerte liefern und als Referenz für die anderen Lichtsensoren dienen. Die Messwerte des Mini-Lux werden von Hand in die Messprotokolle aufgenommen, der Hersteller bietet jedoch auch externe Schnittstellen zur automatisierten Messerwerterfassung auf seiner Webseite an.\cite{specminilux}
 
 \subsection{Temperatursensor DS18S20}
 Bei dem Bauteil DS18S20 handelt es sich um einen verbreiteten Temperatursensor, welcher über das OneWire-Protokoll angesprochen werden kann. Zu den Vorzügen dieses Senesors zählen der Messbereich von -55 bis +125 Grad Celsius, die
-geringe Messdauer von nur 200 Millisekunden pro Messung, dass zum Betrieb keine zusätzlichen, externen Bauteile nötig sind und die Kaskadierbarkeit mehrerer Sensoren über den OneWire-Bus.\cite{specds1820} Ein solcher Sensor ist für Temperaturüberwachungszwecke auf dem Caralux-Steuermodul enthalten.
+geringe Messdauer von nur 200 Millisekunden pro Messung, dass zum Betrieb keine zusätzlichen, externen Bauteile nötig sind und die Kaskadierbarkeit mehrerer Sensoren über den OneWire-Bus.\cite{specds1820} Ein solcher Sensor ist für Temperaturüberwachungszwecke auf dem Control-Board enthalten.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.8\hsize]{./images/schaltung-ds18s20.png}
 \end{center}
 \caption{\label{fig:schaltungDs18s20}Beschaltung des DS18S20 bei Betrieb mit Versorgungsspannung gemäß Datenblatt \cite{specds1820}}
 \end{figure}
 
-Abbildung \ref{fig:schaltungDs18s20} zeigt eine Referenzschaltung für den DS18S20 gemäß Datenblatt. Darauf ist ein Pull-Up-Widerstand am One-Wire-Bus zu erkennen. Dieser fehlt jedoch auf dem CaraLux Control Board. Um den Sensor dennoch in Betrieb zu nehmen, war es nötig den fehlen Pull-Up-Widerstand nachträglich einzusetzen. Dies geschah jedoch nicht auf dem Control Board selbst, sondern über die am Sockel des Mikrocontroller angebrachte Stiftleiste. Hierfür wurde ein 4,7 kOhm Widerstand auf die 3,3 V Spannungsversorgung des LPC1768 geklemmt.
+Abbildung \ref{fig:schaltungDs18s20} zeigt eine Referenzschaltung für den DS18S20 gemäß Datenblatt. Darauf ist ein Pull-Up-Widerstand am One-Wire-Bus zu erkennen. Dieser fehlt jedoch auf dem CaraLux Control Board. Um den Sensor dennoch in Betrieb zu nehmen, war es nötig den fehlen Pull-Up-Widerstand nachträglich einzusetzen. Dies geschah jedoch nicht auf dem Control Board selbst, sondern über die am Sockel des Mikrocontroller angebrachte Stiftleiste. Hierfür wurde ein 4,7 kOhm Widerstand auf die 3,3 V Spannungsversorgung des LPC1768 gelegt.
 
 Um den Temperatursensor in Betrieb zu nehmen kam ein Referenzprogramm von der mBed-Webseite \cite{progds1820} zum Einsatz. Hierbei ist zu beachten, dass der entsprechende Sensor via Konstante im Quellcode zu definieren ist.
 
@@ -355,7 +342,9 @@ Um den Temperatursensor in Betrieb zu nehmen kam ein Referenzprogramm von der mB
 Dieser Abschnitt beschreibt die Inbetriebnahme und Implementierung der einzelnen Komponenten. Dabei wird auf entstandene Probleme und deren Lösung eingegangen. Die dabei vorgestellten Programmausschnitte sowie der im Anhang befindliche gesamte Quellcode sind in Eigenleistung der Autoren entstanden.
 
 \subsection{Steuerung des PWM-Controllers}
-Wie in Abschnitt \ref{sec:hardwarePWM} beschrieben erfolgt die Adresskonfiguration des PCA9685 mittels sechs Adresspins. Auf dem Control Board sind diese alle mit GND beschaltet. Daraus ergeben sich die Schreibadresse \texttt{80h} sowie die Leseadresse \texttt{81h}.
+Für die Steuerung des PWM-Controllers wurden hauptsächlich drei Schwerpunkte implementiert. Die Initialisierung die den Controller in einen Betriebsbereiten Zustand versetzt, die Ausgabe von PWM-Signalen und das Auslesen der LED-Steuerregister.
+
+Wie in Abschnitt \ref{sec:hardwarePWM} beschrieben erfolgt die Adresskonfiguration des PCA9685 mittels sechs Adresspins. Auf dem Control-Board sind diese alle mit GND beschaltet. Daraus ergeben sich die Schreibadresse \texttt{80h} sowie die Leseadresse \texttt{81h}.
 
 \subsubsection{Initialisierung}
 Zur Initialisierung des PWM-Controllers sind zwei Schritte nötig. Zunächst erfolgt das Setzen der allgemeinen Betriebsparameter über die Register \texttt{MODE1} und \texttt{MODE2}. Das Register \texttt{MODE1} erhält den Wert \texttt{20h}. Dies entspricht dem Betrieb mit 
@@ -375,7 +364,7 @@ Abschließend wird der mit Output Enalbe belegte Pin 18 auf einen Low-Pegel gese
 
 \subsubsection{PWM-Ausgabe}
 \label{sec:pwmOut}
-Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel, wie in Abbildung [Todo: GRAFIK 4095/4096 einfügen] dargestellt.
+Für die Konfiguration der PWM-Ausgabe wird die Funktion \texttt{setPwm12(int n, int ontime)} verwendet. Dabei repräsentieren die Parameter \texttt{n} und \texttt{ontime} den entsprechenden PWM-Kanal beginnend mit 0 sowie den Anteil des High-Pegel der PWM-Ausgabe innerhalb eines Zyklus von 0 bis 4095. Wird der Funktion für den Parameter \texttt{ontime} der Wert 4096 übergeben, so ist die Ausgabe des entsprechenden Kanals ein durchgehender High-Pegel.
 
 Zu aller erst ermittelt die Funktion den zum jeweiligen Kanal entsprechenden Offset des PWM-Signals, welcher als Startzeitpunkt des High-Pegels dient. Dieser ergibt sich aus der Kanalnummer multipliziert mit 256, um eine möglichst gleichmäßige Verteilung über die 12-Bit-Periode zu erzielen. Somit soll eine stoßweise Belastung des Netzteils vermieden werden. Anschließend ergibt sich der Ausschaltzeitpunkt durch Addition der ermittelten Startzeit und dem übergebenen Parameter \texttt{ontime}. Abblidung \ref{fig:pwmExample2} verdeutlicht dies am Beispiel zweier verschiedener Kanäle mit entsprechenden Offset.
 
@@ -394,17 +383,17 @@ Abschließend sind die ermittelten Werte in ein fünf Byte großes \texttt{char}
 \subsubsection{Auslesen der PWM-Werte}
 Zum Auslesen der PWM-Kanalregister wurde die Funktion \texttt{readPwm12(int n)} implementiert. Zwar speichert das entwickelte Programm die jeweiligen Registereinstellungen nach dem Setzen, aber im Falle eines Datenübertragungsfehlers kann das direkte Auslesen der jeweiligen Register von Vorteil sein. Als Parameter erhält sie die Kanalnummer \texttt{n} und gibt anschließend den High-Pegel-Anteil der 12-Bit-Periode zurück.
 
-Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt werden nun, analog zum im vorangegangen Abschnitt beschrieben Verfahren, zur Berechnung des High-Pegel-Anteils verwendet und von der Funktion zurückgegeben.
+Als erstes berechnet die Methode anhand der übergebenen Kanalnummer die entsprechende Basisadresse wie bereits in Abschnitt \ref{sec:pwmOut} beschrieben. Darauf folgend wird diese in das Adressregister des PWM-Controllers via I2C-Bus übertragen. Im direkten Anschluss erfolgt ein Lesevorgang von vier Byte. Aus den somit erhaltenen Werten für An- und Abschaltzeitpunkt wird nun, analog zum im Abschnitt \ref{sec:pwmOut} beschrieben Verfahren, der High-Pegel-Anteil berechnet und von der Funktion zurückgegeben.
 
 \subsection{Lichtmessung mittels GeoSys GSLx}
 \label{sec:impGSLx}
 Für die Ermittlung der Beleuchtungsstärke mit dem GSLx sind zwei Schritte nötig. Zunächst erfolgt die Erfassung der am Messwiderstand abfallenden Spannung. Dies geschieht mittels des im LPC1768 integrierten AD-Wandlers. Die Funktion \texttt{AnalogIn.read()} gibt einen \texttt{Double}-Wert im Intervall von 0 bis 1,0 zurück. Dies entspricht der Messbaren Spannung von 0 V bis 3,3 V. Ausgehend vom im Abschnitt \ref{sec:HardwareGSLx} beschriebenen relevanten Messbereich von 0,65 V bis 3,0 V wird dieser Wert auf eine prozentuale Wiedergabe des Messbereiches umgerechnet. Dabei stellen die Werte 0,1953 die untere Grenze sowie 0,9194 die Obere Grenze des Messbereichs dar, wie Abbildung \ref{fig:geosysScale} verdeutlicht.
 
-\begin{figure}[htb]
+\begin{figure}[H]
 \begin{center}
 \includegraphics[width=0.9\hsize]{./schematics/geosysScale.png}
 \end{center}
-\caption{\label{fig:geosysScale}Abbildung der gemessenen Spannung auf den relevanten Messbereich, Quelle: Autoren}
+\caption{\label{fig:geosysScale}Abbildung der gemessenen Spannung auf den relevanten Messbereich}
 \end{figure}
 
 Listing \ref{code:GSLx} zeigt das Einlesen des Wertes sowie die anschließende Umrechnung. Dabei handelt es sich um eine einfache Dreisatzgleichung mit anschließender Multiplikation um einen Skalierungsfaktor. In dieser Gleichung werden von der maximal möglichen Spannung (1,0) der untere (0,1953) sowie obere (0,0806) nicht relevante Bereich abgezogen, was dem korrigierten Wert 0,7241 entspricht. Von der aktuellen Spannung wird nur der untere Bereich abgezogen. Das Ergebnis dieser Rechnung ist die prozentuale Spannung im Bereich von 0 bis 100. Die abschließende Multiplikation mit dem Faktor 1,7 skaliert somit in den erfassbaren Messbereich von 0 bis 170 Lux.
@@ -482,7 +471,7 @@ Die Beleuchtungsmessung wurde auf die drei Funktionen \texttt{readLux()}, \textt
   	backgroundcolor=\color[rgb]{0.95,0.95,0.95},
 }
 
-\begin{lstlisting}[captionpos=b, caption=Berechnung der Beleuchtungsstärke aus Full-Range- und IR-Photodiode, label=code:calclux]
+\begin{lstlisting}[captionpos=b, caption=Berechnung der Beleuchtungsstärke aus Full-Range- und IR-Photodiode analog dem im Datenblatt beschriebenen Verfahren \cite{tsl2561}, label=code:calclux]
 dif = ch1/ch0;
 
 if(dif <= 0.50) {
@@ -505,36 +494,31 @@ Die vorangegangen beschriebene Funktion erfasst lediglich Beleuchtungsstärken v
 Anschließend wird eine Korrektur der erfassten Messwerte mittels der Funtkion \texttt{readLuxCalib()} durchgeführt. Diese addiert zum gemessenen Wert den selbigen multipliziert mit dem Faktor 0,1095. Abschnitt \ref{sec:auswertung} beschriebt das Zustandekommen dieser Korrekturfunktion.
 
 \subsection{Benutzerinterface}
-Für die Benutzerinteraktion wird die vom LPC1768 bereitgestellte Terminalemulation über USB verwendet. So kann mit einem Terminalclient wie PuTTy auf den Controller zugegriffen werden. In Abbildung \ref{fig:gui} ist der Startbildschirm der Anwendung dargestellt. Zu sehen sind dabei die momentan anliegenden PWM-Werte aller 16 Kanäle in numerischer und grafischer Darstellung. Des Weiteren können Unterprogramme zur Messung der aktuellen Beleuchtungsstärke, zum Setzen der einzelnen PWM-Kanäle und zum Erstellen von Messreihen aufgerufen werden.
+Für die Benutzerinteraktion wird die vom LPC1768 bereitgestellte Terminalemulation über USB verwendet. So kann mit einem Terminalclient wie PuTTy oder GNU Screen auf den Controller zugegriffen werden. In Abbildung \ref{fig:gui} ist der Startbildschirm der Anwendung dargestellt. Zu sehen sind dabei die momentan anliegenden PWM-Werte aller 16 Kanäle in numerischer und grafischer Darstellung. Des Weiteren können Unterprogramme zur Messung der aktuellen Beleuchtungsstärke, zum Setzen der einzelnen PWM-Kanäle und zum Erstellen von Messreihen aufgerufen werden.
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.7\hsize]{./schematics/blockDiagramm.png}
+\includegraphics[width=0.7\hsize]{./images/messoftware.png}
 \end{center}
-\caption[Bedienoberfläche dargestellt mit PuTTY, Quelle: Autoren]{\label{fig:gui}Bedienoberfläche dargestellt mit PuTTY}
+\caption{\label{fig:gui}Hauptbildschirm der Bedienoberfläche dargestellt mit GNU Screen}
 \end{figure}
 
 Das Messunterprogramm gibt dabei die Werte der beiden Sensoren über die in den Abschnitten \ref{sec:impGSLx} und \ref{sec:impTaos} aufgeführten Funktionen aus. Diese Messungen können durch Drücken einer beliebigen Taste wiederholt werden. Mittels der Taste ’Q’ erfolgt die Rückkehr zum Hauptmenü.
 
-Mit Aufruf des Unterprogramms zum Einstellen der PWM-Werte ist der zu setzende Kanal mit des gewünschten High-Pegel-Anteil anzugeben. Die Kanalnummern sind hier 0 bis 15. Bei Eingabe einer 16 werden alle Kanäle beschrieben. Für den High-Pegel-Anteil sind Werte von 0 bis 4095 erlaubte PWM-Werte. Bei der Eingabe von 4096 wird ein durchgehender High-Pegel ausgegeben.
+Mit Aufruf des Unterprogramms zum Einstellen der PWM-Werte ist der zu setzende Kanal mit dem gewünschten High-Pegel-Anteil anzugeben. Die Kanalnummern sind hier 0 bis 15. Bei Eingabe einer 16 werden alle Kanäle beschrieben. Für den High-Pegel-Anteil sind Werte von 0 bis 4095 erlaubte PWM-Werte. Bei der Eingabe von 4096 wird ein durchgehender High-Pegel ausgegeben.
 
-Die letzte bereitgestellte Funktion ist die Aufnahme von Messreihen. Hier wird automatisiert eine Reihe von PMW-Werten mit vorgegebener Schrittweite eingestellt und die daraus resultierende Beleuchtungsstärke gemessen. Die in der Messreihe ermittelten Werte werden anschließend in eine CSV-Datei auf dem internen Flash-Speicher des LPC1768 ausgegeben. Vor Beginn der Messreihe müssen der Dateiname ohne Erweiterung, die Schrittweite sowie die Wartezeit zwischen den Messungen angegeben werden.
+Die letzte bereitgestellte Funktion ist die Aufnahme von Messreihen. Hier wird automatisiert eine Reihe von PMW-Werten mit wählbarer Schrittweite eingestellt und die daraus resultierende Beleuchtungsstärke gemessen. Die in der Messreihe ermittelten Werte werden anschließend in eine CSV-Datei auf dem internen Flash-Speicher des LPC1768 ausgegeben. Vor Beginn der Messreihe müssen der Dateiname ohne Erweiterung, die Schrittweite sowie die Wartezeit zwischen den Messungen angegeben werden.
 
 \clearpage
 \section{Versuchsanordnung}
-Für die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit
-einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt, wie es beispielsweise von der Post zum Versand genutzt wird. Dieses Rohr
-kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden. Eine Seite
-des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne
-Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit
-3 Öffnungen versehen um die 3 Lichtsensoren einsetzen zu können.
+Für die Durchführung der Messreihen wurde ein handelsübliches Papprohr mit einer Länge von 120 cm und einem Durchmesser von 10 cm benutzt, wie es beispielsweise von der Post zum Versand genutzt wird. Dieses Rohr kann auf beiden Seiten mit Kunststoffdeckeln verschlossen werden. Eine Seite des Rohrs wurde so modifiziert, dass eine LED des LED-Moduls mit oder ohne Optik eingesetzt werden kann. Der Deckel der gegenüberliegenden Seite wurde mit drei Öffnungen versehen um die drei Lichtsensoren einsetzen zu können.
 
-\begin{figure}[h] 
+\begin{figure}[H] 
   \subfigure[Deckel zur Aufnahme des LED-Moduls]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_beleuchtungsdeckel.png}} 
   \subfigure[Sensoren: MiniLux, GSLx,
 TSL2561]{\includegraphics[width=0.495\textwidth]{./images/foto_hardware_sensordeckel.png}} 
   \subfigure[Messrohr]{\includegraphics[width=1\hsize]{./images/foto_hardware_messrohr.png}}
-  \caption[Messaufbau]{\label{fotohwmessaufbau}Messaufbau, Quelle: Autoren}
+  \caption{\label{fotohwmessaufbau}Messaufbau}
 \end{figure} 
 
 Um bei der Bestimmung der Messreihen tragfähige Ergebnisse zu generieren, wurde jede einzelne Messung mit der Messgeräten parallel durchgeführt. Die beiden
@@ -1088,10 +1072,11 @@ Mittelwert $(m)$& 0,1095 \\
 \section{Schlussbetrachtung}
 Anhand der Messreihen in der Messkonstruktion wird ein linearer Zusammenhang zwischen den PWM-Stufen und den zugehörigen gemessenen Beleuchtungsstärken ersichtlich. Dies ist für die Implementierung einer Korrekturfunktion zur Kalibrierung erforderlich. Es soll jedoch nochmals darauf hingewiesen werden, dass alle oben genannten Messwerte nur für den in diesem Dokument beschriebenen Messaufbau Gültigkeit besitzen.
 
-%\clearpage
-%\section{Schluss}
-%Dies ist der Schlussteil. Abschlie\ss{}ende Empfehlung
+Des Weiteren wurden wichtige Erkenntnisse für das LED-Straßenleuchtenprojekt gewonnen. Hier zu nennen sind die für das Projekt unzureichenden Eigenschaften des GSLx, der Konstruktionsfehler des Caralux-LED-Control-Board bei der Ansteuerung des Temperatursensors und die Erstellung einer Test- sowie Ansteuerungssoftware für den Caralux-Lampenkopf.
 
+Im Ausblick können die Ergebnisse dieser Arbeit nun für die weitere Entwicklung einer Steuerung zur Helligkeitsregulierung der Straßenleuchte verwendet werden sowie in das Design folgender Versionen des LED-Control-Boards einfließen.
+
+\newpage6
 \section{Anhang}
 \subsection{Quellcodelisting}
 \definecolor{listinggray}{gray}{0.9}
@@ -1786,6 +1771,11 @@ int main()
 \bibitem{progds1820}
 \url{http://mbed.org/users/snatch59/code/OneWireCRC/}
 \\Abrufbar am 10.04.2013
+
+\bibitem{tsl2561}
+\url{http://www.adafruit.com/datasheets/TSL2561.pdf}
+\\Abrufbar am 10.04.2013
+
 
 \end{thebibliography}
 
